@@ -16,7 +16,7 @@ class SelectOrder extends Component {
     render() {
         const { orders } = this.props;
         return (
-            <Layout header={<Header title={'Select Order'} back={'SearchOrders'} />}>
+            <Layout header={<Header title={'Select Reservation'} back={'SearchOrders'} />}>
                 <OrderList onCheckInItem={this.handleCheckInItem} orders={orders} />
             </Layout>
         );

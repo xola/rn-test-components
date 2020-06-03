@@ -15,7 +15,7 @@ class SelectWaiver extends Component {
     render() {
         const { orders, experiences } = this.props;
         return (
-            <Layout header={<Header title={'Select Booking'} back={'Home'} />}>
+            <Layout header={<Header title={'Select Reservation'} back={'Home'} />}>
                 <WaiverExperienceList onSignWaiver={this.handleSignWaiver} orders={orders} experiences={experiences} />
             </Layout>
         );

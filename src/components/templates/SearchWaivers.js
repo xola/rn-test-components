@@ -16,7 +16,7 @@ class SearchWaivers extends Component {
     };
 
     render() {
-        return <SearchPage title={'Find your order to sign waiver'} onSearchClick={this.handleSearchClick} />;
+        return <SearchPage title={'Find your reservation to sign waiver'} onSearchClick={this.handleSearchClick} />;
     }
 }
 
