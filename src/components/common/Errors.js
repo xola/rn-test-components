@@ -6,6 +6,7 @@ import LoadingButton from './LoadingButton';
 import styles from './ErrorsStyle';
 import StyledText from './StyledText';
 import PropTypes from 'prop-types';
+import CustomIcon from './CustomIcon';
 
 class Errors extends Component {
     static propTypes = {
@@ -23,9 +24,16 @@ class Errors extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <StyledText style={styles.title}>{latestError.title}</StyledText>
+                    <StyledText style={styles.title}>
+                        <CustomIcon style={styles.title} size={20} name="cancel-circle" /> {latestError.title}
+                    </StyledText>
                     <StyledText style={styles.error}>{latestError.error}</StyledText>
-                    <LoadingButton title="Dismiss" onPress={dismissLatestError} styleNames={['cancel', 'medium']} />
+                    <LoadingButton
+                        title="Dismiss"
+                        onPress={dismissLatestError}
+                        style={styles.button}
+                        styleNames={['cancel', 'medium']}
+                    />
                 </View>
             </View>
         );

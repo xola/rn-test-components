@@ -37,7 +37,6 @@ class Setup extends Component {
                         <View style={styles.container}>
                             <View style={styles.logo}>
                                 <Image style={styles.image} source={{ uri: logoUrl }} />
-                                <StyledText styleNames={['h1']}>{seller.name}</StyledText>
                             </View>
                             <View style={styles.actions}>
                                 <View style={styles.buttons}>

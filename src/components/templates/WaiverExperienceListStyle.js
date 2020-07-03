@@ -9,6 +9,12 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         width: listSize,
     },
+    noResult: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
 });
 
 export default styles;

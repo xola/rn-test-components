@@ -41,10 +41,20 @@ export const RESET_EMPTY_SEARCH_RESULT = 'RESET_EMPTY_SEARCH_RESULT';
 export const searchOrders = searchTerm => async dispatch => {
     try {
         dispatch({ type: SEARCH_ORDERS_REQUESTED });
-        const { data } = await xolaApi.get('/api/orders', {
+        let { data } = await xolaApi.get('/api/orders', {
             params: { search: searchTerm, authenticate: true, limit: 100 },
         });
-        dispatch({ type: SEARCH_ORDERS_SUCCEEDED, orders: data });
+        let result = data.data;
+        const emailRegex = /\S+@\S+\.\S+/;
+        if (emailRegex.test(searchTerm)) {
+            result = _.filter(data.data, order => {
+                if (order.customerEmail) {
+                    return order.customerEmail === searchTerm;
+                }
+                return true;
+            });
+        }
+        dispatch({ type: SEARCH_ORDERS_SUCCEEDED, orders: result });
     } catch (e) {
         dispatch({ type: SEARCH_ORDERS_FAILED, error: e.message });
     }

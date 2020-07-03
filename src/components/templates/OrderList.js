@@ -6,6 +6,7 @@ import styles from './OrderListStyle';
 import StyledText from '../common/StyledText';
 import { connect } from 'react-redux';
 import { dismissLatestError } from '../../actions/errorsActions';
+import moment from 'moment';
 
 class OrderList extends Component {
     componentWillUnmount() {
@@ -14,17 +15,28 @@ class OrderList extends Component {
 
     render() {
         const { orders } = this.props;
+        let experienceItems = [];
 
-        return _.size(orders) ? (
+        _.forEach(orders, order => {
+            _.forEach(order.items, item => {
+                if (moment(item.arrival).isSameOrAfter({}, 'day')) {
+                    experienceItems.push({ item, order });
+                }
+            });
+        });
+
+        experienceItems = _.orderBy(experienceItems, ['items.arrival', 'order.customerName'], ['desc', 'asc']);
+
+        return _.size(experienceItems) ? (
             <ScrollView contentContainerStyle={styles.list}>
-                {_.map(orders, order => {
-                    if (order.items) {
-                        return _.map(order.items, item => (
-                            <OrderListItem key={item.id} item={item} order={order} onClick={this.props.onCheckInItem} />
-                        ));
-                    }
-                    return null;
-                })}
+                {_.map(experienceItems, experienceItem => (
+                    <OrderListItem
+                        key={experienceItem.item.id}
+                        item={experienceItem.item}
+                        order={experienceItem.order}
+                        onClick={this.props.onCheckInItem}
+                    />
+                ))}
             </ScrollView>
         ) : (
             <View style={styles.noResult}>

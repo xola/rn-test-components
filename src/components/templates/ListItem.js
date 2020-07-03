@@ -32,6 +32,10 @@ class ListItem extends Component {
             const time = item.arrivalTime.toString().padStart(3, '0');
             arrival = moment(`${item.arrival} ${time}`, 'YYYY-MM-DD Hmm');
         }
+        const obfuscatedCustomerName = order.customerName.replace(/(\w\s.)(.*)/, '$1***');
+        const obfuscatedCustomerEmail = order.customerEmail
+            ? order.customerEmail.replace(/(^.{1,3})(.*)@(.{1,3})(.*)/, '$1***@$3**.***')
+            : null;
         return (
             <View style={styles.item}>
                 <Image source={image} style={styles.image} />
@@ -51,11 +55,11 @@ class ListItem extends Component {
                         </StyledText>
                     ) : null}
                     <StyledText style={styles.infoText}>
-                        <CustomIcon size={14} name={'user'} /> {order.customerName}
+                        <CustomIcon size={14} name={'user'} /> {obfuscatedCustomerName}
                     </StyledText>
-                    {order.customerEmail ? (
+                    {obfuscatedCustomerEmail ? (
                         <StyledText style={styles.infoText}>
-                            <CustomIcon size={14} name={'email'} /> {order.customerEmail}
+                            <CustomIcon size={14} name={'email'} /> {obfuscatedCustomerEmail}
                         </StyledText>
                     ) : null}
                 </View>

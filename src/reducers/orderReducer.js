@@ -34,7 +34,7 @@ const orderReducer = createReducer(initialState, {
     },
 
     [SEARCH_ORDERS_SUCCEEDED](state, { orders }) {
-        state.collection = _.mapKeys(orders.data, order => order.id);
+        state.collection = _.mapKeys(orders, order => order.id);
         state.isLoading = false;
     },
 

@@ -30,10 +30,19 @@ class Header extends Component {
          * Element shown on the right side (usually a button)
          */
         right: PropTypes.object,
+
+        /**
+         * Param that determines whether home button should be shown
+         */
+        home: PropTypes.bool,
     };
 
     handleBackClick = () => {
         NavigationService.navigate(this.props.back);
+    };
+
+    handleHomeClick = () => {
+        NavigationService.navigate('Home');
     };
 
     render() {
@@ -43,6 +52,13 @@ class Header extends Component {
                     {this.props.back ? (
                         <TouchableOpacity onPress={this.handleBackClick}>
                             <CustomIcon style={styles.backIcon} size={36} name="arrow-left" />
+                        </TouchableOpacity>
+                    ) : null}
+                    {this.props.home ? (
+                        <TouchableOpacity onPress={this.handleHomeClick}>
+                            <StyledText styleNames={['h1']} style={styles.backIcon}>
+                                Home
+                            </StyledText>
                         </TouchableOpacity>
                     ) : null}
                 </View>

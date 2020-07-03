@@ -41,6 +41,7 @@ class SearchPage extends Component {
                                 <TextInput
                                     id="searchText"
                                     onChangeText={props.handleChange('searchText')}
+                                    onSubmitEditing={props.handleSubmit}
                                     placeholder="Search by email or phone"
                                 />
 

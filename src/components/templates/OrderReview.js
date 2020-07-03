@@ -46,11 +46,6 @@ class OrderReview extends Component {
         this.props.closeModal();
     };
 
-    getBookingFee() {
-        const { partnerFee } = this.props.cart.preparedOrder;
-        return partnerFee && partnerFee.type === 'traveler' ? partnerFee : null;
-    }
-
     handleEndEditing = ({ customerName, customerEmail, phone }) => () => {
         this.props.updateCustomer({ customerName, customerEmail, phone });
     };
@@ -59,8 +54,7 @@ class OrderReview extends Component {
         const { experience, device } = this.props;
         const { customerName, customerEmail, phone } = this.props.cart.order;
         const { amount } = this.props.cart.preparedOrder;
-        const bookingFee = this.getBookingFee();
-        const total = amount + (bookingFee ? bookingFee.amount : 0);
+        const total = amount;
 
         return (
             <Formik

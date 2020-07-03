@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import _ from 'lodash';
+import moment from 'moment';
 import WaiverExperienceListItem from './WaiverExperienceListItem';
 import styles from './WaiverExperienceListStyle';
+import StyledText from '../common/StyledText';
 
 class WaiverExperienceList extends Component {
     render() {
         const { orders } = this.props;
-        const experienceItems = [];
+        let experienceItems = [];
 
         _.forEach(orders, order => {
             _.forEach(order.items, item => {
-                experienceItems.push({ item, order });
+                if (moment(item.arrival).isSameOrAfter({}, 'day')) {
+                    experienceItems.push({ item, order });
+                }
             });
         });
-        return (
+
+        experienceItems = _.orderBy(experienceItems, ['item.arrival', 'order.customerName'], ['desc', 'asc']);
+        return _.size(experienceItems) ? (
             <ScrollView contentContainerStyle={styles.list}>
                 {_.map(experienceItems, experienceItem => (
                     <WaiverExperienceListItem
@@ -25,6 +31,10 @@ class WaiverExperienceList extends Component {
                     />
                 ))}
             </ScrollView>
+        ) : (
+            <View style={styles.noResult}>
+                <StyledText styleNames={['h2']}>No Results Found</StyledText>
+            </View>
         );
     }
 }

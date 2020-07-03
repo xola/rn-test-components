@@ -33,6 +33,7 @@ class LogIn extends Component {
                                 <TextInput
                                     id="username"
                                     onChangeText={props.handleChange('username')}
+                                    onSubmitEditing={props.handleSubmit}
                                     placeholder="Email"
                                     keyboardType="email-address"
                                 />
@@ -44,6 +45,7 @@ class LogIn extends Component {
                                 <TextInput
                                     id="password"
                                     onChangeText={props.handleChange('password')}
+                                    onSubmitEditing={props.handleSubmit}
                                     placeholder="Password"
                                     secureTextEntry={true}
                                 />

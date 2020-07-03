@@ -60,11 +60,6 @@ class OrderSummary extends Component {
         });
     }
 
-    getBookingFee() {
-        const { partnerFee } = this.props.cart.preparedOrder;
-        return partnerFee && partnerFee.type === 'traveler' ? partnerFee : null;
-    }
-
     render() {
         const { medias, id } = this.props.experience;
 
@@ -72,10 +67,8 @@ class OrderSummary extends Component {
             ? { uri: medias[0].src }
             : { uri: xolaApi.xolaUrl(`api/experiences/${id}/medias/default?size=small`) };
 
-        const { items, amount } = this.props.cart.preparedOrder;
-        const { adjustments } = items[this.props.cart.itemIndex];
-        const bookingFee = this.getBookingFee();
-        const total = amount + (bookingFee ? bookingFee.amount : 0);
+        const { amount } = this.props.cart.preparedOrder;
+        const total = amount;
 
         return (
             <ScrollView style={styles.container}>
@@ -109,28 +102,6 @@ class OrderSummary extends Component {
                             </StyledText>
                         </View>
                     ))}
-
-                    {adjustments.map(adjustment => {
-                        return adjustment.type === 'fee' && adjustment.amount !== 0 ? (
-                            <View style={styles.line} key={adjustment.caption}>
-                                <StyledText>{adjustment.caption}</StyledText>
-
-                                <StyledText>
-                                    <Currency>{adjustment.amount}</Currency>
-                                </StyledText>
-                            </View>
-                        ) : null;
-                    })}
-
-                    {bookingFee ? (
-                        <View style={styles.line}>
-                            <StyledText>Booking Fee</StyledText>
-
-                            <StyledText>
-                                <Currency>{bookingFee.amount}</Currency>
-                            </StyledText>
-                        </View>
-                    ) : null}
 
                     <View style={styles.line}>
                         <StyledText style={styles.total}>Total</StyledText>

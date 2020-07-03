@@ -10,23 +10,27 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     title: {
-        fontSize: 25,
+        fontSize: 22,
         color: variables.white,
     },
     error: {
-        fontSize: 20,
+        fontSize: 17,
         color: variables.white,
         margin: 10,
     },
     wrapper: {
-        padding: 10,
+        padding: 30,
         marginTop: 20,
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: variables.redBright,
         backgroundColor: variables.redError,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'space-evenly',
+        borderRadius: 30,
+    },
+    button: {
+        alignSelf: 'center',
     },
 });
 
