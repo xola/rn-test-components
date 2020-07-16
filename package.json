@@ -1,6 +1,7 @@
 {
     "name": "native-kiosk",
     "version": "0.0.1",
+    "description": "Xola Kiosk App",
     "private": true,
     "scripts": {
         "start": "react-native start",

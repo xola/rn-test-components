@@ -25,7 +25,7 @@ class OrderList extends Component {
             });
         });
 
-        experienceItems = _.orderBy(experienceItems, ['items.arrival', 'order.customerName'], ['desc', 'asc']);
+        experienceItems = _.orderBy(experienceItems, ['item.arrival', 'order.customerName'], ['desc', 'asc']);
 
         return _.size(experienceItems) ? (
             <ScrollView contentContainerStyle={styles.list}>

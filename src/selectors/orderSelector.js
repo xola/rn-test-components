@@ -1,7 +1,7 @@
 export const getActiveItem = state => {
     const { selectedOrder, selectedItem, collection, itemIndex } = state.order;
 
-    if (state.cart.submittedOrder) {
+    if (state.cart.submittedOrder.id) {
         return state.cart.submittedOrder.items[state.cart.itemIndex];
     }
 
@@ -19,7 +19,7 @@ export const getActiveItem = state => {
 export const getActiveOrder = state => {
     const { selectedOrder, collection } = state.order;
 
-    if (state.cart.submittedOrder) {
+    if (state.cart.submittedOrder.id) {
         return state.cart.submittedOrder;
     }
 

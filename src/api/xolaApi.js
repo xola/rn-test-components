@@ -1,10 +1,13 @@
 import axios from 'axios';
 import _ from 'lodash';
+import pkg from '../../package.json';
 import { XOLA_API_URL } from '../constants/apiConstants';
 import { XOLA_API_VERSION } from 'react-native-dotenv';
 
+const USER_AGENT = `${pkg.name}/${pkg.version} (${pkg.description})`;
+
 const xolaApi = axios.create({
-    headers: { 'X-API-VERSION': XOLA_API_VERSION },
+    headers: { 'X-API-VERSION': XOLA_API_VERSION, 'User-Agent': USER_AGENT },
 });
 
 let store;

@@ -107,6 +107,8 @@ const cartReducer = createReducer(initialState, {
             method: PAYMENT_METHOD_INTENT,
             paymentIntentMethods: [PAYMENT_INTENT_METHOD_CARD_PRESENT],
         };
+
+        state.preparedOrder.tags = [{ id: 'Kiosk', system: true }];
     },
 
     [PREPARE_ORDER_REQUESTED](state) {
