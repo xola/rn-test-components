@@ -14,6 +14,7 @@ import LogIn from './templates/LogIn';
 import SearchWaivers from './templates/SearchWaivers';
 import SuccessPage from './templates/SuccessPage';
 import Setup from './templates/Setup';
+import SelectSeller from './templates/SelectSeller';
 
 const Navigator = createStackNavigator(
     {
@@ -32,6 +33,7 @@ const Navigator = createStackNavigator(
         SelectWaiver: { screen: SelectWaiver },
         SignInWaiver: { screen: SignInWaiver },
         SuccessPage: { screen: SuccessPage },
+        SelectSeller: { screen: SelectSeller },
     },
     {
         headerMode: 'none',

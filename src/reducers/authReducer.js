@@ -4,11 +4,13 @@ import {
     AUTHENTICATE_USER_REQUESTED,
     EMV_ENABLED,
     FETCH_SELLER_SUCCEEDED,
+    FETCH_DELEGATORS_SUCCEEDED,
 } from '../actions/authActions';
 import { createReducer } from '@reduxjs/toolkit';
 
 export const initialState = {
     isLoading: false,
+    sellers: [],
     seller: {},
     user: {},
     apiKey: null,
@@ -30,6 +32,10 @@ const authReducer = createReducer(initialState, {
     },
     [EMV_ENABLED](state) {
         state.isEMVEnabled = true;
+    },
+    [FETCH_DELEGATORS_SUCCEEDED](state, { sellers, apiKey }) {
+        state.sellers = sellers;
+        state.apiKey = apiKey;
     },
     [FETCH_SELLER_SUCCEEDED](state, { seller }) {
         state.seller = seller;
