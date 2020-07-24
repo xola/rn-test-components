@@ -7,8 +7,8 @@ import styles from './SellerDelegateStyle';
  * A full-width button that show seller option for multi-seller delegate
  */
 class SellerDelegate extends Component {
-    onSelectSeller = () => {
-        this.props.handleClick(this.props.seller.id);
+    handleSelectSeller = () => {
+        this.props.onClick(this.props.seller.id);
     };
 
     render() {
@@ -16,7 +16,7 @@ class SellerDelegate extends Component {
 
         return (
             <View style={styles.container}>
-                <LoadingButton title={name} onPress={this.onSelectSeller} styleNames={['large', 'empty']} />
+                <LoadingButton title={name} onPress={this.handleSelectSeller} styleNames={['large', 'empty']} />
             </View>
         );
     }

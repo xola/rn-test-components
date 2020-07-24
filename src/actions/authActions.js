@@ -26,11 +26,9 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
         });
         let user, seller;
         if (data.type !== 1) {
-            dispatch({ type: FETCH_DELEGATORS_REQUESTED });
-            const delegatorData = await xolaApi.get(`/api/delegators`, { headers: { 'X-API-KEY': data.apiKey } });
-            dispatch({ type: FETCH_DELEGATORS_SUCCEEDED, sellers: delegatorData.data.data, apiKey: data.apiKey });
+            dispatch(fetchDelegates(data.apiKey));
             if (getState().auth.sellers.length === 1) {
-                const bootstrapData = await xolaApi.get(`/api/sellers/${delegatorData.data.data[0].id}/bootstrap`, {
+                const bootstrapData = await xolaApi.get(`/api/sellers/${getState().auth.sellers[0].id}/bootstrap`, {
                     headers: { 'X-API-KEY': data.apiKey },
                 });
                 user = bootstrapData.data.user;
@@ -48,6 +46,12 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
     } catch (e) {
         dispatch({ type: AUTHENTICATE_USER_FAILED, error: 'Invalid username or password' });
     }
+};
+
+export const fetchDelegates = apiKey => async dispatch => {
+    dispatch({ type: FETCH_DELEGATORS_REQUESTED });
+    const delegatorData = await xolaApi.get(`/api/delegators`, { headers: { 'X-API-KEY': apiKey } });
+    dispatch({ type: FETCH_DELEGATORS_SUCCEEDED, sellers: delegatorData.data.data, apiKey: apiKey });
 };
 
 export const selectDelegate = (user, seller) => async dispatch => {

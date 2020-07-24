@@ -17,7 +17,7 @@ class SelectSeller extends Component {
                 </StyledText>
                 <ScrollView style={styles.container}>
                     {_.map(this.props.sellers, seller => (
-                        <SellerDelegate key={seller.id} seller={seller} handleClick={this.props.selectSeller} />
+                        <SellerDelegate key={seller.id} seller={seller} onClick={this.props.selectSeller} />
                     ))}
                 </ScrollView>
             </Layout>
