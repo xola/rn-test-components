@@ -26,7 +26,7 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
         });
         let user, seller;
         if (data.type !== 1) {
-            dispatch(fetchDelegates(data.apiKey));
+            await dispatch(fetchDelegates(data.apiKey));
             if (getState().auth.sellers.length === 1) {
                 const bootstrapData = await xolaApi.get(`/api/sellers/${getState().auth.sellers[0].id}/bootstrap`, {
                     headers: { 'X-API-KEY': data.apiKey },
