@@ -61,7 +61,7 @@ export const selectDelegate = (user, seller) => async dispatch => {
     if (hasEmvEnabled) {
         dispatch({ type: EMV_ENABLED });
     }
-    if (seller.preferences.language) {
+    if (seller.preferences.language && seller.preferences.language.locale) {
         let locale = seller.preferences.language.locale.replace('_', '-');
         if (locale === 'en-US') {
             locale = 'en';
