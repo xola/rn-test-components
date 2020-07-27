@@ -26,13 +26,9 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
         });
         let user, seller;
         if (data.type !== 1) {
-            await dispatch(fetchDelegates(data.apiKey));
+            await dispatch(fetchDelegates(data));
             if (getState().auth.sellers.length === 1) {
-                const bootstrapData = await xolaApi.get(`/api/sellers/${getState().auth.sellers[0].id}/bootstrap`, {
-                    headers: { 'X-API-KEY': data.apiKey },
-                });
-                user = bootstrapData.data.user;
-                seller = bootstrapData.data.seller;
+                await dispatch(selectSeller(getState().auth.sellers[0].id));
             } else {
                 NavigationService.navigate('SelectSeller');
                 return;
@@ -48,16 +44,20 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
     }
 };
 
-export const fetchDelegates = apiKey => async dispatch => {
+export const fetchDelegates = user => async dispatch => {
     dispatch({ type: FETCH_DELEGATORS_REQUESTED });
-    const delegatorData = await xolaApi.get(`/api/delegators`, { headers: { 'X-API-KEY': apiKey } });
-    dispatch({ type: FETCH_DELEGATORS_SUCCEEDED, sellers: delegatorData.data.data, apiKey: apiKey });
+    const delegatorData = await xolaApi.get(`/api/delegators`, { headers: { 'X-API-KEY': user.apiKey } });
+    dispatch({ type: FETCH_DELEGATORS_SUCCEEDED, sellers: delegatorData.data.data, apiKey: user.apiKey, user: user });
 };
 
 export const selectDelegate = (user, seller) => async dispatch => {
-    const isSeller = _.includes(user.roles, ROLE_SELLER);
-    const isAdmin = _.includes(user.roles, ROLE_SELLER_ADMIN);
-    if (!isSeller && !isAdmin) {
+    const isSellerOrAdmin =
+        user.type === 1 ||
+        _.find(user.permissions, permission => {
+            return permission.name === ROLE_SELLER || permission.name === ROLE_SELLER_ADMIN;
+        });
+
+    if (!isSellerOrAdmin) {
         dispatch({ type: AUTHENTICATE_USER_FAILED, error: 'Seller or admin account required' });
         return;
     }
@@ -77,25 +77,16 @@ export const selectDelegate = (user, seller) => async dispatch => {
 };
 
 export const selectSeller = sellerId => async (dispatch, getState) => {
-    const bootstrapData = await xolaApi.get(`/api/sellers/${sellerId}/bootstrap`, {
-        headers: { 'X-API-KEY': getState().auth.apiKey },
-    });
-    const user = bootstrapData.data.user;
-    const seller = bootstrapData.data.seller;
-
-    dispatch(selectDelegate(user, seller));
-};
-
-export const fetchSellerData = () => async (dispatch, getState) => {
     try {
         dispatch({ type: FETCH_SELLER_REQUESTED });
-        const { apiKey } = getState().auth.user;
-        const { id } = getState().auth.seller;
-        const { data } = await xolaApi.get(`/api/sellers/${id}/bootstrap`, {
-            headers: { 'X-API-KEY': apiKey },
+        const { data } = await xolaApi.get(`/api/sellers/${sellerId}`, {
+            headers: { 'X-API-KEY': getState().auth.apiKey },
         });
-
-        dispatch({ type: FETCH_SELLER_SUCCEEDED, seller: data.seller });
+        dispatch({ type: FETCH_SELLER_SUCCEEDED, seller: data });
+        const user = _.find(data.delegates, delegate => {
+            return delegate.user.email === getState().auth.user.username;
+        });
+        dispatch(selectDelegate(user, data));
     } catch (e) {
         dispatch({ type: FETCH_SELLER_FAILED, error: 'Invalid username or password' });
     }
