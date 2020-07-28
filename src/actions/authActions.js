@@ -22,7 +22,10 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
     try {
         dispatch({ type: AUTHENTICATE_USER_REQUESTED });
         let { data } = await xolaApi.get('/api/users/me', {
-            headers: { Authorization: `Basic ${btoa(`${_.trim(credentials.username)}:${credentials.password}`)}` },
+            auth: {
+                username: _.trim(credentials.username),
+                password: credentials.password,
+            },
         });
         let user, seller;
         if (data.type !== 1) {

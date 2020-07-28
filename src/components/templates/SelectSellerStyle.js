@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingTop: '10%',
     },
-    subTitle: {
+    subtitle: {
         alignSelf: 'center',
         marginTop: 20,
     },
