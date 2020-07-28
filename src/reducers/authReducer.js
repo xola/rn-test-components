@@ -33,9 +33,10 @@ const authReducer = createReducer(initialState, {
     [EMV_ENABLED](state) {
         state.isEMVEnabled = true;
     },
-    [FETCH_DELEGATORS_SUCCEEDED](state, { sellers, apiKey }) {
+    [FETCH_DELEGATORS_SUCCEEDED](state, { sellers, apiKey, user }) {
         state.sellers = sellers;
         state.apiKey = apiKey;
+        state.user = user;
     },
     [FETCH_SELLER_SUCCEEDED](state, { seller }) {
         state.seller = seller;
