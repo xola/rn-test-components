@@ -21,7 +21,7 @@ xolaApi.interceptors.request.use(config => {
         }
 
         if (config.params && config.params.authenticate) {
-            config.headers['X-API-KEY'] = auth.user.apiKey;
+            config.headers['X-API-KEY'] = auth.apiKey;
             delete config.params.authenticate;
         }
 

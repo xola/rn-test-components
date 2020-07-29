@@ -50,7 +50,7 @@ export const fetchDelegates = user => async dispatch => {
     dispatch({ type: FETCH_DELEGATORS_SUCCEEDED, sellers: delegatorData.data.data, apiKey: user.apiKey, user: user });
 };
 
-export const selectDelegate = (user, seller) => async dispatch => {
+export const selectDelegate = (user, seller) => async (dispatch, getState) => {
     const isSellerOrAdmin =
         user.type === 1 ||
         _.find(user.permissions, permission => {
@@ -72,7 +72,8 @@ export const selectDelegate = (user, seller) => async dispatch => {
         }
         moment.locale(locale);
     }
-    dispatch({ type: AUTHENTICATE_USER_SUCCEEDED, seller: seller, user: user });
+    const apiKey = user.apiKey ? user.apiKey : getState().auth.apiKey;
+    dispatch({ type: AUTHENTICATE_USER_SUCCEEDED, seller: seller, user: user, apiKey: apiKey });
     NavigationService.navigate('Setup');
 };
 

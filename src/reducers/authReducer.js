@@ -24,11 +24,11 @@ const authReducer = createReducer(initialState, {
     [AUTHENTICATE_USER_FAILED](state) {
         state.isLoading = false;
     },
-    [AUTHENTICATE_USER_SUCCEEDED](state, { seller, user }) {
+    [AUTHENTICATE_USER_SUCCEEDED](state, { seller, user, apiKey }) {
         state.isLoading = false;
         state.seller = seller;
         state.user = user;
-        state.apiKey = user.apiKey;
+        state.apiKey = apiKey;
     },
     [EMV_ENABLED](state) {
         state.isEMVEnabled = true;
