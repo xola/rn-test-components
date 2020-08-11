@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { PAYMENT_INTENT_METHOD_CARD_PRESENT, PAYMENT_METHOD_INTENT } from '../constants/paymentConstants';
-import { SOURCE_CHECKOUT, STATUS_HOLD } from '../constants/orderConstants';
+import { SOURCE_KIOSK, STATUS_HOLD } from '../constants/orderConstants';
 import { SELECT_EXPERIENCE } from '../actions/experiencesActions';
 import { SELECT_DATE, SELECT_TIME } from '../actions/dateActions';
 import {
@@ -30,7 +30,7 @@ export const initialState = {
     preparedOrder: {},
     submittedOrder: {},
     itemIndex: 0,
-    order: { items: [], customerName: '', phone: '', customerEmail: '' },
+    order: { items: [], customerName: '', phone: '', customerEmail: '', source: SOURCE_KIOSK },
 };
 
 const cartReducer = createReducer(initialState, {
@@ -124,7 +124,7 @@ const cartReducer = createReducer(initialState, {
         state.preparedOrder.customerName = customerName;
         state.preparedOrder.customerEmail = customerEmail;
         state.preparedOrder.phone = phone;
-        state.preparedOrder.source = SOURCE_CHECKOUT;
+        state.preparedOrder.source = SOURCE_KIOSK;
     },
 
     [SUBMIT_ORDER_SUCCEEDED](state, { order }) {

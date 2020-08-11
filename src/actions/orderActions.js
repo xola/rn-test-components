@@ -1,7 +1,7 @@
 import xolaApi from '../api/xolaApi';
 import _ from 'lodash';
 import NavigationService from '../components/NavigationService';
-import { GUEST_STATUS_ARRIVED, STATUS_ACCEPTED, SOURCE_CHECKOUT } from '../constants/orderConstants';
+import { GUEST_STATUS_ARRIVED, STATUS_ACCEPTED, SOURCE_KIOSK } from '../constants/orderConstants';
 
 export const CHANGE_DEMOGRAPHICS = 'CHANGE_DEMOGRAPHICS';
 
@@ -123,7 +123,7 @@ export const prepareOrder = () => async (dispatch, getState) => {
         dispatch({ type: PREPARE_ORDER_REQUESTED });
         const { order, itemIndex } = getState().cart;
         const request = _.cloneDeep(order);
-        request.source = SOURCE_CHECKOUT;
+        request.source = SOURCE_KIOSK;
         request.items[itemIndex].addOns = _.pickBy(request.items[itemIndex].addOns, addOn => {
             return addOn.object !== 'choices';
         });

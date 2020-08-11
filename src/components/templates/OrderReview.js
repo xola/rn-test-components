@@ -53,8 +53,11 @@ class OrderReview extends Component {
     render() {
         const { experience, device } = this.props;
         const { customerName, customerEmail, phone } = this.props.cart.order;
-        const { amount } = this.props.cart.preparedOrder;
-        const total = amount;
+        const { amount, partnerFee } = this.props.cart.preparedOrder;
+        let total = amount;
+        if (partnerFee && !partnerFee.orderAmountIncludesPartnerFee) {
+            total += partnerFee.amount;
+        }
 
         return (
             <Formik
