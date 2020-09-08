@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ProgressBar from './ProgressBar';
 import NavigationService from '../NavigationService';
@@ -38,11 +39,11 @@ class Header extends Component {
     };
 
     handleBackClick = () => {
+        if (_.isFunction(this.props.back)) {
+            this.props.back();
+            return;
+        }
         NavigationService.navigate(this.props.back);
-    };
-
-    handleHomeClick = () => {
-        NavigationService.navigate('Home');
     };
 
     render() {
@@ -51,14 +52,13 @@ class Header extends Component {
                 <View style={styles.back}>
                     {this.props.back ? (
                         <TouchableOpacity onPress={this.handleBackClick}>
-                            <CustomIcon style={styles.backIcon} size={36} name="arrow-left" />
-                        </TouchableOpacity>
-                    ) : null}
-                    {this.props.home ? (
-                        <TouchableOpacity onPress={this.handleHomeClick}>
-                            <StyledText styleNames={['h1']} style={styles.backIcon}>
-                                Home
-                            </StyledText>
+                            {this.props.back === 'Home' ? (
+                                <StyledText styleNames={['h1']} style={styles.backIcon}>
+                                    Home
+                                </StyledText>
+                            ) : (
+                                <CustomIcon style={styles.backIcon} size={36} name="arrow-left" />
+                            )}
                         </TouchableOpacity>
                     ) : null}
                 </View>

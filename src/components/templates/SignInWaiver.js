@@ -7,6 +7,16 @@ import Header from '../common/Header';
 import { getActiveItem, getActiveOrder } from '../../selectors/orderSelector';
 
 class SignInWaiver extends Component {
+    state = {
+        canGoBack: false,
+    };
+
+    webview = React.createRef();
+
+    componentDidMount() {
+        this.onGoBack = this.webview.current.goBack;
+    }
+
     render() {
         const { item, experiences, order } = this.props;
         const experience = experiences[item.experience.id];
@@ -14,8 +24,21 @@ class SignInWaiver extends Component {
         source.hash(`#?embedded=true&tag=${item.shortCode}&itemId=${item.id}&orderId=${order.id}`);
 
         return (
-            <Layout noPadding={true} header={<Header title={'Sign Waiver'} home={true} />}>
-                <WebView source={{ uri: source.toString() }} />
+            <Layout
+                noPadding={true}
+                header={<Header title={'Sign Waiver'} back={this.state.canGoBack ? this.onGoBack : 'Home'} />}
+            >
+                <WebView
+                    ref={this.webview}
+                    source={{ uri: source.toString() }}
+                    onNavigationStateChange={navState => {
+                        if (navState.url.includes(source.domain())) {
+                            this.setState({ canGoBack: false });
+                        } else {
+                            this.setState({ canGoBack: navState.canGoBack });
+                        }
+                    }}
+                />
             </Layout>
         );
     }
