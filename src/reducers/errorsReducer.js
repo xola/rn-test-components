@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER_FAILED, AUTHENTICATE_USER_SUCCEEDED } from '../actions/authActions';
+import { AUTHENTICATE_USER_FAILED, AUTHENTICATE_USER_SUCCEEDED, FETCH_SELLER_FAILED } from '../actions/authActions';
 import { DISCONNECT_READER_FAILED, CONNECT_READER_FAILED, DISCOVER_READERS_FAILED } from '../actions/readersActions';
 import {
     PREPARE_ORDER_FAILED,
@@ -24,6 +24,13 @@ const errorsReducer = createReducer(initialState, {
     [AUTHENTICATE_USER_FAILED](state, { error }) {
         state.push({
             title: 'Failed to authenticate user',
+            error,
+        });
+    },
+
+    [FETCH_SELLER_FAILED](state, { error }) {
+        state.push({
+            title: 'Failed to fetch seller',
             error,
         });
     },
