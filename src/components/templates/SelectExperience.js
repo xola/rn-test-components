@@ -8,18 +8,31 @@ import NavigationService from '../NavigationService';
 
 class SelectExperience extends Component {
     onSelectExperience = experience => {
-        this.props.selectExperience(experience.id);
-        NavigationService.navigate('ExperienceAvailability');
+        if (this.props.navigation.getParam('selectExperienceForSigningWaiver')) {
+            NavigationService.navigate('SignInWaiver', { experience: experience });
+        } else {
+            this.props.selectExperience(experience.id);
+            NavigationService.navigate('ExperienceAvailability');
+        }
     };
 
     render() {
         const { experiences } = this.props;
+        const selectExperienceForSigningWaiver = this.props.navigation.getParam('selectExperienceForSigningWaiver');
 
-        return (
-            <Layout header={<Header currentStep={1} title={'Select Activity'} back={'Home'} />}>
-                <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
-            </Layout>
-        );
+        if (selectExperienceForSigningWaiver) {
+            return (
+                <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
+                </Layout>
+            );
+        } else {
+            return (
+                <Layout header={<Header currentStep={1} title={'Select Activity'} back={'Home'} />}>
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
+                </Layout>
+            );
+        }
     }
 }
 
@@ -31,7 +44,4 @@ const mapDispatchToProps = {
     selectExperience,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SelectExperience);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectExperience);

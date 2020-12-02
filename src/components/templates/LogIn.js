@@ -75,7 +75,4 @@ const mapDispatchToProps = {
     authenticateUser,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(LogIn);
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

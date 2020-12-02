@@ -37,6 +37,8 @@ const variables = {
     h3Size: 20,
     h4Size: 18,
     h5Size: 16,
+
+    linkButton: '#80b0e4',
 };
 
 export default variables;

@@ -14,10 +14,17 @@ import TextInput from '../common/TextInput';
 import FormGroup from '../common/FormGroup';
 import { resetEmptySearchResult } from '../../actions/orderActions';
 import Icon from 'react-native-vector-icons/AntDesign';
+import NavigationService from '../NavigationService';
 
 class SearchPage extends Component {
     componentDidMount() {
         this.props.resetEmptySearchResult();
+    }
+
+    handleNoBookingDetails() {
+        NavigationService.navigate('SelectExperience', {
+            selectExperienceForSigningWaiver: true,
+        });
     }
 
     render() {
@@ -42,7 +49,7 @@ class SearchPage extends Component {
                                     id="searchText"
                                     onChangeText={props.handleChange('searchText')}
                                     onSubmitEditing={props.handleSubmit}
-                                    placeholder="Search by email or phone"
+                                    placeholder="Organizer name, email, phone, or last 4 of your booking ID"
                                 />
 
                                 <ErrorMessage name="searchText" />
@@ -58,10 +65,16 @@ class SearchPage extends Component {
                             {this.props.order.isEmpty ? (
                                 <View style={styles.notices}>
                                     <Text style={[styles.notice, styles.alert]}>
-                                        <Icon style={styles.alertIcon} name="warning" /> Sorry, we couldn't find any
-                                        bookings matching that search
+                                        <Icon style={styles.alertIcon} name="warning" /> No bookings were found matching
+                                        your search
                                     </Text>
                                 </View>
+                            ) : null}
+
+                            {this.props.showFindBookingButton ? (
+                                <Text style={styles.text} onPress={this.handleNoBookingDetails}>
+                                    I don’t have my booking details
+                                </Text>
                             ) : null}
                         </KeyboardAwareScrollView>
                     </Layout>
@@ -80,7 +93,4 @@ const mapDispatchToProps = {
     resetEmptySearchResult,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SearchPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

@@ -71,7 +71,4 @@ const mapDispatchToProps = {
     fetchExperiences,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Setup);
+export default connect(mapStateToProps, mapDispatchToProps)(Setup);

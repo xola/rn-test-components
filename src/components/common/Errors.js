@@ -48,7 +48,4 @@ const mapDispatchToProps = {
     dismissLatestError,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Errors);
+export default connect(mapStateToProps, mapDispatchToProps)(Errors);

@@ -160,7 +160,4 @@ const mapDispatchToProps = {
     getComputer,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(DiscoverDevices);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverDevices);

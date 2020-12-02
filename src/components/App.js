@@ -27,7 +27,4 @@ const mapDispatchToProps = {
     bootstrap,
 };
 
-export default connect(
-    null,
-    mapDispatchToProps,
-)(App);
+export default connect(null, mapDispatchToProps)(App);

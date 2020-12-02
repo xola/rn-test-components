@@ -19,9 +19,16 @@ class SignInWaiver extends Component {
 
     render() {
         const { item, experiences, order } = this.props;
-        const experience = experiences[item.experience.id];
-        const source = new URI(experience.waiverPreference.url);
-        source.hash(`#?embedded=true&tag=${item.shortCode}&itemId=${item.id}&orderId=${order.id}`);
+        var experience = null;
+        var source = null;
+        if (this.props.navigation.getParam('experience')) {
+            experience = this.props.navigation.getParam('experience');
+            source = new URI(experience.waiverPreference.url + '&experienceId=' + experience.id);
+        } else {
+            experience = experiences[item.experience.id];
+            source = new URI(experience.waiverPreference.url);
+            source.hash(`#?embedded=true&tag=${item.shortCode}&itemId=${item.id}&orderId=${order.id}`);
+        }
 
         return (
             <Layout
@@ -52,7 +59,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SignInWaiver);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInWaiver);

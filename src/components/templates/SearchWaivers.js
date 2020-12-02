@@ -16,7 +16,13 @@ class SearchWaivers extends Component {
     };
 
     render() {
-        return <SearchPage title={'Find your reservation to sign waiver'} onSearchClick={this.handleSearchClick} />;
+        return (
+            <SearchPage
+                title={'Find your reservation to sign the waiver'}
+                showFindBookingButton={true}
+                onSearchClick={this.handleSearchClick}
+            />
+        );
     }
 }
 
@@ -29,7 +35,4 @@ const mapDispatchToProps = {
     showEmptySearchResult,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SearchWaivers);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchWaivers);

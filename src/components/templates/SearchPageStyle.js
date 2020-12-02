@@ -4,7 +4,7 @@ import variables from '../../styles/variables';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '30%',
+        width: '45%',
         justifyContent: 'flex-start',
         alignItems: 'stretch',
         alignSelf: 'center',
@@ -37,10 +37,17 @@ const styles = StyleSheet.create({
     alert: {
         backgroundColor: variables.brandWarning,
         borderRadius: variables.borderRadius,
+        width: 470,
         overflow: 'hidden',
     },
     alertIcon: {
         fontSize: variables.fontSize,
+    },
+    text: {
+        color: variables.linkButton,
+        textAlign: 'center',
+        marginTop: 15,
+        textDecorationLine: 'underline',
     },
 });
 
