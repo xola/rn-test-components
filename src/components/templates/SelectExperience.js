@@ -18,6 +18,7 @@ class SelectExperience extends Component {
 
     render() {
         const { experiences } = this.props;
+        experiences = experiences.filter(experience => experience.visible);
         const selectExperienceForSigningWaiver = this.props.navigation.getParam('selectExperienceForSigningWaiver');
 
         if (selectExperienceForSigningWaiver) {
