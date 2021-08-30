@@ -18,19 +18,19 @@ class SelectExperience extends Component {
 
     render() {
         const { experiences } = this.props;
-        experiences = experiences.filter(experience => experience.visible);
+        let visibleExperiences = experiences.filter(experience => experience.visible);
         const selectExperienceForSigningWaiver = this.props.navigation.getParam('selectExperienceForSigningWaiver');
 
         if (selectExperienceForSigningWaiver) {
             return (
                 <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>
-                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
                 </Layout>
             );
         } else {
             return (
                 <Layout header={<Header currentStep={1} title={'Select Activity'} back={'Home'} />}>
-                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
                 </Layout>
             );
         }
