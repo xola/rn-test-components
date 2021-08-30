@@ -18,19 +18,18 @@ class SelectExperience extends Component {
 
     render() {
         const { experiences } = this.props;
-        let visibleExperiences = experiences.filter(experience => experience.visible);
         const selectExperienceForSigningWaiver = this.props.navigation.getParam('selectExperienceForSigningWaiver');
 
         if (selectExperienceForSigningWaiver) {
             return (
                 <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>
-                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
                 </Layout>
             );
         } else {
             return (
                 <Layout header={<Header currentStep={1} title={'Select Activity'} back={'Home'} />}>
-                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
+                    <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={experiences} />
                 </Layout>
             );
         }
@@ -38,7 +37,7 @@ class SelectExperience extends Component {
 }
 
 const mapStateToProps = state => ({
-    experiences: state.experiences.collection,
+    experiences: state.experiences.collection.filter(experience => experience.visible),
 });
 
 const mapDispatchToProps = {
