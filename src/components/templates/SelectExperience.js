@@ -28,8 +28,6 @@ class SelectExperience extends Component {
             }
             return experience.visible;
           });
-        console.log("manoj");
-        console.log(visibleExperiences);
         if (selectExperienceForSigningWaiver) {
             return (
                 <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>
