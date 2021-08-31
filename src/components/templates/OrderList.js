@@ -19,9 +19,7 @@ class OrderList extends Component {
 
         _.forEach(orders, order => {
             _.forEach(order.items, item => {
-                if (moment(item.arrival).isSameOrAfter({}, 'day')) {
-                    experienceItems.push({ item, order });
-                }
+                experienceItems.push({ item, order });
             });
         });
 
