@@ -223,7 +223,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNCAsyncStorage (1.6.2):
     - React
-  - RNGestureHandler (1.5.3):
+  - RNGestureHandler (1.8.0):
     - React
   - RNStripeTerminal (1.1.0):
     - React
@@ -368,7 +368,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856
-  RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNStripeTerminal: 9b092c3d0ece10927581866ef60be772c3fd1bcf
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   StripeTerminal: e3e7bb513066c9adebba6e7cea8c798b4286ed40

@@ -48,4 +48,7 @@ const mapDispatchToProps = {
     dismissLatestError,
 };
 
-export default connect(null, mapDispatchToProps)(OrderList);
+export default connect(
+    null,
+    mapDispatchToProps,
+)(OrderList);

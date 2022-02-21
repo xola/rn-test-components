@@ -30,4 +30,7 @@ const mapDispatchToProps = {
     showEmptySearchResult,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchOrders);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SearchOrders);

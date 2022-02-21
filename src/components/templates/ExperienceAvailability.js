@@ -129,4 +129,7 @@ const mapDispatchToProps = {
     selectTime,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExperienceAvailability);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ExperienceAvailability);

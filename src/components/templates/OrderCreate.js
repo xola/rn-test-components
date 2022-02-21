@@ -199,4 +199,7 @@ const mapDispatchToProps = {
     prepareOrder,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderCreate);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(OrderCreate);

@@ -31,4 +31,7 @@ const mapDispatchToProps = {
     selectOrderItem,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectWaiver);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SelectWaiver);

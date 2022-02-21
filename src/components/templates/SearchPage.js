@@ -93,4 +93,7 @@ const mapDispatchToProps = {
     resetEmptySearchResult,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SearchPage);

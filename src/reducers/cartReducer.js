@@ -68,7 +68,9 @@ const cartReducer = createReducer(initialState, {
     },
 
     [SELECT_TIME](state, { time }) {
-        state.order.items[state.itemIndex].arrivalTime = time;
+        if (time) {
+            state.order.items[state.itemIndex].arrivalTime = time;
+        }
     },
 
     [CHANGE_DEMOGRAPHICS](state, { demographic }) {

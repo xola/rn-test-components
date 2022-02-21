@@ -182,4 +182,7 @@ const mapDispatchToProps = {
     updateCustomer,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderReview);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(OrderReview);

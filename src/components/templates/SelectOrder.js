@@ -33,4 +33,7 @@ const mapDispatchToProps = {
     selectOrderItem,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectOrder);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SelectOrder);

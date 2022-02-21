@@ -28,6 +28,7 @@ class SelectExperience extends Component {
             }
             return experience.visible;
           });
+
         if (selectExperienceForSigningWaiver) {
             return (
                 <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>
@@ -52,4 +53,7 @@ const mapDispatchToProps = {
     selectExperience,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectExperience);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SelectExperience);

@@ -35,4 +35,7 @@ const mapDispatchToProps = {
     showEmptySearchResult,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchWaivers);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SearchWaivers);
