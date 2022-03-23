@@ -23,7 +23,8 @@ class SignInWaiver extends Component {
         var source = null;
         if (this.props.navigation.getParam('experience')) {
             experience = this.props.navigation.getParam('experience');
-            source = new URI(experience.waiverPreference.url + '&experienceId=' + experience.id);
+            source = new URI(experience.waiverPreference.url);
+            source.hash(`#?embedded=true&experienceId=${experience.id}`);
         } else {
             experience = experiences[item.experience.id];
             source = new URI(experience.waiverPreference.url);
