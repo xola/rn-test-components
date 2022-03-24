@@ -2,7 +2,7 @@ import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../ac
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import StripePaymentModal from '../../modals/StripePaymentModal';
-import StripeTerminal from 'react-native-stripe-terminal';
+import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
 import customerSchema from '../../schemas/customerSchema';
 import LoadingButton from '../common/LoadingButton';
 import OrderSummary from '../common/OrderSummary';

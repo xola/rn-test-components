@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 class SelectExperience extends Component {
     onSelectExperience = experience => {
-        if (this.props.navigation.getParam('selectExperienceForSigningWaiver')) {
+        if (this.props.route.params?.selectExperienceForSigningWaiver) {
             NavigationService.navigate('SignInWaiver', { experience: experience });
         } else {
             this.props.selectExperience(experience.id);
@@ -19,16 +19,15 @@ class SelectExperience extends Component {
 
     render() {
         const { experiences } = this.props;
-        
-        const selectExperienceForSigningWaiver = this.props.navigation.getParam('selectExperienceForSigningWaiver');
-        const visibleExperiences = []; 
+
+        const selectExperienceForSigningWaiver = this.props.route.params?.selectExperienceForSigningWaiver;
+        const visibleExperiences = [];
         _.map(experiences, function(experience, key) {
             if (experience.visible) {
                 visibleExperiences.push(experience);
             }
             return experience.visible;
-          });
-
+        });
         if (selectExperienceForSigningWaiver) {
             return (
                 <Layout header={<Header title={'Which activity are you attending?'} back={'Home'} />}>

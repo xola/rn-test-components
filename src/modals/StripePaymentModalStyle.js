@@ -72,6 +72,17 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row-reverse',
     },
+    title: {
+        fontSize: variables.h1Size,
+        color: variables.textModal,
+        textAlign: 'center',
+    },
+    subTitle: {
+        fontSize: variables.fontSize,
+        color: variables.textModal,
+        marginVertical: 20,
+        lineHeight: 28,
+    },
 });
 
 export default styles;

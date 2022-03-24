@@ -1,11 +1,9 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { NavigationContainer } from '@react-navigation/native';
 import { bootstrap } from '../actions/bootstrapActions';
 import { connect } from 'react-redux';
-import NavigationService from './NavigationService';
+import { navigationRef } from './NavigationService';
 import Navigator from './Navigator';
-
-const AppContainer = createAppContainer(Navigator);
 
 class App extends React.Component {
     componentDidMount() {
@@ -14,11 +12,9 @@ class App extends React.Component {
 
     render() {
         return (
-            <AppContainer
-                ref={navigatorRef => {
-                    NavigationService.setTopLevelNavigator(navigatorRef);
-                }}
-            />
+            <NavigationContainer ref={navigationRef}>
+                <Navigator />
+            </NavigationContainer>
         );
     }
 }

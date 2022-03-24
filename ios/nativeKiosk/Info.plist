@@ -41,6 +41,8 @@
 	<string>This app uses Bluetooth to connect to supported card readers.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth access is required in order to connect to supported card readers.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Kiosk would like to access your calendar</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location access is required in order to accept payments.</string>
 	<key>NSMicrophoneUsageDescription</key>

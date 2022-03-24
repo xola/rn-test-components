@@ -40,6 +40,7 @@ export const authenticateUser = credentials => async (dispatch, getState) => {
 
         dispatch(selectDelegate(user, seller));
     } catch (e) {
+        console.log(e.message);
         dispatch({ type: AUTHENTICATE_USER_FAILED, error: 'Invalid username or password' });
     }
 };

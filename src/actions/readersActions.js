@@ -1,8 +1,8 @@
-import StripeTerminal from 'react-native-stripe-terminal';
+import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
 import AsyncStorage from '@react-native-community/async-storage';
 import ObjectID from 'bson-objectid';
 import xolaApi from '../api/xolaApi';
-import { SIMULATE_STRIPE_TERMINAL } from 'react-native-dotenv';
+import { SIMULATE_STRIPE_TERMINAL } from '@env';
 import PaymentDeviceService from '../services/PaymentDeviceService';
 import { getPairedReader } from '../selectors/readersSelector';
 import _ from 'lodash';
@@ -53,10 +53,9 @@ export const discoverReaders = () => async (dispatch, getState) => {
         params: { authenticate: true },
     });
 
-    StripeTerminal.initialize({ fetchConnectionToken: async () => data.secret });
-    await StripeTerminal.disconnectReader();
+    await StripeTerminal.initialize({ fetchConnectionToken: async () => data.secret });
 
-    discoverReadersSubscription = StripeTerminal.addReadersDiscoveredListener(readers => {
+    await StripeTerminal.addReadersDiscoveredListener(readers => {
         dispatch(readersDiscovered(readers));
     });
 
@@ -76,11 +75,6 @@ export const discoverReaders = () => async (dispatch, getState) => {
 export const abortDiscoverReaders = () => (dispatch, getState) => {
     const { readers } = getState();
     clearTimeout(readers.timeoutId);
-
-    if (discoverReadersSubscription) {
-        discoverReadersSubscription.remove();
-        discoverReadersSubscription = null;
-    }
 
     StripeTerminal.abortDiscoverReaders().catch(() => null);
     dispatch({ type: ABORT_DISCOVER_READERS });
@@ -123,11 +117,15 @@ export const readersDiscovered = readers => (dispatch, getState) => {
 
 export const connectReader = serialNumber => async (dispatch, getState) => {
     try {
+        const { auth, readers } = getState();
+        const { seller } = auth;
+        const locationId = seller.preferences.stripeTerminal.location.remoteId;
+        if (locationId == null) {
+            return;
+        }
         dispatch({ type: CONNECT_READER_REQUESTED, serialNumber });
 
-        const { auth, readers } = getState();
         const { computer, connectedReader } = readers;
-        const { seller } = auth;
         const { paymentDevices = [] } = seller.preferences.stripeTerminal;
 
         if (connectedReader) {
@@ -153,8 +151,7 @@ export const connectReader = serialNumber => async (dispatch, getState) => {
             await PaymentDeviceService.unpairReader(seller.id, reader.id, reader.computer.id);
             await PaymentDeviceService.pairReader(seller.id, reader.id, computer);
         }
-
-        await StripeTerminal.connectReader(serialNumber);
+        await StripeTerminal.connectReader(serialNumber, locationId);
         dispatch({ type: CONNECT_READER_SUCCEEDED, serialNumber });
         dispatch(abortDiscoverReaders());
     } catch (e) {

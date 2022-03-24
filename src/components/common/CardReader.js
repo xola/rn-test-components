@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import styles from './CardReaderStyle';
 import StyledText from './StyledText';
 import PropTypes from 'prop-types';
+import StripeFirmWareUpdateModal from '../../modals/StripeFirmWareUpdateModal';
+import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
 
 class CardReader extends Component {
     static propTypes = {
@@ -14,6 +16,36 @@ class CardReader extends Component {
         isConnected: PropTypes.bool,
         isPaired: PropTypes.bool,
     };
+
+    state = {
+        updateType: 'mandatory',
+        showUpdateModal: false,
+        batteryStatus: 'on'
+    }
+
+    componentDidMount() {
+        StripeTerminal.addReaderSoftwareUpdateProgressListener(({ progress }) => {
+            console.log(progress)
+        })
+
+        StripeTerminal.addUpdateFailedBatteryLowListener(({ error }) => {
+            this.setState({ batteryStatus: 'off' })
+        })
+
+        StripeTerminal.addReaderUpdateAvailableListener(({ firmwareUpdate }) => {
+            this.setState({ showUpdateModal: true, updateType: 'optional' })
+        })
+
+        StripeTerminal.addUpdateInstallStartListener(({ firmwareUpdate }) => {
+            console.log('firware update started')
+            this.setState({ showUpdateModal: true, updateType: 'mandatory' })
+        })
+
+        StripeTerminal.addUpdateInstallFinishListener(({ firmwareUpdate }) => {
+            console.log('finishupdate')
+            this.setState({ showUpdateModal: false })
+        })
+    }
 
     connectReader = () => {
         this.props.onConnect(this.props.reader.serialNumber);
@@ -27,11 +59,25 @@ class CardReader extends Component {
         this.props.onOpenCheckout();
     };
 
+    firmwareUpdate = () => {
+        this.setState({ showUpdateModal: false })
+        StripeTerminal.installUpdate()
+    }
+
     render() {
         const { reader, isLoading } = this.props;
 
         return (
             <View style={styles.container}>
+                <StripeFirmWareUpdateModal
+                    transparent={true}
+                    toggle={this.state.showUpdateModal}
+                    batteryStatus={this.state.batteryStatus}
+                    updateType={this.state.updateType}
+                    estTime="5 mins"
+                    onSubmit={() => this.firmwareUpdate()}
+                    onCancel={() => this.setState({ showUpdateModal: false })}
+                />
                 <StyledText style={styles.name}>{reader.serialNumber} </StyledText>
 
                 {this.props.isConnected ? (
@@ -65,6 +111,7 @@ class CardReader extends Component {
                         />
                     </View>
                 )}
+
             </View>
         );
     }

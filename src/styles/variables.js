@@ -23,10 +23,14 @@ const variables = {
     brandDanger: '#DC5D42',
     redBright: '#fa3d18',
     redError: '#DC5D42',
+    modalBackColor: '#00000070',
+    mainBlue: '#1352C6',
+    buttonBorder: '#E0E3E7',
 
     textColor: '#666',
     textColorMuted: '#999',
     progressBar: '#ddd',
+    textModal: '#222324',
 
     borderColorMuted: '#DBDBDB',
     borderRadius: 4,

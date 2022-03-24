@@ -20,15 +20,12 @@ class SuccessPage extends Component {
     render() {
         const { selectedExperience, collection } = this.props.experiences;
         const experience = collection[selectedExperience];
-        const item = this.props.navigation.getParam('item', this.props.item);
+        const item = this.props.item;
 
         return (
             <Layout>
                 <View styles={styles.container}>
-                    <SuccessInfo
-                        title="Congratulations"
-                        message={this.props.navigation.getParam('message', 'Success!')}
-                    />
+                    <SuccessInfo title="Congratulations" message={(this.props.route.params?.message, 'Success!')} />
 
                     <OrderInfo experience={experience} item={item} style={{ alignItems: 'center' }} />
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import pkg from '../../package.json';
 import { XOLA_API_URL } from '../constants/apiConstants';
-import { XOLA_API_VERSION } from 'react-native-dotenv';
+import { XOLA_API_VERSION } from '@env';
 
 const USER_AGENT = `${pkg.name}/${pkg.version} (${pkg.description})`;
 

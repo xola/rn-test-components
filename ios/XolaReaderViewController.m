@@ -3,10 +3,9 @@
 @implementation XolaReaderViewController
 
 // Action for a "Connect Reader" button
-- (void)connectReaderAction {
-  SCPDiscoveryConfiguration *config = [[SCPDiscoveryConfiguration alloc] initWithDeviceType:SCPDeviceTypeChipper2X
-                                                                            discoveryMethod:SCPDiscoveryMethodBluetoothProximity
-                                                                                  simulated:YES];
+- (void)connectReaderAction:(NSString *)locationId {
+  SCPDiscoveryConfiguration *config = [[SCPDiscoveryConfiguration alloc] initWithDiscoveryMethod:SCPDiscoveryMethodBluetoothScan simulated:YES];
+
   self.discoverCancelable = [[SCPTerminal shared] discoverReaders:config delegate:self completion:^(NSError *error) {
     if (error != nil) {
       NSLog(@"discoverReaders failed: %@", error);
@@ -29,7 +28,8 @@
   
   // In your app, display the discovered reader(s) to the user.
   // Call `connectReader` with the selected reader.
-  [[SCPTerminal shared] connectReader:selectedReader completion:^(SCPReader *reader, NSError *error) {
+  SCPBluetoothConnectionConfiguration *config = [[SCPBluetoothConnectionConfiguration alloc] initWithLocationId:selectedReader.locationId];
+  [[SCPTerminal shared] connectBluetoothReader:selectedReader delegate:self connectionConfig:config completion:^(SCPReader * _Nullable reader, NSError * _Nullable error) {
     if (reader != nil) {
       NSLog(@"Successfully connected to reader: %@", reader);
     }
@@ -39,8 +39,34 @@
   }];
 }
 
-- (void)terminal:(SCPTerminal *)terminal didReportUnexpectedReaderDisconnect:(SCPReader *)reader NS_SWIFT_NAME(terminal(_:didReportUnexpectedReaderDisconnect:)) {
+- (void)terminal:(SCPTerminal *)terminal didReportUnexpectedReaderDisconnect:(SCPReader *)reader {
+  
   return;
 }
+
+- (void)reader:(nonnull SCPReader *)reader didFinishInstallingUpdate:(nullable SCPReaderSoftwareUpdate *)update error:(nullable NSError *)error {
+  
+}
+
+- (void)reader:(nonnull SCPReader *)reader didReportAvailableUpdate:(nonnull SCPReaderSoftwareUpdate *)update {
+  
+}
+
+- (void)reader:(nonnull SCPReader *)reader didReportReaderSoftwareUpdateProgress:(float)progress {
+  
+}
+
+- (void)reader:(nonnull SCPReader *)reader didRequestReaderDisplayMessage:(SCPReaderDisplayMessage)displayMessage {
+  
+}
+
+- (void)reader:(nonnull SCPReader *)reader didRequestReaderInput:(SCPReaderInputOptions)inputOptions {
+  
+}
+
+- (void)reader:(nonnull SCPReader *)reader didStartInstallingUpdate:(nonnull SCPReaderSoftwareUpdate *)update cancelable:(nullable SCPCancelable *)cancelable {
+  
+}
+
 
 @end

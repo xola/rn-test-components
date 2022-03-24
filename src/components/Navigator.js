@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './templates/Home';
 import SelectExperience from './templates/SelectExperience';
 import ExperienceAvailability from './templates/ExperienceAvailability';
@@ -16,28 +16,27 @@ import SuccessPage from './templates/SuccessPage';
 import Setup from './templates/Setup';
 import SelectSeller from './templates/SelectSeller';
 
-const Navigator = createStackNavigator(
-    {
-        LogIn: { screen: LogIn },
-        Setup: { screen: Setup, navigationOptions: { gesturesEnabled: false } },
-        Home: { screen: Home, navigationOptions: { gesturesEnabled: false } },
-        DiscoverDevices: { screen: DiscoverDevices },
-        SelectExperience: { screen: SelectExperience },
-        ExperienceAvailability: { screen: ExperienceAvailability },
-        OrderCreate: { screen: OrderCreate },
-        OrderReview: { screen: OrderReview },
-        SearchOrders: { screen: SearchOrders },
-        SelectOrder: { screen: SelectOrder },
-        CheckInSuccess: { screen: SuccessPage },
-        SearchWaivers: { screen: SearchWaivers },
-        SelectWaiver: { screen: SelectWaiver },
-        SignInWaiver: { screen: SignInWaiver },
-        SuccessPage: { screen: SuccessPage },
-        SelectSeller: { screen: SelectSeller },
-    },
-    {
-        headerMode: 'none',
-    },
-);
+const Stack = createNativeStackNavigator();
 
-export default Navigator;
+export default () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="LogIn" component={LogIn} />
+            <Stack.Screen name="Setup" component={Setup} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="DiscoverDevices" component={DiscoverDevices} />
+            <Stack.Screen name="SelectExperience" component={SelectExperience} />
+            <Stack.Screen name="ExperienceAvailability" component={ExperienceAvailability} />
+            <Stack.Screen name="OrderCreate" component={OrderCreate} />
+            <Stack.Screen name="OrderReview" component={OrderReview} />
+            <Stack.Screen name="SearchOrders" component={SearchOrders} />
+            <Stack.Screen name="SelectOrder" component={SelectOrder} />
+            <Stack.Screen name="CheckInSuccess" component={SuccessPage} />
+            <Stack.Screen name="SearchWaivers" component={SearchWaivers} />
+            <Stack.Screen name="SelectWaiver" component={SelectWaiver} />
+            <Stack.Screen name="SignInWaiver" component={SignInWaiver} />
+            <Stack.Screen name="SuccessPage" component={SuccessPage} />
+            <Stack.Screen name="SelectSeller" component={SelectSeller} />
+        </Stack.Navigator>
+    );
+};

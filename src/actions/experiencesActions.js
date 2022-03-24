@@ -12,7 +12,7 @@ export const fetchExperiences = () => async dispatch => {
         let response = await xolaApi.get('api/experiences', { params: { limit: 100, authenticate: true } });
         let data = response.data.data;
         while (response.data.paging.next) {
-            response = await xolaApi.get(response.data.paging.next, { params: { limit: 100,  authenticate: true } });
+            response = await xolaApi.get(response.data.paging.next, { params: { limit: 100, authenticate: true } });
             data = [...data, ...response.data.data];
         }
         dispatch({ type: FETCH_EXPERIENCE_SUCCEEDED, experiences: data });

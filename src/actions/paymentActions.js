@@ -1,4 +1,4 @@
-import StripeTerminal from 'react-native-stripe-terminal';
+import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
 import { commitOrder } from './orderActions';
 
 export const PAYMENT_FAILED = 'PAYMENT_FAILED';
