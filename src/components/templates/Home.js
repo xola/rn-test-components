@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import NavigationService from '../NavigationService';
@@ -41,9 +41,13 @@ class Home extends Component {
                             <StyledText>Loading...</StyledText>
                         </View>
                     ) : (
-                        <View style={styles.container}>
+                        <View style={styles.content}>
                             <View style={styles.logo}>
                                 <Image style={styles.image} source={{ uri: logoUrl }} />
+                            </View>
+
+                            <View style={styles.logo}>
+                                <StyledText styleNames={['large']}>{seller.name}</StyledText>
                             </View>
 
                             <View style={styles.actions}>
@@ -51,7 +55,7 @@ class Home extends Component {
                                     {this.props.connectedReader ? (
                                         <LoadingButton
                                             onPress={this.handleBookNowClick}
-                                            styleNames={['large', 'success', 'narrow']}
+                                            styleNames={['large', 'active', 'narrow']}
                                             title="Book Now"
                                         />
                                     ) : null}
@@ -59,14 +63,14 @@ class Home extends Component {
                                     {hasWaivers ? (
                                         <LoadingButton
                                             onPress={this.handleWaiversClick}
-                                            styleNames={['large', 'narrow']}
+                                            styleNames={['large', 'neutral', 'narrow']}
                                             title="Sign Waiver"
                                         />
                                     ) : null}
 
                                     <LoadingButton
                                         onPress={this.handleCheckInClick}
-                                        styleNames={['large', 'narrow']}
+                                        styleNames={['large', 'neutral', 'narrow']}
                                         title="Check In"
                                     />
                                 </View>

@@ -1,18 +1,23 @@
 import { StyleSheet } from 'react-native';
-import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    content: {
+        flex: 1,
+        paddingVertical: w(67),
+    },
     logo: {
-        flex: 2,
-        justifyContent: 'space-evenly',
+        flex: 1,
         alignItems: 'center',
+        justifyContent: 'center',
     },
     image: {
-        width: variables.fullWidth * 0.4,
-        height: variables.fullHeight * 0.4,
+        width: w(130),
+        height: w(130),
+        borderRadius: w(8),
         resizeMode: 'contain',
     },
     actions: {
@@ -21,7 +26,8 @@ const styles = StyleSheet.create({
     buttons: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
 });
 

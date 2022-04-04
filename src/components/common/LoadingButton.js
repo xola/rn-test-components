@@ -29,7 +29,7 @@ class LoadingButton extends StyledComponent {
     render() {
         const { isLoading, title, ...rest } = this.props;
         return (
-            <TouchableOpacity {...rest}>
+            <TouchableOpacity {...rest} style={styles.container}>
                 {isLoading ? (
                     <ActivityIndicator color="#ffff" style={this.getStyles()} />
                 ) : (

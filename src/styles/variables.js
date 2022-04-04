@@ -27,7 +27,7 @@ const variables = {
     mainBlue: '#1352C6',
     buttonBorder: '#E0E3E7',
 
-    textColor: '#666',
+    textColor: '#222324',
     textColorMuted: '#999',
     progressBar: '#ddd',
     textModal: '#222324',
@@ -35,9 +35,12 @@ const variables = {
     borderColorMuted: '#DBDBDB',
     borderRadius: 4,
 
+    fontBold: 'Inter-Bold',
+    fontLight: 'Inter-Light',
     fontSize: 16,
+    largeText: 64,
     h1Size: 30,
-    h2Size: 25,
+    h2Size: 24,
     h3Size: 20,
     h4Size: 18,
     h5Size: 16,

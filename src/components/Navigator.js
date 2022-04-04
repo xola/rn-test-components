@@ -23,7 +23,13 @@ export default () => {
         <Stack.Navigator>
             <Stack.Screen name="LogIn" component={LogIn} />
             <Stack.Screen name="Setup" component={Setup} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{
+                    headerShown: false
+                }}
+            />
             <Stack.Screen name="DiscoverDevices" component={DiscoverDevices} />
             <Stack.Screen name="SelectExperience" component={SelectExperience} />
             <Stack.Screen name="ExperienceAvailability" component={ExperienceAvailability} />

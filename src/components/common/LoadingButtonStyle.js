@@ -1,12 +1,20 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
     loadingButton: {
         textAlign: 'center',
-        backgroundColor: variables.blue,
-        borderRadius: 5,
+        backgroundColor: variables.mainBlue,
+        borderRadius: 12,
         overflow: 'hidden',
         color: variables.white,
+        borderColor: variables.textModal,
+        borderWidth: 1,
     },
     small: {
         paddingLeft: 10,
@@ -23,11 +31,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     large: {
-        paddingLeft: 40,
-        paddingRight: 40,
-        paddingTop: 20,
-        paddingBottom: 20,
-        fontSize: 25,
+        fontSize: 24,
+        fontWeight: '700',
+        paddingVertical: w(24.5)
+    },
+    active: {
+        backgroundColor: variables.mainBlue,
     },
     success: {
         backgroundColor: variables.brandSuccess,
@@ -57,7 +66,7 @@ const styles = StyleSheet.create({
         width: 400,
     },
     narrow: {
-        width: 250,
+        width: w(340),
     },
     flex: {
         flex: 1,
