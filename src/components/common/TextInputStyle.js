@@ -1,15 +1,24 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
+    label: {
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontBold,
+        paddingBottom: w(10)
+    },
     container: {
+        width: '99%',
         borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: variables.borderColorMuted,
+        borderWidth: w(1),
+        borderColor: variables.lightGrey,
         borderRadius: variables.borderRadius,
-        padding: 10,
+        fontFamily: variables.fontBold,
+        padding: w(24),
         color: variables.textColor,
-        fontSize: variables.fontSize,
+        fontSize: variables.h6Size,
+        height: w(70)
     },
 });
 

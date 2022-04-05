@@ -1,26 +1,33 @@
 import { StyleSheet } from 'react-native';
-import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: w(700),
         alignSelf: 'center',
-        paddingLeft: '25%',
-        paddingRight: '25%',
+    },
+    flex: {
+        flex: 1
     },
     logo: {
-        flex: 2,
+        flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
     },
+    brand: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: w(40)
+    },
+    brandText: {
+        paddingLeft: w(30)
+    },
     image: {
-        width: variables.fullWidth * 0.3,
-        height: variables.fullHeight * 0.3,
+        width: w(94),
+        height: w(33),
         resizeMode: 'contain',
         alignSelf: 'center',
-    },
-    title: {
-        fontSize: 30,
     },
     actions: {
         flex: 1,

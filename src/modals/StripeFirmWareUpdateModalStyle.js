@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         paddingVertical: 11,
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: variables.buttonBorder
+        borderColor: variables.lightGrey
     },
     buttonText: {
         color: variables.white,

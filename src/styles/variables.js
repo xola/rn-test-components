@@ -1,10 +1,12 @@
 import { Dimensions } from 'react-native';
+import { w } from '../utils/Scale';
 
 const variables = {
     fullHeight: Dimensions.get('window').height,
     fullWidth: Dimensions.get('window').width,
     blue: '#25AAE2',
     lightGreen: '#87c03d',
+    lightGrey: "#E0E3E7",
     btnPaddingY: 10,
     btnPaddingX: 5,
     grayBase: '#000',
@@ -25,7 +27,6 @@ const variables = {
     redError: '#DC5D42',
     modalBackColor: '#00000070',
     mainBlue: '#1352C6',
-    buttonBorder: '#E0E3E7',
 
     textColor: '#222324',
     textColorMuted: '#999',
@@ -33,17 +34,20 @@ const variables = {
     textModal: '#222324',
 
     borderColorMuted: '#DBDBDB',
-    borderRadius: 4,
+    borderRadius: w(12),
 
     fontBold: 'Inter-Bold',
     fontLight: 'Inter-Light',
-    fontSize: 16,
-    largeText: 64,
-    h1Size: 30,
-    h2Size: 24,
-    h3Size: 20,
-    h4Size: 18,
-    h5Size: 16,
+    fontSize: w(16),
+    largeText: w(64),
+    h1Size: w(42),
+    h2Size: w(38),
+    h3Size: w(34),
+    h4Size: w(30),
+    h5Size: w(26),
+    h6Size: w(22),
+    fontSmall: w(20),
+    fontBig: w(26),
 
     linkButton: '#80b0e4',
 };

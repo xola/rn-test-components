@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     loadingButton: {
         textAlign: 'center',
         backgroundColor: variables.mainBlue,
-        borderRadius: 12,
+        borderRadius: w(12),
         overflow: 'hidden',
         color: variables.white,
         borderColor: variables.textModal,
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     large: {
-        fontSize: 24,
+        fontSize: w(24),
         fontWeight: '700',
-        paddingVertical: w(24.5)
+        paddingVertical: w(24)
     },
     active: {
         backgroundColor: variables.mainBlue,
@@ -50,7 +50,10 @@ const styles = StyleSheet.create({
     },
     link: {
         backgroundColor: 'transparent',
-        color: variables.brandPrimary,
+        color: variables.textColor,
+        borderWidth: 0,
+        fontSize: variables.fontSize,
+        textDecorationLine: 'underline'
     },
     empty: {
         backgroundColor: 'transparent',
@@ -70,6 +73,7 @@ const styles = StyleSheet.create({
     },
     flex: {
         flex: 1,
+        width: '99%'
     },
 });
 
