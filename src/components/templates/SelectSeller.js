@@ -12,10 +12,10 @@ class SelectSeller extends Component {
     render() {
         return (
             <Layout>
-                <StyledText styleNames={['h1']} style={styles.title}>
+                <StyledText style={styles.title}>
                     Select Account
                 </StyledText>
-                <StyledText styleNames={['h3']} style={styles.subtitle}>
+                <StyledText style={styles.subtitle}>
                     You have access to multiple Xola accounts. Which account should the Kiosk app log-in to?
                 </StyledText>
                 <ScrollView style={styles.container}>
