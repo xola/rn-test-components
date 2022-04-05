@@ -41,15 +41,10 @@ class Home extends Component {
                             <StyledText>Loading...</StyledText>
                         </View>
                     ) : (
-                        <View style={styles.content}>
+                        <View style={styles.container}>
                             <View style={styles.logo}>
                                 <Image style={styles.image} source={{ uri: logoUrl }} />
                             </View>
-
-                            <View style={styles.logo}>
-                                <StyledText styleNames={['large']}>{seller.name}</StyledText>
-                            </View>
-
                             <View style={styles.actions}>
                                 <View style={styles.buttons}>
                                     {this.props.connectedReader ? (
@@ -76,6 +71,7 @@ class Home extends Component {
                                 </View>
                             </View>
                         </View>
+
                     )}
                 </View>
             </Layout>

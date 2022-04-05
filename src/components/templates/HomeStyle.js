@@ -10,13 +10,14 @@ const styles = StyleSheet.create({
         paddingVertical: w(67),
     },
     logo: {
-        flex: 1,
+        flex: 6,
         alignItems: 'center',
         justifyContent: 'center',
     },
     image: {
-        width: w(130),
-        height: w(130),
+        paddingTop: w(96),
+        width: w(590),
+        height: w(590),
         borderRadius: w(8),
         resizeMode: 'contain',
     },
@@ -24,10 +25,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     buttons: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        height: w(80)
     },
 });
 
