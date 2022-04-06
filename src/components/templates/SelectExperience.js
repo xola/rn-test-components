@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import ExperiencesList from './ExperiencesList';
@@ -58,10 +58,10 @@ class SelectExperience extends Component {
                 <>
                     <Header
                         back={true}
-                        right={() => <TouchableOpacity disabled={!this.state.selectedExperience} onPress={() => this.handleNext()} style={[styles.next, { backgroundColor: !this.state.selectedExperience ? variables.lightGrey : variables.mainBlue }]}>
+                        right={() => this.state.selectedExperience ? <TouchableOpacity onPress={() => this.handleNext()} style={[styles.next, { backgroundColor: !this.state.selectedExperience ? variables.lightGrey : variables.mainBlue }]}>
                             <Text style={styles.nextText}>Next</Text>
                             <NextIcon />
-                        </TouchableOpacity>}
+                        </TouchableOpacity> : <View />}
                         steps={["Product", "Time", "Quantity", "Info", "Pay"]}
                         currentStep={1}
                     />

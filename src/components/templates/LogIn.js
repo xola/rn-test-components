@@ -65,15 +65,14 @@ class LogIn extends Component {
                                 />
                                 <ErrorMessage name="password" />
                             </FormGroup>
-                            <FormGroup style={styles.flex}>
+                            <View style={[styles.flex, { flexDirection: 'row' }]}>
                                 <LoadingButton
                                     onPress={props.handleSubmit}
                                     isLoading={this.props.auth.isLoading}
                                     styleNames={['large', 'active', 'flex']}
                                     title="Login"
                                 />
-                            </FormGroup>
-                            <View style={styles.flex}>
+
                                 <LoadingButton
                                     onPress={() => this.openSignUp()}
                                     styleNames={['large', 'neutral', 'flex']}
