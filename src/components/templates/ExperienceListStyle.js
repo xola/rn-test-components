@@ -1,37 +1,56 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
-
-const listSize = variables.fullWidth - 30;
-const itemSize = listSize / 3;
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
-    list: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: listSize,
-    },
-    item: {
-        width: itemSize,
-        padding: 10,
-    },
     image: {
-        width: itemSize - 20,
-        height: itemSize - 50,
+        width: w(170),
+        height: w(127),
+        borderRadius: w(12),
+        borderColor: variables.lightGrey,
+        borderWidth: 1,
     },
     name: {
-        marginTop: 10,
-        marginBottom: 5,
+        fontFamily: variables.fontBold,
+        fontSize: variables.h6Size,
+        color: variables.titleText,
     },
     button: {
-        alignItems: 'flex-start',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        padding: w(12),
+        borderColor: variables.lightGrey,
+        backgroundColor: variables.white,
+        borderWidth: 1,
+        borderRadius: w(12),
+        flexWrap: 'wrap',
+        marginBottom: w(12),
+        alignItems: 'center'
+    },
+    content: {
+        width: w(820),
+        flexWrap: 'wrap',
+        paddingHorizontal: w(48),
     },
     description: {
-        color: variables.textColor,
-        minHeight: 150,
+        fontFamily: variables.fontLight,
+        fontSize: w(18),
+        color: variables.titleText,
+        marginTop: w(20),
+        width: w(800),
+    },
+    priceContainer: {
+        backgroundColor: variables.grey,
+        borderRadius: w(80),
+        paddingHorizontal: w(4),
+        paddingVertical: w(8),
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: w(200),
+        marginTop: w(8)
     },
     price: {
-        marginBottom: 10,
+        fontFamily: variables.fontLight,
+        fontSize: w(20),
     },
 });
 

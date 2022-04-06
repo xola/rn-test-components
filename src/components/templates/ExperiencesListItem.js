@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from './ExperienceListStyle';
 import StyledText from '../common/StyledText';
 import Currency from '../common/Currency';
 import xolaApi from '../../api/xolaApi';
+import { PriceIcon } from '../../images/svg';
 
 class ExperiencesListItem extends Component {
     handleExperienceSelect = () => {
@@ -18,26 +19,33 @@ class ExperiencesListItem extends Component {
             : { uri: xolaApi.xolaUrl(`api/experiences/${experience.id}/medias/default?size=medium`) };
 
         const priceSchemes = experience.priceSchemes;
-        let price = priceSchemes[0] && priceSchemes[0].price ? priceSchemes[0].price : null;
+        const price = priceSchemes[0] && priceSchemes[0].price ? priceSchemes[0].price : null;
+        const priceType = priceSchemes[0] && priceSchemes[0].constraints[0]?.priceType ? priceSchemes[0].constraints[0].priceType : '';
 
         return (
-            <View style={styles.item}>
-                <TouchableOpacity style={styles.button} onPress={this.handleExperienceSelect}>
-                    <Image source={image} style={styles.image} />
+            <TouchableOpacity style={styles.button} onPress={this.handleExperienceSelect}>
+                <Image source={image} style={styles.image} />
 
-                    <View style={styles.description}>
-                        <StyledText styleNames={['h2', 'uppercase']} style={styles.name}>
-                            {experience.name.trim()}
-                        </StyledText>
+                <View>
+                    <View style={styles.content}>
+                        <View>
+                            <Text style={styles.name}>
+                                {experience.name.trim()}
+                            </Text>
+                        </View>
 
-                        <StyledText style={styles.price}>
-                            <Currency>{price}</Currency>
-                        </StyledText>
-
-                        <StyledText style={styles.description}>{experience.excerpt}</StyledText>
+                        <View style={styles.priceContainer}>
+                            <PriceIcon />
+                            <Text style={styles.price}>
+                                <Currency>{price}</Currency>/{priceType}
+                            </Text>
+                        </View>
+                        <View>
+                            <Text style={styles.description}>{experience.excerpt}</Text>
+                        </View>
                     </View>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         );
     }
 }
