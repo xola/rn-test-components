@@ -9,20 +9,33 @@ import NavigationService from '../NavigationService';
 import _ from 'lodash';
 import { NextIcon } from '../../images/svg';
 import styles from '../common/HeaderStyle'
+import variables from '../../styles/variables';
 
 class SelectExperience extends Component {
+    state = {
+        selectedExperience: null
+    }
+
     onSelectExperience = experience => {
+        console.log(experience)
         if (this.props.route.params?.selectExperienceForSigningWaiver) {
             NavigationService.navigate('SignInWaiver', { experience: experience });
         } else {
-            this.props.selectExperience(experience.id);
-            NavigationService.navigate('ExperienceAvailability');
+            if (this.state.selectedExperience === experience.id) {
+                this.setState({ selectedExperience: null })
+            } else {
+                this.setState({ selectedExperience: experience.id })
+            }
         }
     };
 
+    handleNext = () => {
+        this.props.selectExperience(this.state.selectedExperience);
+        NavigationService.navigate('ExperienceAvailability');
+    }
+
     render() {
         const { experiences } = this.props;
-
         const selectExperienceForSigningWaiver = this.props.route.params?.selectExperienceForSigningWaiver;
         const visibleExperiences = [];
         _.map(experiences, function (experience, key) {
@@ -45,15 +58,15 @@ class SelectExperience extends Component {
                 <>
                     <Header
                         back={true}
-                        right={() => <TouchableOpacity onPress={() => { }} style={styles.next}>
+                        right={() => <TouchableOpacity disabled={!this.state.selectedExperience} onPress={() => this.handleNext()} style={[styles.next, { backgroundColor: !this.state.selectedExperience ? variables.lightGrey : variables.mainBlue }]}>
                             <Text style={styles.nextText}>Next</Text>
                             <NextIcon />
                         </TouchableOpacity>}
                         steps={["Product", "Time", "Quantity", "Info", "Pay"]}
-                        currentStep={3}
+                        currentStep={1}
                     />
                     <Layout>
-                        <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
+                        <ExperiencesList selectedExperience={this.state.selectedExperience} onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
                     </Layout>
                 </>
             );

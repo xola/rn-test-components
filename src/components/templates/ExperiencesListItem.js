@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from './ExperienceListStyle';
-import StyledText from '../common/StyledText';
 import Currency from '../common/Currency';
 import xolaApi from '../../api/xolaApi';
 import { PriceIcon } from '../../images/svg';
+import variables from '../../styles/variables';
 
 class ExperiencesListItem extends Component {
     handleExperienceSelect = () => {
@@ -12,7 +12,7 @@ class ExperiencesListItem extends Component {
     };
 
     render() {
-        const { experience } = this.props;
+        const { experience, selectedExperience } = this.props;
 
         const image = experience.medias[0]
             ? { uri: experience.medias[0].src }
@@ -23,7 +23,13 @@ class ExperiencesListItem extends Component {
         const priceType = priceSchemes[0] && priceSchemes[0].constraints[0]?.priceType ? priceSchemes[0].constraints[0].priceType : '';
 
         return (
-            <TouchableOpacity style={styles.button} onPress={this.handleExperienceSelect}>
+            <TouchableOpacity
+                style={[styles.button, {
+                    backgroundColor: selectedExperience === experience.id ? variables.lightBlue : variables.white,
+                    borderColor: selectedExperience === experience.id ? variables.mainBlue : variables.lightGrey,
+                }]}
+                onPress={this.handleExperienceSelect}
+            >
                 <Image source={image} style={styles.image} />
 
                 <View>

@@ -6,7 +6,7 @@ import styles from './ExperienceListStyle';
 
 class ExperiencesList extends Component {
     render() {
-        const { experiences } = this.props;
+        const { experiences, selectedExperience } = this.props;
 
         return (
             <ScrollView contentContainerStyle={styles.list}>
@@ -14,6 +14,7 @@ class ExperiencesList extends Component {
                     <ExperiencesListItem
                         key={experience.id}
                         experience={experience}
+                        selectedExperience={selectedExperience}
                         onClick={this.props.onSelectExperience}
                     />
                 ))}

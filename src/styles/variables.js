@@ -5,6 +5,7 @@ const variables = {
     fullHeight: Dimensions.get('window').height,
     fullWidth: Dimensions.get('window').width,
     blue: '#25AAE2',
+    lightBlue: '#D1E1FF',
     lightGreen: '#87c03d',
     grey: "#F0F2F4",
     lightGrey: "#E0E3E7",
