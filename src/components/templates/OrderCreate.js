@@ -85,22 +85,7 @@ class OrderCreate extends Component {
             <Formik validate={this.validateForm} onSubmit={this.handleNextClick}>
                 {props => (
                     <Layout
-                        header={
-                            <Header
-                                currentStep={3}
-                                title={'Guest Information'}
-                                back={'ExperienceAvailability'}
-                                right={
-                                    <LoadingButton
-                                        isLoading={this.props.cart.isLoading}
-                                        type="submit"
-                                        title="Next"
-                                        styleNames={['medium']}
-                                        onPress={props.handleSubmit}
-                                    />
-                                }
-                            />
-                        }
+
                     >
                         <View style={styles.container}>
                             <ScrollView style={styles.quantity}>

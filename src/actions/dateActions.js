@@ -30,5 +30,4 @@ export const selectTime = time => dispatch => {
         type: SELECT_TIME,
         time: time,
     });
-    NavigationService.navigate('OrderCreate');
 };

@@ -31,7 +31,7 @@ class LogIn extends Component {
     render() {
         return (
             <Formik
-                initialValues={{ username: '', password: '' }}
+                initialValues={{ username: 'vlastimir@crowdbotics.com', password: 'tst12345' }}
                 validationSchema={userSchema}
                 onSubmit={this.onLogInClick}
             >
@@ -65,14 +65,15 @@ class LogIn extends Component {
                                 />
                                 <ErrorMessage name="password" />
                             </FormGroup>
-                            <View style={[styles.flex, { flexDirection: 'row' }]}>
+                            <FormGroup style={styles.flex}>
                                 <LoadingButton
                                     onPress={props.handleSubmit}
                                     isLoading={this.props.auth.isLoading}
                                     styleNames={['large', 'active', 'flex']}
                                     title="Login"
                                 />
-
+                            </FormGroup>
+                            <View style={styles.flex}>
                                 <LoadingButton
                                     onPress={() => this.openSignUp()}
                                     styleNames={['large', 'neutral', 'flex']}
