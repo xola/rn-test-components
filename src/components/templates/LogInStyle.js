@@ -5,23 +5,20 @@ const styles = StyleSheet.create({
     container: {
         width: w(700),
         alignSelf: 'center',
-    },
-    flex: {
         flex: 1
     },
-    logo: {
+    flex: {
         flex: 1,
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
     },
     brand: {
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: w(40)
+        paddingTop: w(40),
+        flex: 1
     },
     brandText: {
-        paddingLeft: w(30)
+        textAlign: 'center',
+        paddingTop: (20)
     },
     image: {
         width: w(94),
@@ -29,8 +26,11 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'center',
     },
-    actions: {
-        flex: 1,
-    },
+    buttonContainer: {
+        paddingTop: w(60),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1
+    }
 });
 export default styles;

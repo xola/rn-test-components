@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     large: {
         fontSize: w(24),
         fontWeight: '700',
-        paddingVertical: w(24)
+        paddingVertical: w(24),
     },
     active: {
         backgroundColor: variables.mainBlue,
@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     },
     flex: {
         flex: 1,
-        width: '99%'
+        width: '99%',
+        maxHeight: w(80)
     },
 });
 

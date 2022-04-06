@@ -31,14 +31,14 @@ class LogIn extends Component {
     render() {
         return (
             <Formik
-                initialValues={{ username: 'vlastimir@crowdbotics.com', password: 'tst12345' }}
+                initialValues={{ username: '', password: '' }}
                 validationSchema={userSchema}
                 onSubmit={this.onLogInClick}
             >
                 {props => (
                     <Layout>
-                        <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
-                            <Image style={styles.image} source={logo} />
+                        <Image style={styles.image} source={logo} />
+                        <View keyboardShouldPersistTaps="handled" style={styles.container}>
                             <View style={styles.brand}>
                                 <KioskAppIcon />
                                 <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
@@ -53,9 +53,7 @@ class LogIn extends Component {
                                 />
 
                                 <ErrorMessage name="username" />
-                            </FormGroup>
 
-                            <FormGroup style={styles.flex}>
                                 <TextInput
                                     id="password"
                                     title="Password"
@@ -66,28 +64,26 @@ class LogIn extends Component {
                                 <ErrorMessage name="password" />
                             </FormGroup>
                             <FormGroup style={styles.flex}>
-                                <LoadingButton
-                                    onPress={props.handleSubmit}
-                                    isLoading={this.props.auth.isLoading}
-                                    styleNames={['large', 'active', 'flex']}
-                                    title="Login"
-                                />
-                            </FormGroup>
-                            <View style={styles.flex}>
-                                <LoadingButton
-                                    onPress={() => this.openSignUp()}
-                                    styleNames={['large', 'neutral', 'flex']}
-                                    title="Not a Xola customer?"
-                                />
-                            </View>
-                            <View style={styles.flex}>
+                                <View style={styles.buttonContainer}>
+                                    <LoadingButton
+                                        onPress={() => this.openSignUp()}
+                                        styleNames={['large', 'neutral', 'flex']}
+                                        title="Not a Xola customer?"
+                                    />
+                                    <LoadingButton
+                                        onPress={props.handleSubmit}
+                                        isLoading={this.props.auth.isLoading}
+                                        styleNames={['large', 'active', 'flex']}
+                                        title="Login"
+                                    />
+                                </View>
                                 <LoadingButton
                                     onPress={() => this.openPrivacy()}
                                     styleNames={['large', 'link', 'flex']}
                                     title="Privacy Policy"
                                 />
-                            </View>
-                        </ScrollView>
+                            </FormGroup>
+                        </View>
                     </Layout>
                 )}
             </Formik>

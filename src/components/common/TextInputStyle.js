@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         paddingBottom: w(10)
     },
     container: {
-        width: '99%',
+        width: '100%',
         borderStyle: 'solid',
         borderWidth: w(1),
         borderColor: variables.lightGrey,
@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
         padding: w(24),
         color: variables.textColor,
         fontSize: variables.h6Size,
-        height: w(70)
+        height: w(70),
+        marginVertical: w(10)
     },
 });
 

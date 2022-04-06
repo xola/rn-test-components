@@ -17,7 +17,6 @@ class SelectExperience extends Component {
     }
 
     onSelectExperience = experience => {
-        console.log(experience)
         if (this.props.route.params?.selectExperienceForSigningWaiver) {
             NavigationService.navigate('SignInWaiver', { experience: experience });
         } else {

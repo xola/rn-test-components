@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         fontSize: w(variables.fontSize),
     },
     large: {
-        fontSize: w(variables.largeText),
+        fontSize: w(variables.h1Size),
         fontFamily: variables.fontBold,
         color: variables.textColor,
     },
