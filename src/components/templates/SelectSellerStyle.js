@@ -5,18 +5,18 @@ import { w } from '../../utils/Scale';
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingTop: '10%',
+        paddingTop: w(40)
     },
     content: {
         justifyContent: 'space-evenly',
     },
     title: {
-        paddingTop: '10%',
+        paddingTop: w(60),
         fontSize: variables.h3Size,
         fontFamily: variables.fontBold
     },
     subtitle: {
-        marginTop: w(12),
+        paddingTop: w(12),
         fontSize: variables.fontSize,
         fontFamily: variables.fontLight
     },

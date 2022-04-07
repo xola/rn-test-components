@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 import { selectSeller } from '../../actions/authActions';
 import styles from './SelectSellerStyle';
@@ -18,11 +18,17 @@ class SelectSeller extends Component {
                 <StyledText style={styles.subtitle}>
                     You have access to multiple Xola accounts. Which account should the Kiosk app log-in to?
                 </StyledText>
-                <ScrollView style={styles.container}>
-                    {_.map(this.props.sellers, seller => (
-                        <SellerDelegate key={seller.id} seller={seller} onClick={this.props.selectSeller} />
-                    ))}
-                </ScrollView>
+                <View style={styles.container}>
+                    <FlatList
+                        data={this.props.sellers}
+                        extraData={this.props.sellers}
+                        renderItem={({ item }) =>
+                            <SellerDelegate key={item.id} seller={item} onClick={this.props.selectSeller} />
+                        }
+                        keyExtractor={item => item.id}
+                        numColumns={2}
+                    />
+                </View>
             </Layout>
         );
     }
