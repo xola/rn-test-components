@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
         borderWidth: w(1),
         borderColor: variables.lightGrey,
         borderRadius: variables.borderRadius,
-        fontFamily: variables.fontBold,
+        fontFamily: variables.fontLight,
         padding: w(24),
         color: variables.textColor,
-        fontSize: variables.h6Size,
+        fontSize: variables.fontSmall,
         height: w(70),
         marginVertical: w(10)
     },

@@ -1,20 +1,27 @@
 import { StyleSheet } from 'react-native';
+import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     name: {
-        marginBottom: 20,
-        fontSize: 20,
-        textTransform: 'uppercase',
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontBold,
     },
     info: {
         flex: 3,
-        padding: 10,
+        paddingLeft: w(20),
         lineHeight: 20,
         alignSelf: 'center',
     },
     infoText: {
-        lineHeight: 25,
+        fontSize: variables.fontSmall,
+        fontFamily: variables.fontLight,
+        paddingLeft: w(4)
     },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 });
 
 export default styles;

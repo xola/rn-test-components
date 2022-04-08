@@ -7,6 +7,9 @@ import orderUtil from '../../utils/OrderUtil';
 import StyledText from './StyledText';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { CalendarIcon, TimeIcon } from '../../images/svg';
+import { w } from '../../utils/Scale';
+import DemoGraphicIcon from './DemographicIcon';
 
 /**
  * Component that shows information about order, experience, customer and payment info.
@@ -36,27 +39,39 @@ class OrderInfo extends Component {
         return (
             <View style={[styles.info, style]}>
                 <StyledText style={styles.name}>{name}</StyledText>
-                <StyledText style={styles.infoText}>
-                    <CustomIcon name="calendar" /> {arrivalDate.format('L')}
-                </StyledText>
-                {arrivalTime || arrivalDatetime ? (
-                    <StyledText style={styles.infoText}>
-                        <CustomIcon name="time" /> {arrivalDate.format('LT')}
-                    </StyledText>
-                ) : null}
-                <StyledText style={styles.infoText}>
+                <View style={styles.row}>
+                    <View style={styles.row}>
+                        <CalendarIcon />
+                        <StyledText style={styles.infoText}>
+                            {arrivalDate.format('LLLL')}
+                        </StyledText>
+                    </View>
+
+                    {arrivalTime || arrivalDatetime ? (
+                        <View style={[styles.row, { paddingLeft: w(20) }]}>
+                            <TimeIcon />
+                            <StyledText style={styles.infoText}>
+                                {arrivalDate.format('LT')}
+                            </StyledText>
+                        </View>
+
+                    ) : null}
+                </View>
+                <View style={styles.row}>
                     {_.map(demographics, demographic => {
                         const label = demographic.label
                             ? demographic.label
                             : orderUtil.getDemographicLabel(this.props.experience, demographic.demographic.id);
                         return demographic.quantity !== 0 ? (
-                            <StyledText key={demographic.label}>
-                                <CustomIcon name={orderUtil.guessDemographicIcon(label)} /> {demographic.quantity}{' '}
-                                {label} &nbsp;
-                            </StyledText>
+                            <View style={[styles.row, { paddingRight: w(20) }]}>
+                                <DemoGraphicIcon name={label} />
+                                <StyledText key={demographic.label} style={styles.infoText}>
+                                    {demographic.quantity} {label}
+                                </StyledText>
+                            </View>
                         ) : null;
                     })}
-                </StyledText>
+                </View>
             </View>
         );
     }

@@ -10,9 +10,10 @@ const DEMOGRAPHICS_MAP = {
 class OrderUtil {
     static guessDemographicIcon(label) {
         label = label && label.toLowerCase();
-        const icon = _.findKey(DEMOGRAPHICS_MAP, function(list) {
+        const icon = _.findKey(DEMOGRAPHICS_MAP, function (list) {
             return _.includes(list, label);
         });
+        console.log(icon, 'icon')
         return icon || 'user';
     }
 

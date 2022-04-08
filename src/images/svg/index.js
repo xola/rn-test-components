@@ -5,6 +5,12 @@ import NextIcon from './next'
 import PriceIcon from './price'
 import CheckIcon from './check'
 import DropDownIcon from './dropdown'
+import CalendarIcon from './calendar'
+import TimeIcon from './clock'
+import AdultIcon from './adult'
+import ChildIcon from './child'
+import VeteranIcon from './veteran'
+import UserIcon from './user'
 
 export {
     KioskAppIcon,
@@ -13,5 +19,11 @@ export {
     NextIcon,
     PriceIcon,
     CheckIcon,
-    DropDownIcon
+    DropDownIcon,
+    CalendarIcon,
+    TimeIcon,
+    AdultIcon,
+    ChildIcon,
+    VeteranIcon,
+    UserIcon
 }

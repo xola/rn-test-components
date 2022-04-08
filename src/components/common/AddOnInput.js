@@ -77,8 +77,7 @@ class AddOnInput extends Component {
                         />
                     </View>
                     <View style={styles.detail}>
-                        <Text style={styles.label}>{addOn.label}</Text>
-                        <Text style={styles.description}>{addOn.description}</Text>
+                        <Text style={styles.description}><Text style={styles.label}>{addOn.label}</Text> {addOn.description}</Text>
                     </View>
                 </View>
 
@@ -99,8 +98,7 @@ class AddOnInput extends Component {
                         </View>
                     </TouchableOpacity>
                     <View style={styles.detail}>
-                        <Text style={styles.label}>{addOn.label}</Text>
-                        <Text style={styles.description}>{addOn.description}</Text>
+                        <Text style={styles.description}><Text style={styles.label}>{addOn.label}</Text> {addOn.description}</Text>
                     </View>
                 </View>
             );
@@ -126,8 +124,7 @@ class AddOnInput extends Component {
                         </View>
                     </View>
                     <View style={styles.detail}>
-                        <Text style={styles.label}>{addOn.label}</Text>
-                        <Text style={styles.description}>{addOn.description}</Text>
+                        <Text style={styles.description}><Text style={styles.label}>{addOn.label}</Text> {addOn.description}</Text>
                     </View>
                 </View>
             );
