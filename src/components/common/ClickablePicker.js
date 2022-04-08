@@ -1,8 +1,6 @@
-import { View, TouchableOpacity, Picker } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { View, TouchableOpacity, Picker, Text } from 'react-native';
 import React, { Component, Children } from 'react';
 import styles from './ClickablePickerStyle';
-import StyledText from './StyledText';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { DropDownIcon } from '../../images/svg';
@@ -39,7 +37,7 @@ class ClickablePicker extends Component {
 
         const children = Children.toArray(this.props.children);
         const child = _.find(children, { props: { value } });
-        return child ? child.props.label() : title();
+        return child ? child.props.label : title();
     }
 
     render() {
@@ -49,7 +47,7 @@ class ClickablePicker extends Component {
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={this.togglePicker} style={styles.labelContainer}>
-                    {this.getTitle()}
+                    <Text style={styles.description}>{this.getTitle()}</Text>
                     <DropDownIcon />
                 </TouchableOpacity>
 

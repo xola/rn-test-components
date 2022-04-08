@@ -80,13 +80,14 @@ class OrderCreate extends Component {
     render() {
         const { order, itemIndex } = this.props.cart;
         const item = order.items[itemIndex];
-
+        const { addOns = [], group } = this.props.experience;
+        const requiredAddOns = addOns.filter(addOn => addOn.required).length;
 
         return (<>
             <Header
                 back={true}
                 right={() => true ? <TouchableOpacity onPress={() => this.handleNext()} style={headerStyles.next}>
-                    <Text style={headerStyles.nextText}>Next</Text>
+                    <Text style={headerStyles.nextText}>{requiredAddOns === 0 ? 'Skip' : 'Next'}</Text>
                     <NextIcon />
                 </TouchableOpacity> : <View />}
                 steps={["Product", "Time", "Quantity", "Info", "Pay"]}

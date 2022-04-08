@@ -7,6 +7,7 @@ import styles from './AddOnInputStyle';
 import PropTypes from 'prop-types';
 import Currency from './Currency';
 import { CheckIcon } from '../../images/svg';
+import { format } from '../../utils/Currency';
 
 /**
  * Input component that determines type of input to be shown based on addOn type
@@ -91,7 +92,7 @@ class AddOnInput extends Component {
                         <View style={styles.flex}>
                             <View style={styles.content}>
                                 <View style={styles.checkBox}>
-                                    {!this.state.isChecked && <CheckIcon />}
+                                    {this.state.isChecked && <CheckIcon />}
                                 </View>
                                 <Text style={styles.description}><Currency>{addOn.configuration.price}</Currency></Text>
                             </View>
@@ -106,6 +107,7 @@ class AddOnInput extends Component {
         }
 
         if (addOn.object === 'choices') {
+            const { currency = 'USD', children: amount = 0 } = this.props
             return (
                 <View style={styles.container}>
                     <View style={styles.action}>
@@ -115,10 +117,10 @@ class AddOnInput extends Component {
                                 onValueChange={this.handleDropDownChange}
                                 title={() => <Text style={styles.description}>Choose an option</Text>}
                             >
-                                <Picker.Item style={{ backgroundColor: 'red' }} label={() => <Text style={styles.description}>None</Text>} value={null} />
+                                <Picker.Item style={{ backgroundColor: 'red' }} label={'None'} value={null} />
 
                                 {addOn.choices.map(choice => (
-                                    <Picker.Item label={() => <Text style={styles.description}>{choice.name} - <Currency>{choice.price}</Currency></Text>} key={choice.id} value={choice.id} />
+                                    <Picker.Item label={`${choice.name} - ${format(choice.price, currency)}`} key={choice.id} value={choice.id} />
                                 ))}
                             </ClickablePicker>
                         </View>

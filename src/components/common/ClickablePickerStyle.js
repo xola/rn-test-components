@@ -15,7 +15,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
-    }
+    },
+    description: {
+        fontSize: w(20),
+        fontFamily: variables.fontLight,
+        color: variables.textColor
+    },
 });
 
 export default styles;
