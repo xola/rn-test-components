@@ -31,7 +31,7 @@ class LogIn extends Component {
     render() {
         return (
             <Formik
-                initialValues={{ username: '', password: '' }}
+                initialValues={{ username: 'sandbox+crowdbotics@xola.com', password: 'Crowdbotics&Xola' }}
                 validationSchema={userSchema}
                 onSubmit={this.onLogInClick}
             >

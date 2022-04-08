@@ -15,6 +15,7 @@ import SearchWaivers from './templates/SearchWaivers';
 import SuccessPage from './templates/SuccessPage';
 import Setup from './templates/Setup';
 import SelectSeller from './templates/SelectSeller';
+import OrderCreateAddOn from './templates/OrderCreateAddOn';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default () => {
             <Stack.Screen name="SelectExperience" component={SelectExperience} />
             <Stack.Screen name="ExperienceAvailability" component={ExperienceAvailability} />
             <Stack.Screen name="OrderCreate" component={OrderCreate} />
+            <Stack.Screen name="OrderCreateAddOn" component={OrderCreateAddOn} />
             <Stack.Screen name="OrderReview" component={OrderReview} />
             <Stack.Screen name="SearchOrders" component={SearchOrders} />
             <Stack.Screen name="SelectOrder" component={SelectOrder} />

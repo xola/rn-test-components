@@ -17,6 +17,7 @@ class Spinner extends Component {
         max: PropTypes.number,
         min: PropTypes.number,
         onChange: PropTypes.func,
+        addOnValue: PropTypes.func,
     };
 
     state = {
@@ -60,9 +61,9 @@ class Spinner extends Component {
                     <Icon name="minus" style={styles.buttonText} />
                 </TouchableOpacity>
 
-                <StyledText styleNames={['h2']} style={styles.value}>
+                {!this.props.addOnValue ? <StyledText styleNames={['h2']} style={styles.value}>
                     {value}
-                </StyledText>
+                </StyledText> : this.props.addOnValue()}
 
                 <TouchableOpacity onPress={this.handleIncrementClick} style={styles.button}>
                     <Icon name="plus" style={styles.buttonText} />
