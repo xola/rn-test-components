@@ -43,7 +43,7 @@ class OrderInfo extends Component {
                     <View style={styles.row}>
                         <CalendarIcon />
                         <StyledText style={styles.infoText}>
-                            {arrivalDate.format('LLLL')}
+                            {arrivalDate.format('dddd, MMMM D YYYY')}
                         </StyledText>
                     </View>
 

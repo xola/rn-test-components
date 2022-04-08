@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingVertical: w(1)
     }
 });
 

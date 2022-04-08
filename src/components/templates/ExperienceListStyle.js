@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
         borderColor: variables.lightGrey,
         borderWidth: 1,
     },
+    flex: {
+        flex: 1
+    },
     name: {
         fontFamily: variables.fontBold,
         fontSize: variables.h6Size,
@@ -27,9 +30,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     content: {
-        width: w(820),
         flexWrap: 'wrap',
-        paddingHorizontal: w(48),
+        paddingHorizontal: w(24),
+        flex: 1
     },
     description: {
         fontFamily: variables.fontLight,

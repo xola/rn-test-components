@@ -14,6 +14,7 @@ import FormGroup from '../common/FormGroup';
 import StyledText from '../common/StyledText';
 import { KioskAppIcon } from '../../images/svg'
 import { PRIVACY_POLICY_URL, SIGN_UP_URL } from '../../constants/externalUrlConstants';
+import { w } from '../../utils/Scale';
 
 class LogIn extends Component {
     onLogInClick = async params => {
@@ -44,24 +45,27 @@ class LogIn extends Component {
                                 <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
                             </View>
                             <FormGroup style={styles.flex}>
-                                <TextInput
-                                    id="username"
-                                    title="E-mail"
-                                    onChangeText={props.handleChange('username')}
-                                    onSubmitEditing={props.handleSubmit}
-                                    keyboardType="email-address"
-                                />
+                                <View style={styles.flex}>
+                                    <TextInput
+                                        id="username"
+                                        title="E-mail"
+                                        onChangeText={props.handleChange('username')}
+                                        onSubmitEditing={props.handleSubmit}
+                                        keyboardType="email-address"
+                                    />
 
-                                <ErrorMessage name="username" />
-
-                                <TextInput
-                                    id="password"
-                                    title="Password"
-                                    onChangeText={props.handleChange('password')}
-                                    onSubmitEditing={props.handleSubmit}
-                                    secureTextEntry={true}
-                                />
-                                <ErrorMessage name="password" />
+                                    <ErrorMessage name="username" />
+                                </View>
+                                <View style={[styles.flex, { paddingTop: w(20) }]}>
+                                    <TextInput
+                                        id="password"
+                                        title="Password"
+                                        onChangeText={props.handleChange('password')}
+                                        onSubmitEditing={props.handleSubmit}
+                                        secureTextEntry={true}
+                                    />
+                                    <ErrorMessage name="password" />
+                                </View>
                             </FormGroup>
                             <FormGroup style={styles.flex}>
                                 <View style={styles.buttonContainer}>
@@ -85,7 +89,8 @@ class LogIn extends Component {
                             </FormGroup>
                         </View>
                     </Layout>
-                )}
+                )
+                }
             </Formik>
         );
     }
