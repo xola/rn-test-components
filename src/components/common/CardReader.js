@@ -1,4 +1,4 @@
-import LoadingButton from './LoadingButton';
+import PairButton from './PairButton';
 import { View, Text } from 'react-native';
 import React, { Component } from 'react';
 import styles from './CardReaderStyle';
@@ -6,12 +6,12 @@ import StyledText from './StyledText';
 import PropTypes from 'prop-types';
 import StripeFirmWareUpdateModal from '../../modals/StripeFirmWareUpdateModal';
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
+import { BBPoSICon, XolaDeviceIcon } from '../../images/svg';
 
 class CardReader extends Component {
     static propTypes = {
         onConnect: PropTypes.func,
         onDisconnect: PropTypes.func,
-        onOpenCheckout: PropTypes.func,
         reader: PropTypes.object,
         isConnected: PropTypes.bool,
         isPaired: PropTypes.bool,
@@ -55,10 +55,6 @@ class CardReader extends Component {
         this.props.onDisconnect(this.props.reader.serialNumber);
     };
 
-    openCheckout = () => {
-        this.props.onOpenCheckout();
-    };
-
     firmwareUpdate = () => {
         this.setState({ showUpdateModal: false })
         StripeTerminal.installUpdate()
@@ -78,40 +74,34 @@ class CardReader extends Component {
                     onSubmit={() => this.firmwareUpdate()}
                     onCancel={() => this.setState({ showUpdateModal: false })}
                 />
-                <StyledText style={styles.name}>{reader.serialNumber} </StyledText>
+                <View style={styles.row}>
+                    {this.props.isPaired ? <BBPoSICon /> : <XolaDeviceIcon />}
+                    <Text style={styles.name}>{reader.serialNumber} </Text>
+                    {(this.props.isPaired || this.props.isConnected) && <View style={styles.pairedContainer}>
+                        <Text style={styles.isPaired}>{'Paired'}</Text>
+                    </View>}
+                </View>
 
                 {this.props.isConnected ? (
                     <View style={styles.actions}>
-                        <Text style={styles.paired}>{this.props.isPaired ? 'Paired' : ''}</Text>
-
-                        <LoadingButton
-                            title="Disconnect"
-                            styleNames={['small', 'cancel']}
+                        <PairButton
+                            hasIcon={true}
+                            title="UnPair"
                             onPress={this.disconnectReader}
                             isLoading={isLoading}
-                        />
-
-                        <LoadingButton
-                            title="Open Checkout"
-                            styleNames={['small', 'success']}
-                            onPress={this.openCheckout}
-                            isLoading={isLoading}
+                            isPaired={this.props.isPaired}
                         />
                     </View>
                 ) : (
-                    <View style={styles.actions}>
-                        <Text style={styles.paired}>{this.props.isPaired ? 'Paired' : ''}</Text>
-
-                        <LoadingButton
-                            onPress={this.connectReader}
-                            styleNames={['small']}
-                            title={this.props.isPaired ? 'Connect' : 'Pair'}
-                            isLoading={isLoading}
-                            disabled={isLoading}
-                        />
-                    </View>
+                    <PairButton
+                        hasIcon={true}
+                        onPress={this.connectReader}
+                        isPaired={this.props.isPaired}
+                        title={'Pair'}
+                        isLoading={isLoading}
+                        disabled={isLoading}
+                    />
                 )}
-
             </View>
         );
     }

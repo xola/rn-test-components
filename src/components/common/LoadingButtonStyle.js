@@ -76,6 +76,23 @@ const styles = StyleSheet.create({
         width: '99%',
         maxHeight: w(80)
     },
+    pairName: {
+        fontSize: w(24),
+        paddingHorizontal: w(24),
+        fontFamily: variables.fontBold,
+    },
+    pairButton: {
+        marginLeft: w(8),
+        padding: w(20),
+        borderColor: variables.lightGrey,
+        borderWidth: 1,
+        borderRadius: variables.borderRadius
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
 
 export default styles;

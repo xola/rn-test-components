@@ -11,6 +11,10 @@ import AdultIcon from './adult'
 import ChildIcon from './child'
 import VeteranIcon from './veteran'
 import UserIcon from './user'
+import PairIcon from './pair'
+import UnPairIcon from './unpair'
+import BBPoSICon from './bbpos'
+import XolaDeviceIcon from './xolaDevice'
 
 export {
     KioskAppIcon,
@@ -25,5 +29,9 @@ export {
     AdultIcon,
     ChildIcon,
     VeteranIcon,
-    UserIcon
+    UserIcon,
+    PairIcon,
+    UnPairIcon,
+    BBPoSICon,
+    XolaDeviceIcon
 }

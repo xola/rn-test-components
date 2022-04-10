@@ -6,7 +6,7 @@ const variables = {
     fullWidth: Dimensions.get('window').width,
     blue: '#25AAE2',
     lightBlue: '#D1E1FF',
-    lightGreen: '#87c03d',
+    lightGreen: '#C1F9D9',
     grey: "#F0F2F4",
     lightGrey: "#E0E3E7",
     darkGrey: '#8A8C91',
