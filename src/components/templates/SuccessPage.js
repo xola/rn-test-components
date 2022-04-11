@@ -7,8 +7,15 @@ import styles from './SuccessPageStyle';
 import NavigationService from '../NavigationService';
 import LoadingButton from '../common/LoadingButton';
 import OrderInfo from '../common/OrderInfo';
+import PrintTickets from './PrintTickets';
+import { addTicket, printTickets } from '../../actions/printerActions';
 
 class SuccessPage extends Component {
+    handlePrintingTickets = async (ticket, total) => {
+        await this.props.addTicket(ticket);
+        await this.props.printTickets(total);
+    };
+
     handleWaiverSignIn = () => {
         NavigationService.navigate('SignInWaiver');
     };
@@ -42,6 +49,17 @@ class SuccessPage extends Component {
                         <LoadingButton onPress={this.handleFinish} styleNames={['medium', 'wide']} title="Finish" />
                     </View>
                 </View>
+                {this.props.printer.printer && this.props.submittedItem ? (
+                    <View>
+                        <PrintTickets
+                            experience={experience}
+                            item={this.props.submittedItem}
+                            order={this.props.order}
+                            printer={this.props.printer}
+                            onTicketLoad={this.handlePrintingTickets}
+                        />
+                    </View>
+                ) : null}
             </Layout>
         );
     }
@@ -50,6 +68,14 @@ class SuccessPage extends Component {
 const mapStateToProps = state => ({
     experiences: state.experiences,
     item: state.cart.order.items[state.cart.itemIndex],
+    order: state.cart.submittedOrder,
+    submittedItem: state.cart.submittedOrder.items[state.cart.itemIndex],
+    printer: state.printer,
 });
 
-export default connect(mapStateToProps)(SuccessPage);
+const mapDispatchToProps = {
+    addTicket,
+    printTickets,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SuccessPage);

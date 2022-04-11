@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import CardReader from '../common/CardReader';
@@ -160,7 +159,4 @@ const mapDispatchToProps = {
     getComputer,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(DiscoverDevices);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverDevices);
