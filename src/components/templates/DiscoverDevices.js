@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, ScrollView } from 'react-native';
 import _ from 'lodash';
+import SelectDropdown from 'react-native-select-dropdown'
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import CardReader from '../common/CardReader';
@@ -13,21 +14,21 @@ import {
     getComputer,
     abortDiscoverReaders,
 } from '../../actions/readersActions';
-import Header from '../common/Header';
-import LoadingButton from '../common/LoadingButton';
 import styles from './DiscoverDevicesStyle';
 import NavigationService from '../NavigationService';
 import StyledText from '../common/StyledText';
 import TextInput from '../common/TextInput';
-import { Formik } from 'formik';
 import ErrorMessage from '../form/ErrorMessage';
 import { object, string } from 'yup';
 import { getPairedReader } from '../../selectors/readersSelector';
 import { w } from '../../utils/Scale';
+import { DropDownIcon } from '../../images/svg';
 
 const computerSchema = object().shape({
     label: string().required('Required'),
 });
+
+const printers = ["Select Printer", "Printer 1", "Printer 2", "Printer 3", "Printer 4"]
 
 class DiscoverDevices extends Component {
     state = {
@@ -98,15 +99,15 @@ class DiscoverDevices extends Component {
                     </Text>
 
                     {!isDiscovering && !connectedReader ? (
-                        <StyledText styleNames={['h3']}>
+                        <Text style={styles.buttonText}>
                             {this.noReadersFound()
                                 && 'No readers found'
                             }
-                        </StyledText>
+                        </Text>
                     ) : null}
 
                     {isDiscovering && availableReaders.length === 0 ? (
-                        <StyledText styleNames={['h3']}>Looking for devices...</StyledText>
+                        <Text style={styles.buttonText}>Looking for devices...</Text>
                     ) : null}
 
                     {connectedReader ? (
@@ -142,6 +143,24 @@ class DiscoverDevices extends Component {
                     <Text style={styles.label}>
                         Select Printer
                     </Text>
+                    <SelectDropdown
+                        data={printers}
+                        defaultValue="Select Printer"
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item
+                        }}
+                        buttonStyle={styles.printerButton}
+                        buttonTextStyle={styles.buttonText}
+                        rowTextStyle={styles.buttonText}
+                        rowStyle={styles.rowStyle}
+                        renderDropdownIcon={() => <DropDownIcon />}
+                    />
                 </ScrollView>
 
             </Layout>

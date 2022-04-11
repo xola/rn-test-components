@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         fontFamily: variables.fontBold,
         fontSize: variables.h3Size,
         color: variables.titleText,
-        paddingVertical: w(20)
+        paddingVertical: w(20),
+        borderColor: variables.lightGrey
     },
     devices: {
         flex: 2,
@@ -38,6 +39,23 @@ const styles = StyleSheet.create({
     discover: {
         marginTop: 40,
     },
+    printerButton: {
+        width: '100%',
+        backgroundColor: variables.white,
+        borderWidth: 1,
+        borderRadius: variables.borderRadius,
+        height: w(60),
+    },
+    buttonText: {
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontLight,
+        textAlign: 'left'
+    },
+    rowStyle: {
+
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
 });
 
 export default styles;
