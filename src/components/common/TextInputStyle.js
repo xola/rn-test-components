@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
         borderColor: variables.lightGrey,
         borderRadius: variables.borderRadius,
         fontFamily: variables.fontLight,
-        padding: w(24),
+        paddingHorizontal: w(24),
         color: variables.textColor,
         fontSize: variables.fontSmall,
+        textAlignVertical: 'center',
         height: w(70),
         marginVertical: w(10)
     },
