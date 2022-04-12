@@ -18,7 +18,7 @@ class Header extends Component {
         /**
          *  Name of navigation screen back button leads to
          */
-        back: PropTypes.string,
+        back: PropTypes.bool,
         /**
          * Title of the current page
          */
@@ -39,59 +39,80 @@ class Header extends Component {
     };
 
     handleBackClick = () => {
-        NavigationService.goBack()
+        NavigationService.goBack();
     };
 
-    getTextColor = (index) => {
-        if (this.props.currentStep < (index + 1)) {
-            return variables.darkGrey
-        } else if (this.props.currentStep === (index + 1)) {
-            return variables.mainBlue
+    getTextColor = index => {
+        if (this.props.currentStep < index + 1) {
+            return variables.darkGrey;
+        } else if (this.props.currentStep === index + 1) {
+            return variables.mainBlue;
         } else {
-            return variables.green
+            return variables.green;
         }
-    }
+    };
 
-    getBackgroundColor = (index) => {
-        if (this.props.currentStep < (index + 1)) {
-            return variables.grey
-        } else if (this.props.currentStep === (index + 1)) {
-            return variables.mainBlue
+    getBackgroundColor = index => {
+        if (this.props.currentStep < index + 1) {
+            return variables.grey;
+        } else if (this.props.currentStep === index + 1) {
+            return variables.mainBlue;
         } else {
-            return variables.white
+            return variables.white;
         }
-    }
+    };
 
     render() {
         return (
             <View style={styles.container}>
-                {this.props.back && <TouchableOpacity onPress={this.handleBackClick} style={styles.back}>
-                    <BackIcon />
-                </TouchableOpacity>}
+                {this.props.back && (
+                    <TouchableOpacity onPress={this.handleBackClick} style={styles.back}>
+                        <BackIcon />
+                    </TouchableOpacity>
+                )}
 
                 <View style={styles.steps}>
                     <FlatList
                         data={this.props.steps}
                         extraData={this.props.steps}
-                        renderItem={({ item, index }) =>
+                        renderItem={({ item, index }) => (
                             <View style={styles.step}>
-                                {this.props.currentStep - 2 < (index) ? <View style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}>
-                                    <StyledText style={[styles.stepText, { color: this.props.currentStep === (index + 1) ? variables.white : variables.darkGrey }]}>
-                                        {index + 1}
-                                    </StyledText>
-                                </View> : <View style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}>
-                                    <ConfirmedIcon />
-                                </View>}
+                                {this.props.currentStep - 2 < index ? (
+                                    <View
+                                        style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}
+                                    >
+                                        <StyledText
+                                            style={[
+                                                styles.stepText,
+                                                {
+                                                    color:
+                                                        this.props.currentStep === index + 1
+                                                            ? variables.white
+                                                            : variables.darkGrey,
+                                                },
+                                            ]}
+                                        >
+                                            {index + 1}
+                                        </StyledText>
+                                    </View>
+                                ) : (
+                                    <View
+                                        style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}
+                                    >
+                                        <ConfirmedIcon />
+                                    </View>
+                                )}
                                 <StyledText style={[styles.stepText, { color: this.getTextColor(index) }]}>
                                     {item}
                                 </StyledText>
                             </View>
-                        }
-                        ItemSeparatorComponent={
-                            () => <View style={styles.separator} >
+                        )}
+                        ItemSeparatorComponent={() => (
+                            <View style={styles.separator}>
                                 <View style={styles.separatorLine} />
-                            </View>}
-                        keyExtractor={item => item.id}
+                            </View>
+                        )}
+                        keyExtractor={(_, index) => String(index)}
                         horizontal={true}
                     />
                 </View>

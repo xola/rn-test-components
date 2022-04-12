@@ -2,9 +2,6 @@ import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
 import { w } from '../../utils/Scale';
 
-const listSize = variables.fullWidth - 30;
-const itemSize = listSize / 3;
-
 const styles = StyleSheet.create({
     image: {
         width: w(170),
@@ -14,11 +11,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     flex: {
-        flex: 1,
+        flex: 1
     },
     name: {
         fontFamily: variables.fontBold,
-        fontSize: variables.h5Size,
+        fontSize: variables.h6Size,
         color: variables.titleText,
     },
     button: {
@@ -30,13 +27,12 @@ const styles = StyleSheet.create({
         borderRadius: w(12),
         flexWrap: 'wrap',
         marginBottom: w(12),
-        alignItems: 'center',
+        alignItems: 'center'
     },
     content: {
         flexWrap: 'wrap',
         paddingHorizontal: w(24),
-        flex: 1,
-        justifyContent: 'space-between',
+        flex: 1
     },
     description: {
         fontFamily: variables.fontLight,
@@ -53,20 +49,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         width: w(200),
-        marginTop: w(8),
+        marginTop: w(8)
     },
-    title: {
-        fontFamily: variables.fontBold,
-        fontSize: variables.h6Size,
-        color: variables.titleText,
+    price: {
+        fontFamily: variables.fontLight,
+        fontSize: w(20),
     },
-    demographics: {
-        flexDirection: 'row',
-        fontSize: 20,
-    },
-    infoText: {
-        color: '#505254'
-    }
 });
 
 export default styles;

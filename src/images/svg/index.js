@@ -15,6 +15,7 @@ import PairIcon from './pair'
 import UnPairIcon from './unpair'
 import BBPoSICon from './bbpos'
 import XolaDeviceIcon from './xolaDevice'
+import SearchIcon from './search'
 
 export {
     KioskAppIcon,
@@ -33,5 +34,6 @@ export {
     PairIcon,
     UnPairIcon,
     BBPoSICon,
-    XolaDeviceIcon
+    XolaDeviceIcon,
+    SearchIcon
 }

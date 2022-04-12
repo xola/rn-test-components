@@ -4,14 +4,21 @@ import variables from '../../styles/variables';
 const listSize = variables.fullWidth - 30;
 
 const styles = StyleSheet.create({
-    list: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: listSize,
-    },
     noResult: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 35,
+        marginBottom: 25,
+    },
+    headerTitle: {
+        fontWeight: '700',
+        fontSize: 34,
         alignItems: 'center',
         alignSelf: 'center',
     },

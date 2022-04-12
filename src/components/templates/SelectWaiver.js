@@ -12,12 +12,33 @@ class SelectWaiver extends Component {
         NavigationService.navigate('SignInWaiver');
     };
 
+    state = {
+        selectedWaiver: null,
+    };
+
+    onSelectWaiver = waiver => {
+        if (this.state.selectedWaiver === waiver.id) {
+            this.setState({ selectedWaiver: null });
+        } else {
+            this.setState({ selectedWaiver: waiver.id });
+        }
+    };
+
     render() {
         const { orders, experiences } = this.props;
         return (
-            <Layout header={<Header title={'Select Reservation'} back={'SearchWaivers'} />}>
-                <WaiverExperienceList onSignWaiver={this.handleSignWaiver} orders={orders} experiences={experiences} />
-            </Layout>
+            <>
+                <Header back={true} steps={['Search', 'Select Reservation', 'Sign Waiver']} currentStep={2} />
+                <Layout>
+                    <WaiverExperienceList
+                        onSignWaiver={this.handleSignWaiver}
+                        orders={orders}
+                        experiences={experiences}
+                        onSelectWaiver={this.onSelectWaiver}
+                        selectedWaiver={this.state.selectedWaiver}
+                    />
+                </Layout>
+            </>
         );
     }
 }
@@ -31,7 +52,4 @@ const mapDispatchToProps = {
     selectOrderItem,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SelectWaiver);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectWaiver);
