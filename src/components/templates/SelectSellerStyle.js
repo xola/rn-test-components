@@ -1,25 +1,24 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        alignSelf: 'center',
-
-        paddingLeft: '25%',
-        paddingRight: '25%',
-        paddingTop: '10%',
+        paddingTop: w(40)
     },
     content: {
         justifyContent: 'space-evenly',
     },
     title: {
-        alignSelf: 'center',
-        paddingTop: '10%',
+        paddingTop: w(60),
+        fontSize: variables.h3Size,
+        fontFamily: variables.fontBold
     },
     subtitle: {
-        alignSelf: 'center',
-        marginTop: 20,
+        paddingTop: w(12),
+        fontSize: variables.fontSize,
+        fontFamily: variables.fontLight
     },
 });
 export default styles;

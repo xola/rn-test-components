@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import LoadingButton from './LoadingButton';
+import { Image, TouchableOpacity, Text } from 'react-native';
+import xolaApi from '../../api/xolaApi';
 import styles from './SellerDelegateStyle';
 
 /**
@@ -12,12 +12,14 @@ class SellerDelegate extends Component {
     };
 
     render() {
-        const { name } = this.props.seller;
+        const { name, id } = this.props.seller;
+        const sellerImg = xolaApi.xolaUrl(`/api/sellers/${id}/logo?height=512&format=png`);
 
         return (
-            <View style={styles.container}>
-                <LoadingButton title={name} onPress={this.handleSelectSeller} styleNames={['large', 'empty']} />
-            </View>
+            <TouchableOpacity style={styles.container} onPress={this.handleSelectSeller} >
+                <Image source={{ uri: sellerImg }} style={styles.image} />
+                <Text style={styles.text}>{name}</Text>
+            </TouchableOpacity>
         );
     }
 }

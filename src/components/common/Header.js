@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import ProgressBar from './ProgressBar';
 import NavigationService from '../NavigationService';
-import { View, TouchableOpacity } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import styles from './HeaderStyle';
-import CustomIcon from './CustomIcon';
 import StyledText from './StyledText';
 import PropTypes from 'prop-types';
+import variables from '../../styles/variables';
+import { BackIcon, ConfirmedIcon } from '../../images/svg';
 
 export const PROGRESS_STEPS = ['Activity', 'Date & Time', 'Information', 'Payment'];
 
@@ -39,43 +39,64 @@ class Header extends Component {
     };
 
     handleBackClick = () => {
-        if (_.isFunction(this.props.back)) {
-            this.props.back();
-            return;
-        }
-        NavigationService.navigate(this.props.back);
+        NavigationService.goBack()
     };
+
+    getTextColor = (index) => {
+        if (this.props.currentStep < (index + 1)) {
+            return variables.darkGrey
+        } else if (this.props.currentStep === (index + 1)) {
+            return variables.mainBlue
+        } else {
+            return variables.green
+        }
+    }
+
+    getBackgroundColor = (index) => {
+        if (this.props.currentStep < (index + 1)) {
+            return variables.grey
+        } else if (this.props.currentStep === (index + 1)) {
+            return variables.mainBlue
+        } else {
+            return variables.white
+        }
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.back}>
-                    {this.props.back ? (
-                        <TouchableOpacity onPress={this.handleBackClick}>
-                            {this.props.back === 'Home' ? (
-                                <StyledText styleNames={['h1']} style={styles.backIcon}>
-                                    Home
-                                </StyledText>
-                            ) : (
-                                <CustomIcon style={styles.backIcon} size={36} name="arrow-left" />
-                            )}
-                        </TouchableOpacity>
-                    ) : null}
-                </View>
+                {this.props.back && <TouchableOpacity onPress={this.handleBackClick} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>}
 
                 <View style={styles.steps}>
-                    {this.props.title ? (
-                        <StyledText styleNames={['h1']} style={styles.title}>
-                            {this.props.title}
-                        </StyledText>
-                    ) : null}
-
-                    {this.props.currentStep ? (
-                        <ProgressBar steps={PROGRESS_STEPS} step={this.props.currentStep} />
-                    ) : null}
+                    <FlatList
+                        data={this.props.steps}
+                        extraData={this.props.steps}
+                        renderItem={({ item, index }) =>
+                            <View style={styles.step}>
+                                {this.props.currentStep - 2 < (index) ? <View style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}>
+                                    <StyledText style={[styles.stepText, { color: this.props.currentStep === (index + 1) ? variables.white : variables.darkGrey }]}>
+                                        {index + 1}
+                                    </StyledText>
+                                </View> : <View style={[styles.stepCount, { backgroundColor: this.getBackgroundColor(index) }]}>
+                                    <ConfirmedIcon />
+                                </View>}
+                                <StyledText style={[styles.stepText, { color: this.getTextColor(index) }]}>
+                                    {item}
+                                </StyledText>
+                            </View>
+                        }
+                        ItemSeparatorComponent={
+                            () => <View style={styles.separator} >
+                                <View style={styles.separatorLine} />
+                            </View>}
+                        keyExtractor={item => item.id}
+                        horizontal={true}
+                    />
                 </View>
 
-                <View style={styles.forward}>{this.props.right}</View>
+                {this.props.right && <View style={styles.forward}>{this.props.right()}</View>}
             </View>
         );
     }

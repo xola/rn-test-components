@@ -42,13 +42,13 @@ class Setup extends Component {
                                 <View style={styles.buttons}>
                                     <LoadingButton
                                         onPress={this.handleLaunchKioskClick}
-                                        styleNames={['large', 'success', 'wide']}
+                                        styleNames={['large', 'flex', 'active']}
                                         title="Launch Kiosk"
                                     />
                                     {this.props.isEMVEnabled ? (
                                         <LoadingButton
                                             onPress={this.handlePaymentHardwareClick}
-                                            styleNames={['large']}
+                                            styleNames={['large', 'neutral', 'flex']}
                                             title="Configure Payment Hardware"
                                         />
                                     ) : null}
