@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        flex: 1,
     },
     checkBox: {
         width: w(30),
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        flex: 1,
+        // flex: 1,
     },
     detail: {
         flexDirection: 'row',

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         backgroundColor: variables.white,
         borderWidth: 1,
         borderRadius: variables.borderRadius,
-        height: w(60),
+        borderColor: variables.lightGrey,
+        height: w(70),
     },
     buttonText: {
         fontSize: variables.h6Size,

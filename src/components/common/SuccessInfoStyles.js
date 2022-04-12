@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         fontSize: variables.h3Size,
         color: variables.textColor,
         textAlign: 'center',
-        paddingVertical: w(10)
+        paddingVertical: w(20)
     },
     message: {
         fontFamily: variables.fontLight,

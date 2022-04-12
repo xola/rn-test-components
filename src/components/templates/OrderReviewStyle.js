@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
     placeholderColor: {
         color: variables.textColorMuted,
     },
+    row: {
+        flexDirection: 'row'
+    }
 });
 
 export default styles;

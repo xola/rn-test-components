@@ -18,7 +18,8 @@ import Header from '../common/Header';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import headerStyles from '../common/HeaderStyle'
-import { NextIcon } from '../../images/svg';
+import variables from '../../styles/variables';
+import Currency from '../common/Currency';
 
 class OrderReviewFinal extends Component {
     handlePayClick = async params => {
@@ -69,9 +70,11 @@ class OrderReviewFinal extends Component {
                     <>
                         <Header
                             back={true}
-                            right={() => true ? <TouchableOpacity onPress={handleSubmit} style={headerStyles.next}>
-                                <Text style={headerStyles.nextText}>{'Next'}</Text>
-                                <NextIcon />
+                            right={() => true ? <TouchableOpacity onPress={handleSubmit} style={[headerStyles.next, { backgroundColor: variables.green }]}>
+                                <View style={styles.row}>
+                                    <Text style={headerStyles.nextText}>{'Pay'}</Text>
+                                    <Text style={[headerStyles.nextText, { paddingRight: 0 }]}><Currency>{total}</Currency></Text>
+                                </View>
                             </TouchableOpacity> : <View />}
                             steps={["Product", "Time", "Quantity", "Info", "Pay"]}
                             currentStep={5}
@@ -87,6 +90,7 @@ class OrderReviewFinal extends Component {
                                         order={this.props.cart.order}
                                         payment={this.props.payment}
                                         device={device}
+                                        total={total}
                                     />
                                 ) : null
                             }
