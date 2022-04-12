@@ -20,6 +20,7 @@ import FailedIcon from './failed'
 import CardIcon from './card'
 import WaiverIcon from './waiver'
 import ProcessingIcon from './processing'
+import SearchIcon from './search'
 
 export {
     KioskAppIcon,
@@ -43,5 +44,6 @@ export {
     FailedIcon,
     CardIcon,
     WaiverIcon,
-    ProcessingIcon
+    ProcessingIcon,
+    SearchIcon
 }

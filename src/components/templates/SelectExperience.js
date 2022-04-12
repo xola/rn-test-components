@@ -8,22 +8,22 @@ import Header from '../common/Header';
 import NavigationService from '../NavigationService';
 import _ from 'lodash';
 import { NextIcon } from '../../images/svg';
-import styles from '../common/HeaderStyle'
+import styles from '../common/HeaderStyle';
 import variables from '../../styles/variables';
 
 class SelectExperience extends Component {
     state = {
-        selectedExperience: null
-    }
+        selectedExperience: null,
+    };
 
     onSelectExperience = experience => {
         if (this.props.route.params?.selectExperienceForSigningWaiver) {
             NavigationService.navigate('SignInWaiver', { experience: experience });
         } else {
             if (this.state.selectedExperience === experience.id) {
-                this.setState({ selectedExperience: null })
+                this.setState({ selectedExperience: null });
             } else {
-                this.setState({ selectedExperience: experience.id })
+                this.setState({ selectedExperience: experience.id });
             }
         }
     };
@@ -31,13 +31,13 @@ class SelectExperience extends Component {
     handleNext = () => {
         this.props.selectExperience(this.state.selectedExperience);
         NavigationService.navigate('ExperienceAvailability');
-    }
+    };
 
     render() {
         const { experiences } = this.props;
         const selectExperienceForSigningWaiver = this.props.route.params?.selectExperienceForSigningWaiver;
         const visibleExperiences = [];
-        _.map(experiences, function (experience, key) {
+        _.map(experiences, function(experience, key) {
             if (experience.visible) {
                 visibleExperiences.push(experience);
             }
@@ -46,9 +46,12 @@ class SelectExperience extends Component {
         if (selectExperienceForSigningWaiver) {
             return (
                 <>
-                    <Header back={true} steps={["Product", "Time", "Quantity", "Info", "Pay"]} currentStep={1} />
+                    <Header back={true} steps={['Product', 'Time', 'Quantity', 'Info', 'Pay']} currentStep={1} />
                     <Layout>
-                        <ExperiencesList onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
+                        <ExperiencesList
+                            onSelectExperience={this.onSelectExperience}
+                            experiences={visibleExperiences}
+                        />
                     </Layout>
                 </>
             );
@@ -57,15 +60,35 @@ class SelectExperience extends Component {
                 <>
                     <Header
                         back={true}
-                        right={() => this.state.selectedExperience ? <TouchableOpacity onPress={() => this.handleNext()} style={[styles.next, { backgroundColor: !this.state.selectedExperience ? variables.lightGrey : variables.mainBlue }]}>
-                            <Text style={styles.nextText}>Next</Text>
-                            <NextIcon />
-                        </TouchableOpacity> : <View />}
-                        steps={["Product", "Time", "Quantity", "Info", "Pay"]}
+                        right={() =>
+                            this.state.selectedExperience ? (
+                                <TouchableOpacity
+                                    onPress={() => this.handleNext()}
+                                    style={[
+                                        styles.next,
+                                        {
+                                            backgroundColor: !this.state.selectedExperience
+                                                ? variables.lightGrey
+                                                : variables.mainBlue,
+                                        },
+                                    ]}
+                                >
+                                    <Text style={styles.nextText}>Next</Text>
+                                    <NextIcon />
+                                </TouchableOpacity>
+                            ) : (
+                                <View />
+                            )
+                        }
+                        steps={['Product', 'Time', 'Quantity', 'Info', 'Pay']}
                         currentStep={1}
                     />
                     <Layout>
-                        <ExperiencesList selectedExperience={this.state.selectedExperience} onSelectExperience={this.onSelectExperience} experiences={visibleExperiences} />
+                        <ExperiencesList
+                            selectedExperience={this.state.selectedExperience}
+                            onSelectExperience={this.onSelectExperience}
+                            experiences={visibleExperiences}
+                        />
                     </Layout>
                 </>
             );
@@ -81,7 +104,4 @@ const mapDispatchToProps = {
     selectExperience,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SelectExperience);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectExperience);

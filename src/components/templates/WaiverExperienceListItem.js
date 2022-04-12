@@ -26,7 +26,7 @@ class WaiverExperienceListItem extends Component {
     }
 
     render() {
-        const { experiences, item } = this.props;
+        const { experiences, item, onClick, selectedWaiver } = this.props;
         if (!item.experience) {
             return null;
         }
@@ -34,7 +34,14 @@ class WaiverExperienceListItem extends Component {
         if (!experience) {
             return null;
         }
-        return <ListItem actionButton={this.renderActionButton()} order={this.props.order} item={this.props.item} />;
+        return (
+            <ListItem
+                onClick={onClick}
+                selectedWaiver={selectedWaiver}
+                order={this.props.order}
+                item={this.props.item}
+            />
+        );
     }
 }
 
