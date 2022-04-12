@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView, Image, View, Linking } from 'react-native';
 import TextInput from '../common/TextInput';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../../actions/authActions';
@@ -11,11 +11,22 @@ import userSchema from '../../schemas/userSchema';
 import logo from '../../images/xola-logo.png';
 import Layout from '../common/Layout';
 import FormGroup from '../common/FormGroup';
+import StyledText from '../common/StyledText';
+import { KioskAppIcon } from '../../images/svg'
+import { PRIVACY_POLICY_URL, SIGN_UP_URL } from '../../constants/externalUrlConstants';
 
 class LogIn extends Component {
     onLogInClick = async params => {
         await this.props.authenticateUser(params);
     };
+
+    openSignUp = () => {
+        Linking.openURL(SIGN_UP_URL)
+    }
+
+    openPrivacy = () => {
+        Linking.openURL(PRIVACY_POLICY_URL)
+    }
 
     render() {
         return (
@@ -26,40 +37,53 @@ class LogIn extends Component {
             >
                 {props => (
                     <Layout>
-                        <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
-                            <Image style={styles.image} source={logo} />
-
-                            <FormGroup>
+                        <Image style={styles.image} source={logo} />
+                        <View keyboardShouldPersistTaps="handled" style={styles.container}>
+                            <View style={styles.brand}>
+                                <KioskAppIcon />
+                                <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
+                            </View>
+                            <FormGroup style={styles.flex}>
                                 <TextInput
                                     id="username"
+                                    title="E-mail"
                                     onChangeText={props.handleChange('username')}
                                     onSubmitEditing={props.handleSubmit}
-                                    placeholder="Email"
                                     keyboardType="email-address"
                                 />
 
                                 <ErrorMessage name="username" />
-                            </FormGroup>
 
-                            <FormGroup>
                                 <TextInput
                                     id="password"
+                                    title="Password"
                                     onChangeText={props.handleChange('password')}
                                     onSubmitEditing={props.handleSubmit}
-                                    placeholder="Password"
                                     secureTextEntry={true}
                                 />
-
                                 <ErrorMessage name="password" />
                             </FormGroup>
-
-                            <LoadingButton
-                                onPress={props.handleSubmit}
-                                isLoading={this.props.auth.isLoading}
-                                styleNames={['medium', 'success']}
-                                title="Log In"
-                            />
-                        </ScrollView>
+                            <FormGroup style={styles.flex}>
+                                <View style={styles.buttonContainer}>
+                                    <LoadingButton
+                                        onPress={() => this.openSignUp()}
+                                        styleNames={['large', 'neutral', 'flex']}
+                                        title="Not a Xola customer?"
+                                    />
+                                    <LoadingButton
+                                        onPress={props.handleSubmit}
+                                        isLoading={this.props.auth.isLoading}
+                                        styleNames={['large', 'active', 'flex']}
+                                        title="Login"
+                                    />
+                                </View>
+                                <LoadingButton
+                                    onPress={() => this.openPrivacy()}
+                                    styleNames={['large', 'link', 'flex']}
+                                    title="Privacy Policy"
+                                />
+                            </FormGroup>
+                        </View>
                     </Layout>
                 )}
             </Formik>

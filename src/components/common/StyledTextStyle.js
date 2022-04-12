@@ -1,20 +1,27 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
+
 const styles = StyleSheet.create({
     basicText: {
-        fontSize: variables.fontSize,
+        fontSize: w(variables.fontSize),
+    },
+    large: {
+        fontSize: w(variables.h1Size),
+        fontFamily: variables.fontBold,
+        color: variables.textColor,
     },
     h1: {
-        fontSize: variables.h1Size,
+        fontSize: w(variables.h1Size),
     },
     h2: {
-        fontSize: variables.h2Size,
+        fontSize: w(variables.h2Size),
     },
     h3: {
-        fontSize: variables.h3Size,
+        fontSize: w(variables.h3Size),
     },
     h4: {
-        fontSize: variables.h4Size,
+        fontSize: w(variables.h4Size),
     },
     uppercase: {
         textTransform: 'uppercase',

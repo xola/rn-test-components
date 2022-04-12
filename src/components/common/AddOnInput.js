@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import Spinner from './Spinner';
-import { View, Switch, Picker } from 'react-native';
+import { View, Text, Picker, TouchableOpacity } from 'react-native';
 import ClickablePicker from './ClickablePicker';
 import styles from './AddOnInputStyle';
 import PropTypes from 'prop-types';
+import Currency from './Currency';
+import { CheckIcon } from '../../images/svg';
+import { format } from '../../utils/Currency';
 
 /**
  * Input component that determines type of input to be shown based on addOn type
@@ -53,50 +56,78 @@ class AddOnInput extends Component {
 
         if (addOn.object === 'quantity') {
             return (
-                <Spinner
-                    key={addOn.configuration.id}
-                    label={addOn.label}
-                    description={addOn.desc}
-                    value={addOn.quantity}
-                    onChange={this.handleQuantityChange}
-                    id={addOn.configuration.id}
-                    name="Add On"
-                    min={0}
-                />
+                <View style={styles.container}>
+                    <View style={[styles.action, { borderWidth: 0 }]}>
+                        <Spinner
+                            key={addOn.configuration.id}
+                            description={addOn.desc}
+                            value={addOn.quantity}
+                            onChange={this.handleQuantityChange}
+                            id={addOn.configuration.id}
+                            name="Add On"
+                            min={0}
+                            addOnValue={() => <View style={styles.quantityContainer}>
+                                <Text style={styles.quantity}>
+                                    {addOn.quantity}
+                                </Text>
+                                <Text style={[styles.description, { marginLeft: 0 }]}>
+                                    <Currency>{addOn.configuration.price}</Currency> / add-on
+                                </Text>
+                            </View>}
+                        />
+                    </View>
+                    <View style={styles.detail}>
+                        <Text style={styles.label}>{addOn.label}</Text>
+                        <Text style={styles.description}>{addOn.description}</Text>
+                    </View>
+                </View>
+
             );
         }
 
         if (addOn.object === 'boolean') {
             return (
                 <View style={styles.container}>
-                    <View style={styles.action}>
-                        <Switch
-                            id={addOn.configuration.id}
-                            name={addOn.configuration.id}
-                            onValueChange={this.handleBooleanChange}
-                            value={this.state.isChecked}
-                        />
+                    <TouchableOpacity onPress={() => this.handleBooleanChange(!this.state.isChecked)} style={styles.action}>
+                        <View style={styles.flex}>
+                            <View style={styles.content}>
+                                <View style={styles.checkBox}>
+                                    {this.state.isChecked && <CheckIcon />}
+                                </View>
+                                <Text style={styles.description}><Currency>{addOn.configuration.price}</Currency></Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.detail}>
+                        <Text style={styles.label}>{addOn.label}</Text>
+                        <Text style={styles.description}>{addOn.description}</Text>
                     </View>
                 </View>
             );
         }
 
         if (addOn.object === 'choices') {
+            const { currency = 'USD', children: amount = 0 } = this.props
             return (
                 <View style={styles.container}>
                     <View style={styles.action}>
-                        <ClickablePicker
-                            value={this.state.selectedChoice}
-                            onValueChange={this.handleDropDownChange}
-                            title="Choose an option"
-                            textSize={16}
-                        >
-                            <Picker.Item label="None" value={null} />
+                        <View style={styles.content}>
+                            <ClickablePicker
+                                value={this.state.selectedChoice}
+                                onValueChange={this.handleDropDownChange}
+                                title={() => <Text style={styles.description}>Choose an option</Text>}
+                            >
+                                <Picker.Item style={{ backgroundColor: 'red' }} label={'None'} value={null} />
 
-                            {addOn.choices.map(choice => (
-                                <Picker.Item label={choice.name} key={choice.id} value={choice.id} />
-                            ))}
-                        </ClickablePicker>
+                                {addOn.choices.map(choice => (
+                                    <Picker.Item label={`${choice.name} - ${format(choice.price, currency)}`} key={choice.id} value={choice.id} />
+                                ))}
+                            </ClickablePicker>
+                        </View>
+                    </View>
+                    <View style={styles.detail}>
+                        <Text style={styles.label}>{addOn.label}</Text>
+                        <Text style={styles.description}>{addOn.description}</Text>
                     </View>
                 </View>
             );

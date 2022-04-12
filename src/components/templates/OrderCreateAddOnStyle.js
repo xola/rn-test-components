@@ -27,12 +27,6 @@ const styles = StyleSheet.create({
     },
     labelContainer: {
         flexDirection: 'row',
-        flex: 3,
-        paddingLeft: w(20)
-    },
-    counterContainer: {
-        flexDirection: 'row',
-        flex: 1,
     },
     quantity: {
         flex: 1,
@@ -64,10 +58,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     inputGroup: {
-        marginTop: w(20),
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1
+        marginTop: 20,
     },
 });
 

@@ -4,6 +4,7 @@ import Modals from './Modals';
 import styles from './LayoutStyle';
 import Errors from './Errors';
 import PropTypes from 'prop-types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 /**
  * Layout component used on most page templates.
@@ -25,21 +26,23 @@ class Layout extends Component {
         }
 
         return (
-            <View style={styles.container} {...rest}>
-                {header ? <View style={styles.header}>{header}</View> : null}
+            <SafeAreaView style={styles.container}>
+                <View style={styles.content} {...rest}>
+                    {header ? <View style={styles.header}>{header}</View> : null}
 
-                <View style={styleArray} role="main">
-                    <Errors />
-                    <Modals>{modals}</Modals>
-                    {children}
-                </View>
-
-                {footer ? (
-                    <View style={styles.footer}>
-                        <View>{footer}</View>
+                    <View style={styleArray} role="main">
+                        <Errors />
+                        <Modals>{modals}</Modals>
+                        {children}
                     </View>
-                ) : null}
-            </View>
+
+                    {footer ? (
+                        <View style={styles.footer}>
+                            <View>{footer}</View>
+                        </View>
+                    ) : null}
+                </View>
+            </SafeAreaView>
         );
     }
 }

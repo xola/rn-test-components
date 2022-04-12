@@ -5,8 +5,16 @@ function navigate(name, params) {
         navigationRef.navigate(name, params);
     }
 }
+
+function goBack() {
+    if (navigationRef.isReady()) {
+        navigationRef.goBack();
+    }
+}
+
 export const navigationRef = createNavigationContainerRef();
 
 export default {
     navigate,
+    goBack
 };

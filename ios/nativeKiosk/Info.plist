@@ -66,6 +66,8 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>xola-icons.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-Light.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

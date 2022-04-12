@@ -1,19 +1,29 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'stretch',
-        paddingBottom: 20,
+        paddingVertical: 20,
     },
     columnDate: {
-        flex: 3,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    next: {
+        paddingVertical: w(13),
+        paddingHorizontal: w(17),
+        borderRadius: w(6),
+        borderColor: variables.lightGrey,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     columnTime: {
-        flex: 2,
-        marginLeft: 10,
+        paddingTop: w(60)
     },
     newDates: {
         flexDirection: 'row',
@@ -22,6 +32,7 @@ const styles = StyleSheet.create({
     isLoading: {
         justifyContent: 'center',
         alignItems: 'center',
+        flex: 1
     },
     dates: {
         flexDirection: 'row',
@@ -30,31 +41,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     label: {
-        marginBottom: 20,
-        marginTop: 30,
+        fontFamily: variables.fontBold,
+        fontSize: w(32),
+        color: variables.titleText,
+        paddingHorizontal: w(80)
     },
-    time: {
-        flex: 7,
-    },
-    timeSlots: {
-        marginTop: 25,
-        height: '100%',
-    },
-    dateLink: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    dateLinkText: {
+    noDate: {
         fontSize: variables.h3Size,
-        fontWeight: 'bold',
-        color: variables.blue,
-        paddingHorizontal: 5,
-    },
-    dateLinkIcon: {
-        paddingTop: 3,
-        fontSize: 30,
-        color: variables.blue,
+        fontFamily: variables.fontLight,
+        color: variables.textColor,
     },
 });
 
