@@ -59,8 +59,8 @@ class ExperienceAvailability extends Component {
             timeSlots = timeSlots.filter(open => open > 0);
         } else {
             timeSlots = _.pickBy(timeSlots, open => open > 0);
+            timeSlots = Object.keys(timeSlots).map(item => { return { timeSlot: item, openSlots: timeSlots[item] } })
         }
-        timeSlots = Object.keys(timeSlots).map(item => { return { timeSlot: item, openSlots: timeSlots[item] } })
 
         return (
             <>
