@@ -15,6 +15,10 @@ import PairIcon from './pair'
 import UnPairIcon from './unpair'
 import BBPoSICon from './bbpos'
 import XolaDeviceIcon from './xolaDevice'
+import SuccessIcon from './success'
+import FailedIcon from './failed'
+import CardIcon from './card'
+import WaiverIcon from './waiver'
 
 export {
     KioskAppIcon,
@@ -33,5 +37,9 @@ export {
     PairIcon,
     UnPairIcon,
     BBPoSICon,
-    XolaDeviceIcon
+    XolaDeviceIcon,
+    SuccessIcon,
+    FailedIcon,
+    CardIcon,
+    WaiverIcon
 }

@@ -55,7 +55,24 @@ const styles = StyleSheet.create({
 
         justifyContent: 'space-between',
         alignItems: 'center'
-    }
+    },
+    back: {
+        paddingVertical: w(23),
+        paddingHorizontal: w(27),
+        borderRadius: w(10),
+        borderColor: variables.lightGrey,
+        backgroundColor: variables.white,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: w(60),
+        width: w(100),
+        flexDirection: 'row',
+        position: 'absolute',
+        left: w(20),
+        top: w(20),
+        zIndex: 999,
+    },
 });
 
 export default styles;

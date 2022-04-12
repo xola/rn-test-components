@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         borderRadius: 0,
     },
     wide: {
-        width: 400,
+        paddingHorizontal: w(100)
     },
     narrow: {
         width: w(340),
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
 });
 
 export default styles;

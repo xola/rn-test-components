@@ -1,26 +1,26 @@
 import { StyleSheet } from 'react-native';
 import variables from '../../styles/variables';
+import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
-        height: '50%',
-        width: '50%',
-        marginTop: '5%',
-        flexDirection: 'column',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'center',
     },
-    icon: {
-        padding: 30,
-        borderRadius: 44,
-        overflow: 'hidden',
-        backgroundColor: variables.brandSuccessDisabled,
-        borderColor: variables.brandSuccess,
-        color: variables.brandSuccess,
-        borderWidth: 1,
-        borderStyle: 'solid',
+    title: {
+        fontFamily: variables.fontBold,
+        fontSize: variables.h3Size,
+        color: variables.textColor,
+        textAlign: 'center',
+        paddingVertical: w(10)
     },
+    message: {
+        fontFamily: variables.fontLight,
+        fontSize: w(26),
+        color: variables.textColor,
+        textAlign: 'center'
+    }
 });
 
 export default styles;

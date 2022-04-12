@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import _ from 'lodash';
 import SelectDropdown from 'react-native-select-dropdown'
 import { connect } from 'react-redux';
@@ -22,7 +22,7 @@ import ErrorMessage from '../form/ErrorMessage';
 import { object, string } from 'yup';
 import { getPairedReader } from '../../selectors/readersSelector';
 import { w } from '../../utils/Scale';
-import { DropDownIcon } from '../../images/svg';
+import { BackIcon, DropDownIcon } from '../../images/svg';
 
 const computerSchema = object().shape({
     label: string().required('Required'),
@@ -73,8 +73,10 @@ class DiscoverDevices extends Component {
         const { availableReaders, connectedReader, computer, isDiscovering } = readers;
 
         return (
-
             <Layout>
+                {<TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>}
                 <ScrollView style={styles.container}>
                     <View style={styles.top}>
                         <Text style={styles.title}>Hardware Configuration</Text>
