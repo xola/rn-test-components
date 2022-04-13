@@ -10,6 +10,8 @@ import _ from 'lodash';
 import { NextIcon } from '../../images/svg';
 import styles from '../common/HeaderStyle';
 import variables from '../../styles/variables';
+import titleStyles from './WaiverExperienceListStyle';
+import StyledText from '../common/StyledText';
 
 class SelectExperience extends Component {
     state = {
@@ -17,14 +19,14 @@ class SelectExperience extends Component {
     };
 
     onSelectExperience = experience => {
-        if (this.props.route.params?.selectExperienceForSigningWaiver) {
-            NavigationService.navigate('SignInWaiver', { experience: experience });
+        if (this.state.selectedExperience === experience.id) {
+            this.setState({ selectedExperience: null });
         } else {
-            if (this.state.selectedExperience === experience.id) {
-                this.setState({ selectedExperience: null });
-            } else {
-                this.setState({ selectedExperience: experience.id });
-            }
+            this.setState({ selectedExperience: experience.id });
+        }
+        if (this.props.route.params?.selectExperienceForSigningWaiver) {
+            !this.state.selectedExperience &&
+                setTimeout(() => NavigationService.navigate('SignInWaiver', { experience }), 1000);
         }
     };
 
@@ -46,11 +48,17 @@ class SelectExperience extends Component {
         if (selectExperienceForSigningWaiver) {
             return (
                 <>
-                    <Header back={true} steps={['Product', 'Time', 'Quantity', 'Info', 'Pay']} currentStep={1} />
+                    <Header back={true} steps={['Search', 'Select Product', 'Sign Waiver']} currentStep={2} />
                     <Layout>
+                        <View style={titleStyles.header}>
+                            <StyledText style={titleStyles.headerTitle} styleNames={['h1']}>
+                                Which activity are you attending?
+                            </StyledText>
+                        </View>
                         <ExperiencesList
                             onSelectExperience={this.onSelectExperience}
                             experiences={visibleExperiences}
+                            selectedExperience={this.state.selectedExperience}
                         />
                     </Layout>
                 </>

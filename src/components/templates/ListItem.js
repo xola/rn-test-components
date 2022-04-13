@@ -47,7 +47,6 @@ class ListItem extends Component {
         const obfuscatedCustomerEmail = order.customerEmail
             ? order.customerEmail.replace(/(^.{1,3})(.*)@(.{1,3})(.*)/, '$1***@$3**.***')
             : null;
-        console.log('experience.waiverPreference: ', experience.waiverPreference);
         return (
             <TouchableOpacity
                 style={[

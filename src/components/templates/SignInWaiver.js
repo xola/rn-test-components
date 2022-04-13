@@ -44,7 +44,15 @@ class SignInWaiver extends Component {
 
         return (
             <>
-                <Header back={true} steps={['Search', 'Select Reservation', 'Sign Waiver']} currentStep={3} />
+                <Header
+                    back={true}
+                    steps={[
+                        'Search',
+                        `Select ${this.props.route.params?.experience ? 'Product' : 'Reservation'}`,
+                        'Sign Waiver',
+                    ]}
+                    currentStep={3}
+                />
                 <Layout noPadding={true}>
                     <StyledText style={styles.title} styleNames={['h1']}>
                         Sign Waiver
