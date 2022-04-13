@@ -9,6 +9,7 @@ import LoadingButton from '../common/LoadingButton';
 import OrderInfo from '../common/OrderInfo';
 import PrintTickets from './PrintTickets';
 import { addTicket, printTickets } from '../../actions/printerActions';
+import { WaiverIcon } from '../../images/svg';
 
 class SuccessPage extends Component {
     handlePrintingTickets = async (ticket, total) => {
@@ -31,24 +32,21 @@ class SuccessPage extends Component {
 
         return (
             <Layout>
-                <View styles={styles.container}>
-                    <SuccessInfo title="Congratulations" message={(this.props.route.params?.message, 'Success!')} />
+                <SuccessInfo title="Purchase Complete" message={"Your booking confirmation has been sent to your [email &/or phone]"} />
 
-                    <OrderInfo experience={experience} item={item} style={{ alignItems: 'center' }} />
-
-                    {experience.waiverPreference ? (
-                        <View style={styles.button}>
-                            <LoadingButton
-                                onPress={this.handleWaiverSignIn}
-                                styleNames={['medium', 'success', 'wide']}
-                                title="Sign Waiver"
-                            />
-                        </View>
-                    ) : null}
+                {experience.waiverPreference ? (
                     <View style={styles.button}>
-                        <LoadingButton onPress={this.handleFinish} styleNames={['medium', 'wide']} title="Finish" />
+                        <LoadingButton
+                            onPress={this.handleWaiverSignIn}
+                            styleNames={['large', 'wide', 'active']}
+                            title="Sign Waiver Now"
+                            icon={() => <WaiverIcon />}
+                        />
                     </View>
-                </View>
+                ) : <View style={styles.button}>
+                    <LoadingButton onPress={this.handleFinish} styleNames={['large', 'active']} title="Done" />
+                </View>}
+
                 {this.props.printer.printer && this.props.submittedItem ? (
                     <View>
                         <PrintTickets

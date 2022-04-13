@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     container: {
         width: w(700),
         alignSelf: 'center',
-        flex: 1
     },
     flex: {
         flex: 1,
@@ -13,7 +12,7 @@ const styles = StyleSheet.create({
     brand: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: w(40),
+        paddingVertical: w(60),
         flex: 1
     },
     brandText: {

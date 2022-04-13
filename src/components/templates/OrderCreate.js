@@ -114,13 +114,13 @@ class OrderCreate extends Component {
                                                 </View>
                                                 <View style={styles.labelContainer}>
                                                     <Text style={styles.demographic}>
-                                                        {demographic.label}
+                                                        {demographic.label} {' '}
+                                                        {demographic.caption && (
+                                                            <Text style={styles.caption}>
+                                                                {demographic.caption}
+                                                            </Text>
+                                                        )}
                                                     </Text>
-                                                    {demographic.caption && (
-                                                        <Text style={styles.caption}>
-                                                            {demographic.caption}
-                                                        </Text>
-                                                    )}
                                                 </View>
                                             </View>
                                         );

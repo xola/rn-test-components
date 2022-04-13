@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Image } from 'react-native';
+import { ScrollView, View, Image, Text } from 'react-native';
 import { format } from '../../utils/Currency';
 import _ from 'lodash';
 import styles from './OrderSummaryStyle';
-import StyledText from './StyledText';
 import Currency from './Currency';
 import xolaApi from '../../api/xolaApi';
 import PropTypes from 'prop-types';
@@ -75,8 +74,6 @@ class OrderSummary extends Component {
 
         return (
             <ScrollView style={styles.container}>
-                <StyledText style={styles.headline}>Booking Summary</StyledText>
-
                 <View style={styles.experience}>
                     <Image style={styles.image} source={image} alt="" />
 
@@ -86,33 +83,31 @@ class OrderSummary extends Component {
                     />
                 </View>
 
-                <StyledText style={styles.headline}>Payment Summary</StyledText>
-
                 <View style={styles.breakdown}>
                     {this.getBreakdownItems().map((item, index) => (
                         <View style={styles.line} key={index}>
-                            <StyledText>{item.label}</StyledText>
-                            <StyledText>{item.value}</StyledText>
+                            <Text style={styles.label}>{item.label}</Text>
+                            <Text style={styles.value}>{item.value}</Text>
                         </View>
                     ))}
 
                     {this.getBreakdownAddOnItems().map((item, index) => (
                         <View style={styles.line} key={index}>
-                            <StyledText>{item.label}</StyledText>
+                            <Text style={styles.label}>{item.label}</Text>
 
-                            <StyledText>
+                            <Text style={styles.label}>
                                 <Currency>{item.value}</Currency>
-                            </StyledText>
+                            </Text>
                         </View>
                     ))}
 
-                    <View style={styles.line}>
-                        <StyledText style={styles.total}>Total</StyledText>
+                    <View style={[styles.line, styles.totalContainer]}>
+                        <Text style={styles.total}>Total</Text>
 
                         {total ? (
-                            <StyledText style={styles.total}>
+                            <Text style={styles.total}>
                                 <Currency>{total}</Currency>
-                            </StyledText>
+                            </Text>
                         ) : null}
                     </View>
                 </View>

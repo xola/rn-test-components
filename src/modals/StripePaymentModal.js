@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Image, Modal, Text, View } from 'react-native';
+import { Modal, Text, View, TouchableOpacity } from 'react-native';
 import styles from './StripePaymentModalStyle';
-import CustomIcon from '../components/common/CustomIcon';
 import LoadingButton from '../components/common/LoadingButton';
 import { STATUS_CONFIRMING, STATUS_ERROR } from '../constants/paymentConstants';
+import Layout from '../components/common/Layout';
+import { BackIcon, CardIcon, FailedIcon, ProcessingIcon } from '../images/svg';
+import NavigationService from '../components/NavigationService';
+import Currency from '../components/common/Currency';
 
 class StripePaymentModal extends Component {
     state = {
@@ -43,72 +46,52 @@ class StripePaymentModal extends Component {
         const time = this.formatTime(this.state.counter.toString());
 
         return (
-            <Modal toggle={toggle} transparent={true} {...rest}>
-                <View style={styles.container}>
+            <Modal toggle={toggle} transparent={false} {...rest}>
+                <Layout>
                     {this.props.payment.status === STATUS_ERROR ? (
-                        <View>
-                            <Image style={styles.image} source={require('../images/chip.png')} />
-                            <Text style={styles.action}>Complete payment using {this.props.device}</Text>
-                            <Text style={styles.info}>
-                                The order will be placed once the payment is processed successfully.
-                            </Text>
-                            <View style={styles.notices}>
-                                <Text style={[styles.notice, styles.alert]}>
-                                    <CustomIcon style={styles.icon} size={20} name="cancel-circle" />{' '}
-                                    {this.props.payment.errorMessage}
-                                </Text>
+                        <View style={styles.container}>
+                            <View style={styles.container}>
+                                <FailedIcon />
+                                <Text style={styles.title}>Payment Failed</Text>
                             </View>
                             <View style={styles.footer}>
                                 <View style={styles.buttons}>
                                     <LoadingButton
                                         onPress={this.props.onRetry}
-                                        title="Try another card"
-                                        styleNames={['success', 'large', 'noRadius']}
+                                        title="Try Again"
+                                        styleNames={['active', 'large', 'wide']}
                                     />
                                     <LoadingButton
                                         onPress={this.props.onClose}
-                                        title="Cancel transaction"
-                                        styleNames={['cancel', 'large', 'noRadius']}
+                                        title="Cancel Purchase"
+                                        styleNames={['inactive', 'large', 'wide']}
                                     />
                                 </View>
                             </View>
                         </View>
                     ) : this.props.payment.status === STATUS_CONFIRMING ? (
-                        <View>
-                            <Image style={styles.image} source={require('../images/chip.png')} />
-                            <Text style={styles.action}>Complete payment using {this.props.device}</Text>
-                            <View style={styles.notices}>
-                                <Text style={[styles.notice, styles.success]}>
-                                    <CustomIcon style={styles.icon} size={20} name="tick-bold" /> Payment completed,
-                                    creating order
-                                </Text>
-                            </View>
+                        <View style={styles.container}>
+                            <ProcessingIcon />
+                            <Text style={styles.title}>Processing Payment</Text>
                         </View>
                     ) : (
-                        <View>
-                            <Image style={styles.image} source={require('../images/chip.png')} />
-                            <Text style={styles.time}>{time}</Text>
-                            <Text style={styles.action}>Complete payment using {this.props.device}</Text>
-                            <Text style={styles.info}>
-                                You have 5 minutes to complete this transaction, after which the booking will expire.
-                            </Text>
-                            <View style={styles.notices}>
-                                <Text style={[styles.notice, styles.neutral]}>
-                                    <CustomIcon style={styles.icon} size={20} name="info" /> Waiting for payment
-                                </Text>
+                        <View style={styles.container}>
+                            <View style={styles.top}>
+                                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                                    <BackIcon />
+                                </TouchableOpacity>
                             </View>
-                            <View style={styles.footer}>
-                                <View style={styles.buttons}>
-                                    <LoadingButton
-                                        title="Cancel transaction"
-                                        onPress={this.props.onClose}
-                                        styleNames={['cancel', 'large', 'noRadius']}
-                                    />
-                                </View>
+                            <View style={styles.container}>
+                                <CardIcon />
+                                <Text style={styles.title}>Insert or Tap your Credit Card</Text>
+                            </View>
+                            <View style={styles.bottom}>
+                                <Text style={styles.title}>Total</Text>
+                                <Text style={styles.title}><Currency>{this.props.total}</Currency></Text>
                             </View>
                         </View>
                     )}
-                </View>
+                </Layout>
             </Modal>
         );
     }

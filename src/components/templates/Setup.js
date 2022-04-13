@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import xolaApi from '../../api/xolaApi';
 import { connect } from 'react-redux';
 import NavigationService from '../NavigationService';
@@ -8,6 +8,7 @@ import { fetchExperiences } from '../../actions/experiencesActions';
 import LoadingButton from '../common/LoadingButton';
 import styles from './HomeStyle';
 import StyledText from '../common/StyledText';
+import { BackIcon } from '../../images/svg';
 
 class Setup extends Component {
     componentDidMount() {
@@ -28,6 +29,9 @@ class Setup extends Component {
 
         return (
             <Layout noReset={true}>
+                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>
                 <View style={styles.container}>
                     {seller.isLoading ? (
                         <View>

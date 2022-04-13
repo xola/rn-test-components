@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import Header from '../common/Header';
 import { Formik } from 'formik';
 import ErrorMessage from '../form/ErrorMessage';
-import LoadingButton from '../common/LoadingButton';
+import IconButton from '../common/IconButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './SearchPageStyle';
 import searchSchema from '../../schemas/searchSchema';
-import xolaApi from '../../api/xolaApi';
 import TextInput from '../common/TextInput';
-import FormGroup from '../common/FormGroup';
 import { resetEmptySearchResult } from '../../actions/orderActions';
 import Icon from 'react-native-vector-icons/AntDesign';
 import NavigationService from '../NavigationService';
+import StyledText from '../common/StyledText';
 
 class SearchPage extends Component {
     componentDidMount() {
@@ -28,9 +27,6 @@ class SearchPage extends Component {
     }
 
     render() {
-        const { seller } = this.props;
-        const logoUrl = xolaApi.xolaUrl(`/api/sellers/${seller.id}/logo?height=512&format=png`);
-
         return (
             <Formik
                 initialValues={{ searchText: '' }}
@@ -38,46 +34,59 @@ class SearchPage extends Component {
                 validationSchema={searchSchema}
             >
                 {props => (
-                    <Layout header={<Header title={this.props.title} back={'Home'} />}>
-                        <KeyboardAwareScrollView extraScrollHeight={200} contentContainerStyle={styles.container}>
-                            <View>
-                                <Image alt={seller.name} style={styles.image} source={{ uri: logoUrl }} />
-                            </View>
-
-                            <FormGroup>
-                                <TextInput
-                                    id="searchText"
-                                    onChangeText={props.handleChange('searchText')}
-                                    onSubmitEditing={props.handleSubmit}
-                                    placeholder="Organizer name, email, phone, or last 4 of your booking ID"
-                                />
-
-                                <ErrorMessage name="searchText" />
-                            </FormGroup>
-
-                            <LoadingButton
-                                isLoading={this.props.order.isLoading}
-                                styleNames={['medium']}
-                                title="Search"
-                                onPress={props.handleSubmit}
-                            />
-
-                            {this.props.order.isEmpty ? (
-                                <View style={styles.notices}>
-                                    <Text style={[styles.notice, styles.alert]}>
-                                        <Icon style={styles.alertIcon} name="warning" /> No bookings were found matching
-                                        your search
-                                    </Text>
+                    <>
+                        <Header back={true} steps={['Search', 'Select Reservation', 'Sign Waiver']} currentStep={1} />
+                        <Layout>
+                            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+                                <View style={styles.steps}>
+                                    {this.props.title ? (
+                                        <StyledText styleNames={['h1']} style={styles.title}>
+                                            {this.props.title}
+                                        </StyledText>
+                                    ) : null}
                                 </View>
-                            ) : null}
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={styles.form}>
+                                        <View style={{ flex: 1 }}>
+                                            <TextInput
+                                                id="searchText"
+                                                onChangeText={props.handleChange('searchText')}
+                                                onSubmitEditing={props.handleSubmit}
+                                                placeholder="Organizer name, email, phone or last 4 of your booking ID"
+                                                style={styles.searchInput}
+                                            />
+                                            <ErrorMessage name="searchText" />
+                                        </View>
+                                        <IconButton
+                                            isLoading={this.props.order.isLoading}
+                                            styleNames={['large']}
+                                            title="SEARCH"
+                                            onPress={props.handleSubmit}
+                                        />
 
-                            {this.props.showFindBookingButton ? (
-                                <Text style={styles.text} onPress={this.handleNoBookingDetails}>
-                                    I don’t have my booking details
-                                </Text>
-                            ) : null}
-                        </KeyboardAwareScrollView>
-                    </Layout>
+                                    </View>
+
+                                </View>
+
+                                {this.props.order.isEmpty ? (
+                                    <View style={styles.notices}>
+                                        <Text style={[styles.notice, styles.alert]}>
+                                            <Icon style={styles.alertIcon} name="warning" /> No bookings were found
+                                            matching your search
+                                        </Text>
+                                    </View>
+                                ) : null}
+
+                                {this.props.showFindBookingButton ? (
+                                    <View style={styles.underline}>
+                                        <Text style={styles.text} onPress={this.handleNoBookingDetails}>
+                                            I don’t have my booking details
+                                        </Text>
+                                    </View>
+                                ) : null}
+                            </KeyboardAwareScrollView>
+                        </Layout>
+                    </>
                 )}
             </Formik>
         );
@@ -93,7 +102,4 @@ const mapDispatchToProps = {
     resetEmptySearchResult,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SearchPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

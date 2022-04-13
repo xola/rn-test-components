@@ -5,6 +5,17 @@ import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import Header from '../common/Header';
 import { getActiveItem, getActiveOrder } from '../../selectors/orderSelector';
+import StyledText from '../common/StyledText';
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+    title: {
+        fontWeight: '700',
+        fontSize: 34,
+        marginTop: 20,
+        marginBottom: 15,
+    },
+});
 
 class SignInWaiver extends Component {
     state = {
@@ -32,22 +43,25 @@ class SignInWaiver extends Component {
         }
 
         return (
-            <Layout
-                noPadding={true}
-                header={<Header title={'Sign Waiver'} back={this.state.canGoBack ? this.onGoBack : 'Home'} />}
-            >
-                <WebView
-                    ref={this.webview}
-                    source={{ uri: source.toString() }}
-                    onNavigationStateChange={navState => {
-                        if (navState.url.includes(source.domain())) {
-                            this.setState({ canGoBack: false });
-                        } else {
-                            this.setState({ canGoBack: navState.canGoBack });
-                        }
-                    }}
-                />
-            </Layout>
+            <>
+                <Header back={true} steps={['Search', 'Select Reservation', 'Sign Waiver']} currentStep={3} />
+                <Layout noPadding={true}>
+                    <StyledText style={styles.title} styleNames={['h1']}>
+                        Sign Waiver
+                    </StyledText>
+                    <WebView
+                        ref={this.webview}
+                        source={{ uri: source.toString() }}
+                        onNavigationStateChange={navState => {
+                            if (navState.url.includes(source.domain())) {
+                                this.setState({ canGoBack: false });
+                            } else {
+                                this.setState({ canGoBack: navState.canGoBack });
+                            }
+                        }}
+                    />
+                </Layout>
+            </>
         );
     }
 }
@@ -60,7 +74,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(SignInWaiver);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInWaiver);
