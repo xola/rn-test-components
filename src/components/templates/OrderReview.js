@@ -3,7 +3,6 @@ import { TouchableOpacity } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import customerSchema from '../../schemas/customerSchema';
-import ErrorMessage from '../form/ErrorMessage';
 import TextInput from '../common/TextInput';
 import FormGroup from '../common/FormGroup';
 import { View, Text } from 'react-native';
@@ -42,7 +41,7 @@ class OrderReview extends Component {
                 validationSchema={customerSchema}
                 onSubmit={this.handlePayClick}
             >
-                {({ values, handleChange, handleBlur, handleSubmit }) => (
+                {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
                     <>
                         <Header
                             back={true}
@@ -69,9 +68,8 @@ class OrderReview extends Component {
                                                 value={values.customerName}
                                                 placeholder="Name"
                                                 title="Name"
+                                                error={errors.customerName}
                                             />
-
-                                            <ErrorMessage name="customerName" />
                                         </View>
                                     </FormGroup>
 
@@ -85,9 +83,8 @@ class OrderReview extends Component {
                                                 placeholder="Email"
                                                 keyboardType="email-address"
                                                 title="Email"
+                                                error={errors.customerEmail}
                                             />
-
-                                            <ErrorMessage name="customerEmail" />
                                         </View>
                                     </FormGroup>
 
@@ -101,6 +98,7 @@ class OrderReview extends Component {
                                                 placeholder={'Phone'}
                                                 keyboardType="phone-pad"
                                                 title="Mobile Phone"
+                                                error={errors.phone}
                                             />
                                         </View>
                                     </FormGroup>

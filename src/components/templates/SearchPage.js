@@ -63,9 +63,9 @@ class SearchPage extends Component {
                                             title="SEARCH"
                                             onPress={props.handleSubmit}
                                         />
-                                        
+
                                     </View>
-                                    
+
                                 </View>
 
                                 {this.props.order.isEmpty ? (

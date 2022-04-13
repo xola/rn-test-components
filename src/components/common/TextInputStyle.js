@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
         fontFamily: variables.fontBold,
         paddingBottom: w(10)
     },
+    error: {
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontBold,
+        paddingBottom: w(10),
+        color: variables.redError
+    },
     container: {
         width: '100%',
         borderStyle: 'solid',

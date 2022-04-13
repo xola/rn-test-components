@@ -4,7 +4,6 @@ import TextInput from '../common/TextInput';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../../actions/authActions';
 import { Formik } from 'formik';
-import ErrorMessage from '../form/ErrorMessage';
 import LoadingButton from '../common/LoadingButton';
 import styles from './LogInStyle';
 import userSchema from '../../schemas/userSchema';
@@ -52,9 +51,8 @@ class LogIn extends Component {
                                             title="E-mail"
                                             onChangeText={props.handleChange('username')}
                                             keyboardType="email-address"
+                                            error={props.errors.username}
                                         />
-
-                                        <ErrorMessage name="username" />
                                     </View>
                                     <View style={[styles.flex, { paddingTop: w(20) }]}>
                                         <TextInput
@@ -62,8 +60,8 @@ class LogIn extends Component {
                                             title="Password"
                                             onChangeText={props.handleChange('password')}
                                             secureTextEntry={true}
+                                            error={props.errors.password}
                                         />
-                                        <ErrorMessage name="password" />
                                     </View>
                                 </FormGroup>
                                 <FormGroup style={styles.flex}>
