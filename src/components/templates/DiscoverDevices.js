@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import _ from 'lodash';
-import SelectDropdown from 'react-native-select-dropdown'
+import SelectDropdown from 'react-native-select-dropdown';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import CardReader from '../common/CardReader';
@@ -14,9 +13,9 @@ import {
     getComputer,
     abortDiscoverReaders,
 } from '../../actions/readersActions';
+import { discoverPrinters, savePrinter } from '../../actions/printerActions';
 import styles from './DiscoverDevicesStyle';
 import NavigationService from '../NavigationService';
-import StyledText from '../common/StyledText';
 import TextInput from '../common/TextInput';
 import ErrorMessage from '../form/ErrorMessage';
 import { object, string } from 'yup';
@@ -28,16 +27,16 @@ const computerSchema = object().shape({
     label: string().required('Required'),
 });
 
-const printers = ["Select Printer", "Printer 1", "Printer 2", "Printer 3", "Printer 4"]
+const printers = ['Select Printer', 'Printer 1', 'Printer 2', 'Printer 3', 'Printer 4'];
 
 class DiscoverDevices extends Component {
     state = {
-        label: ''
-    }
+        label: '',
+    };
 
     componentDidMount() {
         this.props.getComputer();
-        this.handleSubmit('')
+        this.handleSubmit('');
     }
 
     handleOpenCheckout = () => {
@@ -45,19 +44,20 @@ class DiscoverDevices extends Component {
     };
 
     handleSubmit = async () => {
-        const { saveComputer, readers, discoverReaders, abortDiscoverReaders } = this.props;
+        const { saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
 
         if (readers.isDiscovering) {
             abortDiscoverReaders();
         } else {
             await saveComputer(this.state.label);
             discoverReaders();
+            discoverPrinters();
         }
     };
 
-    handleChange = (label) => {
-        this.setState({ label })
-    }
+    handleChange = label => {
+        this.setState({ label });
+    };
 
     componentWillUnmount() {
         this.props.abortDiscoverReaders();
@@ -69,8 +69,9 @@ class DiscoverDevices extends Component {
     }
 
     render() {
-        const { readers, pairedDevice } = this.props;
+        const { readers, pairedDevice, printer } = this.props;
         const { availableReaders, connectedReader, computer, isDiscovering } = readers;
+        const { printers } = printer;
 
         return (
             <Layout>
@@ -82,11 +83,9 @@ class DiscoverDevices extends Component {
                         <Text style={styles.title}>Hardware Configuration</Text>
                     </View>
                     <View style={styles.pos}>
-                        <Text style={styles.headline}>
-                            Payment Terminal
-                        </Text>
+                        <Text style={styles.headline}>Payment Terminal</Text>
                         <TextInput
-                            onChangeText={(text) => this.handleChange(text)}
+                            onChangeText={text => this.handleChange(text)}
                             value={this.state.label}
                             placeholder="Enter a label to identify this mobile device"
                             editable={!isDiscovering}
@@ -96,16 +95,10 @@ class DiscoverDevices extends Component {
                         <ErrorMessage name="label" />
                     </View>
 
-                    <Text style={[styles.label, { paddingTop: w(20) }]}>
-                        Available Devices
-                    </Text>
+                    <Text style={[styles.label, { paddingTop: w(20) }]}>Available Devices</Text>
 
                     {!isDiscovering && !connectedReader ? (
-                        <Text style={styles.buttonText}>
-                            {this.noReadersFound()
-                                && 'No readers found'
-                            }
-                        </Text>
+                        <Text style={styles.buttonText}>{this.noReadersFound() && 'No readers found'}</Text>
                     ) : null}
 
                     {isDiscovering && availableReaders.length === 0 ? (
@@ -123,9 +116,7 @@ class DiscoverDevices extends Component {
                     ) : null}
 
                     {availableReaders.map(reader => {
-                        const isPaired = pairedDevice
-                            ? pairedDevice.serialNumber === reader.serialNumber
-                            : false;
+                        const isPaired = pairedDevice ? pairedDevice.serialNumber === reader.serialNumber : false;
 
                         return isDiscovering ? (
                             <CardReader
@@ -138,24 +129,19 @@ class DiscoverDevices extends Component {
                         ) : null;
                     })}
 
-
-                    <Text style={styles.headline}>
-                        Receipt Printing
-                    </Text>
-                    <Text style={styles.label}>
-                        Select Printer
-                    </Text>
+                    <Text style={styles.headline}>Receipt Printing</Text>
+                    <Text style={styles.label}>Select Printer</Text>
                     <SelectDropdown
                         data={printers}
                         defaultValue="Select Printer"
                         onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
+                            this.props.savePrinter(selectedItem);
                         }}
                         buttonTextAfterSelection={(selectedItem, index) => {
-                            return selectedItem
+                            return selectedItem.information.model;
                         }}
                         rowTextForSelection={(item, index) => {
-                            return item
+                            return item.information.model;
                         }}
                         buttonStyle={styles.printerButton}
                         buttonTextStyle={styles.buttonText}
@@ -164,7 +150,6 @@ class DiscoverDevices extends Component {
                         renderDropdownIcon={() => <DropDownIcon />}
                     />
                 </ScrollView>
-
             </Layout>
         );
     }
@@ -173,6 +158,7 @@ class DiscoverDevices extends Component {
 const mapStateToProps = state => ({
     pairedDevice: getPairedReader(state),
     readers: state.readers,
+    printer: state.printer,
 });
 
 const mapDispatchToProps = {
@@ -183,6 +169,8 @@ const mapDispatchToProps = {
     disconnectReader,
     saveComputer,
     getComputer,
+    discoverPrinters,
+    savePrinter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoverDevices);

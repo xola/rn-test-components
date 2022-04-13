@@ -12,19 +12,12 @@ const TicketPrinterService = {
         manager.discoveryTime = 1000;
         manager.onPrinterFound = async printer => {
             onPrinterFound(printer);
-            await manager.stopDiscovery();
-        };
-
-        manager.onDiscoveryFinished = () => {
-            console.log(`Discovery finished.`);
         };
 
         await manager.startDiscovery();
     },
 
-    async printTicket(printerSettings, uri) {
-        const printer = new StarPrinter(printerSettings);
-
+    async printTicket(printer, uri) {
         try {
             await printer.open();
 
@@ -44,7 +37,6 @@ const TicketPrinterService = {
             console.log(error);
         } finally {
             await printer.close();
-            await printer.dispose();
         }
     },
 };

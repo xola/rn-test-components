@@ -17,7 +17,7 @@ export const savePrinter = printer => async (dispatch, getState) => {
 
 export const discoverPrinters = () => async (dispatch, getState) => {
     dispatch({ type: DISCOVER_PRINTERS_STARTED });
-    await TicketPrinterService.discoverPrinters(savePrinter);
+    await TicketPrinterService.discoverPrinters(discoveredPrinter);
     dispatch({ type: DISCOVER_PRINTERS_FINISHED });
 };
 
