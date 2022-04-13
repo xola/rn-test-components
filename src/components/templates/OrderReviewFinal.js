@@ -1,5 +1,5 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import StripePaymentModal from '../../modals/StripePaymentModal';
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
@@ -9,7 +9,6 @@ import ErrorMessage from '../form/ErrorMessage';
 import StyledText from '../common/StyledText';
 import TextInput from '../common/TextInput';
 import FormGroup from '../common/FormGroup';
-import { View, Text } from 'react-native';
 import React, { Component } from 'react';
 import styles from './OrderReviewStyle';
 import { connect } from 'react-redux';

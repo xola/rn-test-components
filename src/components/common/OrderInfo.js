@@ -57,7 +57,7 @@ class OrderInfo extends Component {
 
                     ) : null}
                 </View>
-                <View style={styles.row}>
+                <View style={[styles.row, { flexWrap: 'wrap' }]}>
                     {_.map(demographics, demographic => {
                         const label = demographic.label
                             ? demographic.label
