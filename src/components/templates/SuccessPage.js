@@ -6,7 +6,6 @@ import Layout from '../common/Layout';
 import styles from './SuccessPageStyle';
 import NavigationService from '../NavigationService';
 import LoadingButton from '../common/LoadingButton';
-import OrderInfo from '../common/OrderInfo';
 import PrintTickets from './PrintTickets';
 import { addTicket, printTickets } from '../../actions/printerActions';
 import { WaiverIcon } from '../../images/svg';
@@ -28,11 +27,18 @@ class SuccessPage extends Component {
     render() {
         const { selectedExperience, collection } = this.props.experiences;
         const experience = collection[selectedExperience];
-        const item = this.props.item;
+        let submittedItem = null;
+        const { submittedOrder, itemIndex } = this.props.cart;
+        if (submittedOrder && submittedOrder.items[itemIndex]) {
+            submittedItem = submittedOrder.items[itemIndex];
+        }
 
         return (
             <Layout>
-                <SuccessInfo title="Purchase Complete" message={"Your booking confirmation has been sent to your [email &/or phone]"} />
+                <SuccessInfo
+                    title="Purchase Complete"
+                    message={'Your booking confirmation has been sent to your [email &/or phone]'}
+                />
 
                 {experience.waiverPreference ? (
                     <View style={styles.button}>
@@ -43,16 +49,18 @@ class SuccessPage extends Component {
                             icon={() => <WaiverIcon />}
                         />
                     </View>
-                ) : <View style={styles.button}>
-                    <LoadingButton onPress={this.handleFinish} styleNames={['large', 'active']} title="Done" />
-                </View>}
+                ) : (
+                    <View style={styles.button}>
+                        <LoadingButton onPress={this.handleFinish} styleNames={['large', 'active']} title="Done" />
+                    </View>
+                )}
 
-                {this.props.printer.printer && this.props.submittedItem ? (
+                {this.props.printer.printer && submittedItem ? (
                     <View>
                         <PrintTickets
                             experience={experience}
-                            item={this.props.submittedItem}
-                            order={this.props.order}
+                            item={submittedItem}
+                            order={submittedOrder}
                             printer={this.props.printer}
                             onTicketLoad={this.handlePrintingTickets}
                         />
@@ -65,9 +73,7 @@ class SuccessPage extends Component {
 
 const mapStateToProps = state => ({
     experiences: state.experiences,
-    item: state.cart.order.items[state.cart.itemIndex],
-    order: state.cart.submittedOrder,
-    submittedItem: state.cart.submittedOrder.items[state.cart.itemIndex],
+    cart: state.cart,
     printer: state.printer,
 });
 
