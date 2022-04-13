@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'center',
     },
+    kioskLogo: {
+        width: w(102),
+        height: w(102),
+        resizeMode: 'contain',
+        alignSelf: 'center',
+    },
     buttonContainer: {
         paddingTop: w(60),
         flexDirection: 'row',

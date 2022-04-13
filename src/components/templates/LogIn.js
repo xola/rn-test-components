@@ -8,10 +8,10 @@ import LoadingButton from '../common/LoadingButton';
 import styles from './LogInStyle';
 import userSchema from '../../schemas/userSchema';
 import logo from '../../images/xola-logo.png';
+import kioskLogo from '../../images/kiosk.png';
 import Layout from '../common/Layout';
 import FormGroup from '../common/FormGroup';
 import StyledText from '../common/StyledText';
-import { KioskAppIcon } from '../../images/svg'
 import { PRIVACY_POLICY_URL, SIGN_UP_URL } from '../../constants/externalUrlConstants';
 import { w } from '../../utils/Scale';
 
@@ -41,7 +41,7 @@ class LogIn extends Component {
                             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
                                 <Image style={styles.image} source={logo} />
                                 <View style={styles.brand}>
-                                    <KioskAppIcon />
+                                    <Image style={styles.kioskLogo} source={kioskLogo} />
                                     <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
                                 </View>
                                 <FormGroup style={styles.flex}>
