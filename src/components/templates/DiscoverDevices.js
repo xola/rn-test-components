@@ -74,9 +74,9 @@ class DiscoverDevices extends Component {
 
         return (
             <Layout>
-                {<TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
                     <BackIcon />
-                </TouchableOpacity>}
+                </TouchableOpacity>
                 <ScrollView style={styles.container}>
                     <View style={styles.top}>
                         <Text style={styles.title}>Hardware Configuration</Text>
