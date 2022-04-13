@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ViewShot from 'react-native-view-shot';
-import { Image, Text } from 'react-native';
+import { Image } from 'react-native';
 import xolaApi from '../../api/xolaApi';
 import moment from 'moment';
 import StyledText from '../common/StyledText';
