@@ -129,7 +129,7 @@ class DiscoverDevices extends Component {
                         ) : null;
                     })}
 
-                    <Text style={styles.headline}>Receipt Printing</Text>
+                    <Text style={styles.headline}>Ticket Printing</Text>
                     <Text style={styles.label}>Select Printer</Text>
                     <SelectDropdown
                         data={printers}
