@@ -19,7 +19,7 @@ class ListItem extends Component {
     };
 
     handleWaiverSelect = () => {
-        this.props.onClick(this.props.experiences[this.props.item.experience.id]);
+        this.props.onClick(this.props.item);
         !this.props.selectedWaiver && setTimeout(this.handleSignWaiver, 1000);
     };
     render() {
@@ -52,8 +52,8 @@ class ListItem extends Component {
                 style={[
                     styles.button,
                     {
-                        backgroundColor: selectedWaiver === experience.id ? variables.lightBlue : variables.white,
-                        borderColor: selectedWaiver === experience.id ? variables.mainBlue : variables.lightGrey,
+                        backgroundColor: selectedWaiver === item.id ? variables.lightBlue : variables.white,
+                        borderColor: selectedWaiver === item.id ? variables.mainBlue : variables.lightGrey,
                     },
                 ]}
                 onPress={this.handleWaiverSelect}
