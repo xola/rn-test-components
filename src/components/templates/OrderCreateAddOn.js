@@ -82,12 +82,13 @@ class OrderCreate extends Component {
         const item = order.items[itemIndex];
         const { addOns = [], group } = this.props.experience;
         const requiredAddOns = addOns.filter(addOn => addOn.required).length;
+        const selected = _.sumBy(_.values(item.addOns), 'quantity');
 
         return (<>
             <Header
                 back={true}
                 right={() => true ? <TouchableOpacity onPress={() => this.handleNext()} style={headerStyles.next}>
-                    <Text style={headerStyles.nextText}>{requiredAddOns === 0 ? 'Skip' : 'Next'}</Text>
+                    <Text style={headerStyles.nextText}>{(requiredAddOns !== 0 || selected !== 0) ? 'Next' : 'Skip'}</Text>
                     <NextIcon />
                 </TouchableOpacity> : <View />}
                 steps={["Product", "Time", "Quantity", "Info", "Pay"]}

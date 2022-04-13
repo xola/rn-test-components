@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import NavigationService from '../NavigationService';
@@ -11,6 +11,7 @@ import styles from './HomeStyle';
 import StyledText from '../common/StyledText';
 import xolaApi from '../../api/xolaApi';
 import { resetCart } from '../../actions/cartActions';
+import { BackIcon } from '../../images/svg';
 
 class Home extends Component {
     handleBookNowClick = () => {
@@ -35,6 +36,9 @@ class Home extends Component {
 
         return (
             <Layout noReset={true}>
+                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>
                 <View style={styles.container}>
                     {seller.isLoading ? (
                         <View>
