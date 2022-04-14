@@ -20,7 +20,7 @@ class PrintTickets extends Component {
             ? this.props.experience.qrCodePreference.ticketGenerationStrategy
             : false;
 
-        if (!ticketQRPreference) {
+        if (!ticketQRPreference || !ticketQRPreference.enabled) {
             return null;
         }
         const totalTickets =
