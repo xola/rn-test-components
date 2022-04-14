@@ -37,7 +37,7 @@ class WaiverExperienceList extends Component {
                     <View>
                         <LoadingButton
                             onPress={this.handleNoBookingDetails}
-                            styleNames={['large', 'neutral', 'wide']}
+                            styleNames={['large', 'neutral', 'narrow']}
                             title="Can’t find your reservation?"
                             style={{
                                 borderColor: '#E0E3E7',

@@ -1,4 +1,5 @@
 import xolaApi from '../api/xolaApi';
+import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 import NavigationService from '../components/NavigationService';
 import { encode as btoa } from 'base-64';
@@ -8,6 +9,10 @@ import { ROLE_SELLER, ROLE_SELLER_ADMIN, ROLE_EMV } from '../constants/sellerCon
 export const AUTHENTICATE_USER_REQUESTED = 'AUTHENTICATE_USER_REQUESTED';
 export const AUTHENTICATE_USER_SUCCEEDED = 'AUTHENTICATE_USER_SUCCEEDED';
 export const AUTHENTICATE_USER_FAILED = 'AUTHENTICATE_USER_FAILED';
+
+export const LOGOUT_USER_REQUESTED = 'LOGOUT_USER_REQUESTED';
+export const LOGOUT_USER_SUCCEEDED = 'LOGOUT_USER_SUCCEEDED';
+export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED';
 
 export const FETCH_SELLER_REQUESTED = 'FETCH_SELLER_REQUESTED';
 export const FETCH_SELLER_SUCCEEDED = 'FETCH_SELLER_SUCCEEDED';
@@ -93,3 +98,14 @@ export const selectSeller = sellerId => async (dispatch, getState) => {
         dispatch({ type: FETCH_SELLER_FAILED, error: 'Invalid username or password' });
     }
 };
+
+export const logout = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: LOGOUT_USER_REQUESTED });
+        NavigationService.goBack()
+        await AsyncStorage.clear()
+        dispatch({ type: LOGOUT_USER_SUCCEEDED });
+    } catch (e) {
+        dispatch({ type: LOGOUT_USER_FAILED, error: 'Logout failed' });
+    }
+}

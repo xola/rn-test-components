@@ -5,6 +5,9 @@ import {
     EMV_ENABLED,
     FETCH_SELLER_SUCCEEDED,
     FETCH_DELEGATORS_SUCCEEDED,
+    LOGOUT_USER_REQUESTED,
+    LOGOUT_USER_FAILED,
+    LOGOUT_USER_SUCCEEDED,
 } from '../actions/authActions';
 import { createReducer } from '@reduxjs/toolkit';
 
@@ -29,6 +32,15 @@ const authReducer = createReducer(initialState, {
         state.seller = seller;
         state.user = user;
         state.apiKey = apiKey;
+    },
+    [LOGOUT_USER_REQUESTED](state) {
+        state.isLoading = true;
+    },
+    [LOGOUT_USER_FAILED](state) {
+        state.isLoading = false;
+    },
+    [LOGOUT_USER_SUCCEEDED](state) {
+        state = initialState
     },
     [EMV_ENABLED](state) {
         state.isEMVEnabled = true;
