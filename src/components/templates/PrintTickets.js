@@ -16,17 +16,16 @@ class PrintTickets extends Component {
     };
 
     render() {
-        const ticketQRPreference = this.props.experience.qrCodePreference
-            ? this.props.experience.qrCodePreference.ticketGenerationStrategy
-            : false;
+        const { qrCodePreference } = this.props.experience;
+        const ticketGenerationStrategy = qrCodePreference ? qrCodePreference.ticketGenerationStrategy : false;
 
-        if (!ticketQRPreference || !ticketQRPreference.enabled) {
+        if (!qrCodePreference || !qrCodePreference.enabled) {
             return null;
         }
         const totalTickets =
-            ticketQRPreference === TICKET_GENERATION_STRATEGY_BOOKING ? 1 : this.props.item.guests.length;
+            ticketGenerationStrategy === TICKET_GENERATION_STRATEGY_BOOKING ? 1 : this.props.item.guests.length;
 
-        if (ticketQRPreference === TICKET_GENERATION_STRATEGY_BOOKING) {
+        if (ticketGenerationStrategy === TICKET_GENERATION_STRATEGY_BOOKING) {
             return (
                 <Ticket
                     item={this.props.item}
