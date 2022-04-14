@@ -263,6 +263,10 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-star-io10 (1.1.0):
+    - React
+  - react-native-view-shot (3.1.2):
+    - React
   - react-native-webview (8.2.1):
     - React
   - React-RCTActionSheet (0.63.4):
@@ -394,6 +398,8 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-star-io10 (from `../node_modules/react-native-star-io10`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -481,6 +487,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-star-io10:
+    :path: "../node_modules/react-native-star-io10"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -558,6 +568,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-star-io10: 271efab5c73dfd305ea8ad0715568070655a69d6
+  react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   react-native-webview: 160ac8d6bb974e2933f2de6bb7464a8e934ff31d
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
@@ -583,4 +595,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9c6710cbfe881d7ca9c3d3d803ccb07815b72c38
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

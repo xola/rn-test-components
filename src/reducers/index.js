@@ -7,6 +7,7 @@ import readersReducer from './readersReducer';
 import cartReducer from './cartReducer';
 import paymentReducer from './paymentReducer';
 import bootstrapReducer from './bootstrapReducer';
+import printerReducer from './printerReducer';
 
 const rootReducer = {
     bootstrap: bootstrapReducer,
@@ -18,6 +19,7 @@ const rootReducer = {
     cart: cartReducer,
     readers: readersReducer,
     payment: paymentReducer,
+    printer: printerReducer,
 };
 
 export default rootReducer;

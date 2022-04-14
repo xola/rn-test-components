@@ -1,17 +1,13 @@
 import { StyleSheet } from 'react-native';
 import variables from '../styles/variables';
+import { w } from '../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: variables.fullHeight * 0.2,
         backgroundColor: variables.white,
         justifyContent: 'center',
-        alignSelf: 'center',
-        shadowColor: variables.grayBase,
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        borderRadius: 5,
+        alignItems: 'center',
+        flex: 1,
     },
     time: {
         fontSize: 60,
@@ -65,17 +61,23 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     footer: {
-        flexDirection: 'row-reverse',
-        backgroundColor: variables.lightestGray,
+        position: 'absolute',
+        width: '100%',
+        alignItems: 'center',
+        left: 0,
+        bottom: w(40)
     },
     buttons: {
         flex: 1,
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
+        width: '75%'
     },
     title: {
-        fontSize: variables.h1Size,
-        color: variables.textModal,
+        fontFamily: variables.fontBold,
+        fontSize: variables.h3Size,
+        color: variables.textColor,
         textAlign: 'center',
+        paddingVertical: w(20)
     },
     subTitle: {
         fontSize: variables.fontSize,
@@ -83,6 +85,39 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         lineHeight: 28,
     },
+    back: {
+        paddingVertical: w(23),
+        paddingHorizontal: w(27),
+        borderRadius: w(10),
+        borderColor: variables.lightGrey,
+        backgroundColor: variables.white,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: w(60),
+        width: w(100),
+        flexDirection: 'row',
+        position: 'absolute',
+        left: w(20),
+        top: w(20),
+        zIndex: 999,
+    },
+    top: {
+        position: 'absolute',
+        width: '100%',
+        left: 0,
+        top: w(20)
+    },
+    bottom: {
+        position: 'absolute',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: '100%',
+        left: 0,
+        bottom: w(20),
+        borderTopWidth: 1,
+        borderTopColor: variables.lightGrey,
+    }
 });
 
 export default styles;

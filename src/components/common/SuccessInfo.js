@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import CustomIcon from './CustomIcon';
+import { View, Text } from 'react-native';
 import styles from './SuccessInfoStyles';
 import StyledText from './StyledText';
 import PropTypes from 'prop-types';
+import { CardIcon, FailedIcon, SuccessIcon } from '../../images/svg';
 
 class SuccessInfo extends Component {
     static propTypes = {
@@ -15,9 +15,9 @@ class SuccessInfo extends Component {
         const { title, message } = this.props;
         return (
             <View style={styles.container}>
-                <CustomIcon style={styles.icon} size={25} name="tick-bold" />
-                <StyledText styleNames={['h2']}>{title}</StyledText>
-                <StyledText styleNames={['h3']}>{message}</StyledText>
+                <SuccessIcon />
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         );
     }

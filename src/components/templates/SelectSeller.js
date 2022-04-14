@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import { ScrollView, FlatList, View } from 'react-native';
+import { TouchableOpacity, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
-import { selectSeller } from '../../actions/authActions';
+import { selectSeller, logout } from '../../actions/authActions';
 import styles from './SelectSellerStyle';
 import Layout from '../common/Layout';
 import _ from 'lodash';
 import SellerDelegate from '../common/SellerDelegate';
 import StyledText from '../common/StyledText';
+import { LogoutIcon } from '../../images/svg';
 
 class SelectSeller extends Component {
+    handleLogout = async () => {
+        await this.props.logout();
+    }
+
     render() {
         return (
             <Layout>
+                <TouchableOpacity onPress={this.handleLogout} style={styles.back}>
+                    <LogoutIcon />
+                </TouchableOpacity>
                 <StyledText style={styles.title}>
                     Select Account
                 </StyledText>
@@ -40,6 +48,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     selectSeller,
+    logout
 };
 
 export default connect(

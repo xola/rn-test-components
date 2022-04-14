@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import _ from 'lodash';
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import CardReader from '../common/CardReader';
@@ -13,39 +13,50 @@ import {
     getComputer,
     abortDiscoverReaders,
 } from '../../actions/readersActions';
-import Header from '../common/Header';
-import LoadingButton from '../common/LoadingButton';
+import { discoverPrinters, savePrinter } from '../../actions/printerActions';
 import styles from './DiscoverDevicesStyle';
 import NavigationService from '../NavigationService';
-import StyledText from '../common/StyledText';
 import TextInput from '../common/TextInput';
-import { Formik } from 'formik';
 import ErrorMessage from '../form/ErrorMessage';
 import { object, string } from 'yup';
 import { getPairedReader } from '../../selectors/readersSelector';
+import { w } from '../../utils/Scale';
+import { BackIcon, DropDownIcon } from '../../images/svg';
 
 const computerSchema = object().shape({
     label: string().required('Required'),
 });
 
+const printers = ['Select Printer', 'Printer 1', 'Printer 2', 'Printer 3', 'Printer 4'];
+
 class DiscoverDevices extends Component {
+    state = {
+        label: '',
+    };
+
     componentDidMount() {
         this.props.getComputer();
+        this.handleSubmit('');
     }
 
     handleOpenCheckout = () => {
         NavigationService.navigate('Home');
     };
 
-    handleSubmit = async ({ label }) => {
-        const { saveComputer, readers, discoverReaders, abortDiscoverReaders } = this.props;
+    handleSubmit = async () => {
+        const { saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
 
         if (readers.isDiscovering) {
             abortDiscoverReaders();
         } else {
-            await saveComputer(label);
+            await saveComputer(this.state.label);
             discoverReaders();
+            discoverPrinters();
         }
+    };
+
+    handleChange = label => {
+        this.setState({ label });
     };
 
     componentWillUnmount() {
@@ -58,89 +69,88 @@ class DiscoverDevices extends Component {
     }
 
     render() {
-        const { readers, pairedDevice } = this.props;
+        const { readers, pairedDevice, printer } = this.props;
         const { availableReaders, connectedReader, computer, isDiscovering } = readers;
+        const { printers } = printer;
 
         return (
-            <Formik
-                initialValues={{ label: computer ? computer.label : '' }}
-                onSubmit={this.handleSubmit}
-                validationSchema={computerSchema}
-                enableReinitialize
-            >
-                {({ handleChange, handleSubmit, values }) => (
-                    <Layout header={<Header title={'Payment Hardware Settings'} back={'Setup'} />}>
-                        <View style={styles.container}>
-                            <View style={styles.pos}>
-                                <StyledText styleNames={['h1']} style={styles.headline}>
-                                    POS Label <StyledText styleNames={['h2', 'required']}>*</StyledText>
-                                </StyledText>
+            <Layout>
+                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>
+                <ScrollView style={styles.container}>
+                    <View style={styles.top}>
+                        <Text style={styles.title}>Hardware Configuration</Text>
+                    </View>
+                    <View style={styles.pos}>
+                        <Text style={styles.headline}>Payment Terminal</Text>
+                        <TextInput
+                            onChangeText={text => this.handleChange(text)}
+                            value={this.state.label}
+                            placeholder="Enter a label to identify this mobile device"
+                            editable={!isDiscovering}
+                            title="Pos Station label"
+                            onEndEditing={() => this.handleSubmit()}
+                        />
+                        <ErrorMessage name="label" />
+                    </View>
 
-                                <TextInput
-                                    onChangeText={handleChange('label')}
-                                    value={values.label}
-                                    placeholder="Enter a label to identify this mobile device"
-                                    editable={!isDiscovering}
-                                />
+                    <Text style={[styles.label, { paddingTop: w(20) }]}>Available Devices</Text>
 
-                                <ErrorMessage name="label" />
-                            </View>
+                    {!isDiscovering && !connectedReader ? (
+                        <Text style={styles.buttonText}>{this.noReadersFound() && 'No readers found'}</Text>
+                    ) : null}
 
-                            <View style={styles.devices}>
-                                <StyledText styleNames={['h1']} style={styles.headline}>
-                                    Devices {isDiscovering ? <ActivityIndicator style={{ paddingBottom: 2 }} /> : null}
-                                </StyledText>
+                    {isDiscovering && availableReaders.length === 0 ? (
+                        <Text style={styles.buttonText}>Looking for devices...</Text>
+                    ) : null}
 
-                                {!isDiscovering && !connectedReader ? (
-                                    <StyledText styleNames={['h3']}>
-                                        {this.noReadersFound()
-                                            ? 'No readers found'
-                                            : 'Click on Discover Devices button to find available devices'}
-                                    </StyledText>
-                                ) : null}
+                    {connectedReader ? (
+                        <CardReader
+                            reader={{ serialNumber: connectedReader }}
+                            onDisconnect={this.props.disconnectReader}
+                            // onOpenCheckout={this.handleOpenCheckout}
+                            isConnected
+                            isPaired
+                        />
+                    ) : null}
 
-                                {isDiscovering && availableReaders.length === 0 ? (
-                                    <StyledText styleNames={['h3']}>Looking for devices...</StyledText>
-                                ) : null}
+                    {availableReaders.map(reader => {
+                        const isPaired = pairedDevice ? pairedDevice.serialNumber === reader.serialNumber : false;
 
-                                {connectedReader ? (
-                                    <CardReader
-                                        reader={{ serialNumber: connectedReader }}
-                                        onDisconnect={this.props.disconnectReader}
-                                        onOpenCheckout={this.handleOpenCheckout}
-                                        isConnected
-                                        isPaired
-                                    />
-                                ) : null}
-
-                                {availableReaders.map(reader => {
-                                    const isPaired = pairedDevice
-                                        ? pairedDevice.serialNumber === reader.serialNumber
-                                        : false;
-
-                                    return isDiscovering ? (
-                                        <CardReader
-                                            key={reader.serialNumber}
-                                            reader={reader}
-                                            isPaired={isPaired}
-                                            onConnect={this.props.connectReader}
-                                            isLoading={readers.isConnecting === reader.serialNumber}
-                                        />
-                                    ) : null;
-                                })}
-                            </View>
-                        </View>
-
-                        <View style={styles.discover}>
-                            <LoadingButton
-                                title={isDiscovering ? 'Stop Discover Devices' : 'Discover Devices'}
-                                styleNames={['large']}
-                                onPress={handleSubmit}
+                        return isDiscovering ? (
+                            <CardReader
+                                key={reader.serialNumber}
+                                reader={reader}
+                                isPaired={isPaired}
+                                onConnect={this.props.connectReader}
+                                isLoading={readers.isConnecting === reader.serialNumber}
                             />
-                        </View>
-                    </Layout>
-                )}
-            </Formik>
+                        ) : null;
+                    })}
+
+                    <Text style={styles.headline}>Ticket Printing</Text>
+                    <Text style={styles.label}>Select Printer</Text>
+                    <SelectDropdown
+                        data={printers}
+                        defaultValue="Select Printer"
+                        onSelect={(selectedItem, index) => {
+                            this.props.savePrinter(selectedItem);
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem.information.model;
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item.information.model;
+                        }}
+                        buttonStyle={styles.printerButton}
+                        buttonTextStyle={styles.buttonText}
+                        rowTextStyle={styles.buttonText}
+                        rowStyle={styles.rowStyle}
+                        renderDropdownIcon={() => <DropDownIcon />}
+                    />
+                </ScrollView>
+            </Layout>
         );
     }
 }
@@ -148,6 +158,7 @@ class DiscoverDevices extends Component {
 const mapStateToProps = state => ({
     pairedDevice: getPairedReader(state),
     readers: state.readers,
+    printer: state.printer,
 });
 
 const mapDispatchToProps = {
@@ -158,9 +169,8 @@ const mapDispatchToProps = {
     disconnectReader,
     saveComputer,
     getComputer,
+    discoverPrinters,
+    savePrinter,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(DiscoverDevices);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverDevices);

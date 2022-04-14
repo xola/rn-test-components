@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View, Image } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import CustomIcon from '../common/CustomIcon';
 import styles from './ListItemStyle';
 import StyledText from '../common/StyledText';
-import Currency from '../common/Currency';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import xolaApi from '../../api/xolaApi';
 import orderUtil from '../../utils/OrderUtil';
+import variables from '../../styles/variables';
+import { selectOrderItem } from '../../actions/orderActions';
+import NavigationService from '../NavigationService';
 
 class ListItem extends Component {
+    handleSignWaiver = () => {
+        this.props.selectOrderItem(this.props.order.id, this.props.item.id);
+        NavigationService.navigate('SignInWaiver');
+    };
+
+    handleWaiverSelect = () => {
+        this.props.onClick(this.props.item);
+        !this.props.selectedWaiver && setTimeout(this.handleSignWaiver, 1000);
+    };
     render() {
-        const { order, experiences, item } = this.props;
+        const { order, experiences, item, selectedWaiver } = this.props;
         if (!item.experience) {
             return null;
         }
@@ -37,51 +48,52 @@ class ListItem extends Component {
             ? order.customerEmail.replace(/(^.{1,3})(.*)@(.{1,3})(.*)/, '$1***@$3**.***')
             : null;
         return (
-            <View style={styles.item}>
+            <TouchableOpacity
+                style={[
+                    styles.button,
+                    {
+                        backgroundColor: selectedWaiver === item.id ? variables.lightBlue : variables.white,
+                        borderColor: selectedWaiver === item.id ? variables.mainBlue : variables.lightGrey,
+                    },
+                ]}
+                onPress={this.handleWaiverSelect}
+            >
                 <Image source={image} style={styles.image} />
-                <View style={styles.description}>
-                    <StyledText styleNames={['h2', 'uppercase']} style={styles.name}>
-                        {experience.name.trim()}
-                    </StyledText>
-                    <StyledText style={styles.price}>
-                        <Currency>{price}</Currency>
-                    </StyledText>
-                    <StyledText style={styles.infoText}>
-                        <CustomIcon size={14} name="calendar" /> {arrival.format('L')}
-                    </StyledText>
-                    {item.arrivalTime ? (
-                        <StyledText style={styles.infoText}>
-                            <CustomIcon size={14} name="time" /> {arrival.format('LT')}
-                        </StyledText>
-                    ) : null}
-                    <StyledText style={styles.infoText}>
-                        <CustomIcon size={14} name={'user'} /> {obfuscatedCustomerName}
-                    </StyledText>
-                    {obfuscatedCustomerEmail ? (
-                        <StyledText style={styles.infoText}>
-                            <CustomIcon size={14} name={'email'} /> {obfuscatedCustomerEmail}
-                        </StyledText>
-                    ) : null}
-                </View>
 
-                <View style={styles.demographicsContainer}>
-                    <View style={styles.demographics}>
-                        {_.map(demographics, demographic => {
-                            const label = demographic.label
-                                ? demographic.label
-                                : orderUtil.getDemographicLabel(experience, demographic.demographic.id);
-                            return demographic.quantity !== 0 ? (
-                                <StyledText key={label}>
-                                    <CustomIcon name={orderUtil.guessDemographicIcon(label)} /> {demographic.quantity}{' '}
-                                    {label} &nbsp;
-                                </StyledText>
-                            ) : null;
-                        })}
+                <View style={styles.flex}>
+                    <View style={styles.content}>
+                        <View>
+                            <Text style={styles.name}>{obfuscatedCustomerName}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.title}>{experience.name.trim()}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <StyledText style={styles.infoText}>
+                                <CustomIcon size={14} name="calendar" /> {arrival.format('ddd, ll')}{' '}
+                            </StyledText>
+                            <StyledText style={[styles.infoText, { marginLeft: 10 }]}>
+                                <CustomIcon size={14} name="time" /> {arrival.format('LT')}
+                            </StyledText>
+                        </View>
+                        <View style={styles.demographicsContainer}>
+                            <View style={styles.demographics}>
+                                {_.map(demographics, demographic => {
+                                    const label = demographic.label
+                                        ? demographic.label
+                                        : orderUtil.getDemographicLabel(experience, demographic.demographic.id);
+                                    return demographic.quantity !== 0 ? (
+                                        <StyledText key={label} style={{ color: '#505254' }}>
+                                            <CustomIcon name={orderUtil.guessDemographicIcon(label)} />{' '}
+                                            {demographic.quantity} {label} &nbsp;
+                                        </StyledText>
+                                    ) : null;
+                                })}
+                            </View>
+                        </View>
                     </View>
                 </View>
-
-                <View style={styles.button}>{this.props.actionButton}</View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
@@ -90,4 +102,8 @@ const mapStateToProps = state => ({
     experiences: state.experiences.collection,
 });
 
-export default connect(mapStateToProps)(ListItem);
+const mapDispatchToProps = {
+    selectOrderItem,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

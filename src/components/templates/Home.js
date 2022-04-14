@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import NavigationService from '../NavigationService';
 import Layout from '../common/Layout';
 import { authenticateUser } from '../../actions/authActions';
 import { fetchExperiences } from '../../actions/experiencesActions';
+import { discoverPrinters } from '../../actions/printerActions';
 import LoadingButton from '../common/LoadingButton';
 import styles from './HomeStyle';
 import StyledText from '../common/StyledText';
 import xolaApi from '../../api/xolaApi';
 import { resetCart } from '../../actions/cartActions';
+import { BackIcon } from '../../images/svg';
 
 class Home extends Component {
+    componentDidMount() {
+        this.props.discoverPrinters();
+    }
+
     handleBookNowClick = () => {
         this.props.resetCart();
         NavigationService.navigate('SelectExperience');
@@ -35,6 +41,9 @@ class Home extends Component {
 
         return (
             <Layout noReset={true}>
+                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                    <BackIcon />
+                </TouchableOpacity>
                 <View style={styles.container}>
                     {seller.isLoading ? (
                         <View>
@@ -89,9 +98,7 @@ const mapDispatchToProps = {
     authenticateUser,
     fetchExperiences,
     resetCart,
+    discoverPrinters,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

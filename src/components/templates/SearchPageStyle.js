@@ -3,8 +3,6 @@ import variables from '../../styles/variables';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        width: '45%',
         justifyContent: 'flex-start',
         alignItems: 'stretch',
         alignSelf: 'center',
@@ -16,8 +14,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 20,
     },
-    placeholderColor: {
-        color: variables.textColorMuted,
+    searchInput: {
+        fontWeight: '400',
+        fontSize: 19,
+        color: '#505254',
+        height: 75,
+        marginVertical: 0,
     },
     notices: {
         flexDirection: 'row',
@@ -44,10 +46,32 @@ const styles = StyleSheet.create({
         fontSize: variables.fontSize,
     },
     text: {
-        color: variables.linkButton,
         textAlign: 'center',
-        marginTop: 15,
-        textDecorationLine: 'underline',
+        fontWeight: '700',
+        fontSize: 24,
+        lineHeight: 31,
+        color: '#222324',
+    },
+    underline: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        alignSelf: 'center',
+        marginTop: 30,
+    },
+    title: {
+        fontWeight: '700',
+        fontSize: 42,
+        marginTop: 25,
+        paddingBottom: 17,
+        textAlign: 'center',
+        textTransform: 'capitalize',
+    },
+    form: {
+        flex: 1,
+        flexDirection: 'row',
+        marginHorizontal: 70,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
 });
 

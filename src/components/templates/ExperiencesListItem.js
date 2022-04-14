@@ -32,7 +32,7 @@ class ExperiencesListItem extends Component {
             >
                 <Image source={image} style={styles.image} />
 
-                <View>
+                <View style={styles.flex}>
                     <View style={styles.content}>
                         <View>
                             <Text style={styles.name}>

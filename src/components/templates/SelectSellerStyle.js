@@ -20,5 +20,21 @@ const styles = StyleSheet.create({
         fontSize: variables.fontSize,
         fontFamily: variables.fontLight
     },
+    back: {
+        paddingVertical: w(23),
+        paddingHorizontal: w(27),
+        borderRadius: w(10),
+        borderColor: variables.lightGrey,
+        backgroundColor: variables.white,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: w(100),
+        flexDirection: 'row',
+        position: 'absolute',
+        right: w(0),
+        top: w(20),
+        zIndex: 999,
+    },
 });
 export default styles;
