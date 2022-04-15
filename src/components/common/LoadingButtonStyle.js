@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
     },
     loadingButton: {
         textAlign: 'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         color: variables.textColor,
         borderWidth: 0,
         fontSize: variables.fontSize,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
     },
     empty: {
         backgroundColor: 'transparent',
@@ -66,7 +66,10 @@ const styles = StyleSheet.create({
         borderRadius: 0,
     },
     wide: {
-        paddingHorizontal: w(100)
+        paddingHorizontal: w(100),
+    },
+    regular: {
+        paddingHorizontal: w(40),
     },
     narrow: {
         width: w(340),
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     flex: {
         flex: 1,
         width: '99%',
-        maxHeight: w(80)
+        maxHeight: w(80),
     },
     pairName: {
         fontSize: w(24),
@@ -86,12 +89,12 @@ const styles = StyleSheet.create({
         padding: w(20),
         borderColor: variables.lightGrey,
         borderWidth: 1,
-        borderRadius: variables.borderRadius
+        borderRadius: variables.borderRadius,
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 });
 

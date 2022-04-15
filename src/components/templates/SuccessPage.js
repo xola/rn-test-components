@@ -51,7 +51,11 @@ class SuccessPage extends Component {
                     </View>
                 ) : (
                     <View style={styles.button}>
-                        <LoadingButton onPress={this.handleFinish} styleNames={['large', 'active']} title="Done" />
+                        <LoadingButton
+                            onPress={this.handleFinish}
+                            styleNames={['large', 'active', 'regular']}
+                            title="Done"
+                        />
                     </View>
                 )}
 
