@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
         flex: 7,
     },
     footer: {
-        padding: 15,
+        flex: 1,
+        marginVertical: 10,
+        paddingVertical: 10
     },
     noPadding: {
         padding: 0,

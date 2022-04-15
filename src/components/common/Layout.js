@@ -36,11 +36,7 @@ class Layout extends Component {
                         {children}
                     </View>
 
-                    {footer ? (
-                        <View style={styles.footer}>
-                            <View>{footer}</View>
-                        </View>
-                    ) : null}
+                    {footer ? <View style={styles.footer}>{footer}</View> : null}
                 </View>
             </SafeAreaView>
         );

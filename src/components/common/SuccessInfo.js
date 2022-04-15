@@ -12,9 +12,9 @@ class SuccessInfo extends Component {
     };
 
     render() {
-        const { title, message } = this.props;
+        const { title, message, ...rest } = this.props;
         return (
-            <View style={styles.container}>
+            <View style={styles.container} {...rest}>
                 <SuccessIcon />
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.message}>{message}</Text>

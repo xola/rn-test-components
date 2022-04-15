@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SuccessInfo from '../common/SuccessInfo';
 import Layout from '../common/Layout';
@@ -9,6 +9,7 @@ import LoadingButton from '../common/LoadingButton';
 import PrintTickets from './PrintTickets';
 import { addTicket, printTickets } from '../../actions/printerActions';
 import { WaiverIcon } from '../../images/svg';
+import StyledText from '../common/StyledText';
 
 class SuccessPage extends Component {
     handlePrintingTickets = async (ticket, total) => {
@@ -25,52 +26,74 @@ class SuccessPage extends Component {
     };
 
     render() {
-        const { selectedExperience, collection } = this.props.experiences;
-        const experience = collection[selectedExperience];
-        let submittedItem = null;
-        const { submittedOrder, itemIndex } = this.props.cart;
-        if (submittedOrder && submittedOrder.items[itemIndex]) {
-            submittedItem = submittedOrder.items[itemIndex];
+        let experience;
+        if (this.props.experiences && this.props.cart.submittedOrder.items) {
+            const { selectedExperience, collection } = this.props.experiences;
+            experience = collection[selectedExperience];
+            let submittedItem = null;
+            const { submittedOrder, itemIndex } = this.props.cart;
+            if (submittedOrder && submittedOrder.items[itemIndex]) {
+                submittedItem = submittedOrder.items[itemIndex];
+            }
         }
 
         return (
-            <Layout>
-                <SuccessInfo
-                    title="Purchase Complete"
-                    message={'Your booking confirmation has been sent to your email and phone'}
-                />
-
-                {experience.waiverPreference ? (
-                    <View style={styles.button}>
-                        <LoadingButton
-                            onPress={this.handleWaiverSignIn}
-                            styleNames={['large', 'wide', 'active']}
-                            title="Sign Waiver Now"
-                            icon={() => <WaiverIcon />}
-                        />
-                    </View>
-                ) : (
-                    <View style={styles.button}>
-                        <LoadingButton
-                            onPress={this.handleFinish}
-                            styleNames={['large', 'active', 'regular']}
-                            title="Done"
-                        />
+            <>
+                {this.props.route.params?.waiverSigned && (
+                    <View
+                        style={styles.header}
+                    >
+                        <StyledText style={{ fontWeight: '700' }} styleNames={['h2']}>
+                            Thank You!
+                        </StyledText>
                     </View>
                 )}
-
-                {this.props.printer.printer && submittedItem ? (
-                    <View>
-                        <PrintTickets
-                            experience={experience}
-                            item={submittedItem}
-                            order={submittedOrder}
-                            printer={this.props.printer}
-                            onTicketLoad={this.handlePrintingTickets}
+                <Layout>
+                    {this.props.route.params?.waiverSigned ? (
+                        <SuccessInfo
+                            style={styles.info}
+                            title={'Waiver Signed'}
+                            message={'You’re all set!'}
                         />
-                    </View>
-                ) : null}
-            </Layout>
+                    ) : (
+                        <SuccessInfo
+                            title={'Purchase Complete'}
+                            message={'Your booking confirmation has been sent to your [email &/or phone]'}
+                        />
+                    )}
+
+                    {experience && experience.waiverPreference ? (
+                        <View style={styles.button}>
+                            <LoadingButton
+                                onPress={this.handleWaiverSignIn}
+                                styleNames={['large', 'wide', 'active']}
+                                title="Sign Waiver Now"
+                                icon={() => <WaiverIcon />}
+                            />
+                        </View>
+                    ) : (
+                        <View style={styles.button}>
+                            <LoadingButton
+                                onPress={this.handleFinish}
+                                styleNames={['large', 'active']}
+                                title="Done"
+                            />
+                        </View>
+                    )}
+
+                    {this.props.printer.printer && submittedItem ? (
+                        <View>
+                            <PrintTickets
+                                experience={experience}
+                                item={submittedItem}
+                                order={submittedOrder}
+                                printer={this.props.printer}
+                                onTicketLoad={this.handlePrintingTickets}
+                            />
+                        </View>
+                    ) : null}
+                </Layout>
+            </>
         );
     }
 }

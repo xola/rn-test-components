@@ -7,6 +7,8 @@ import Header from '../common/Header';
 import { getActiveItem, getActiveOrder } from '../../selectors/orderSelector';
 import StyledText from '../common/StyledText';
 import { StyleSheet } from 'react-native';
+import LoadingButton from '../common/LoadingButton';
+import NavigationService from '../NavigationService';
 
 const styles = StyleSheet.create({
     title: {
@@ -27,6 +29,10 @@ class SignInWaiver extends Component {
     componentDidMount() {
         this.onGoBack = this.webview.current.goBack;
     }
+
+    handleSign = () => {
+        NavigationService.navigate('SuccessPage', { waiverSigned: true });
+    };
 
     render() {
         const { item, experiences, order } = this.props;
@@ -53,7 +59,16 @@ class SignInWaiver extends Component {
                     ]}
                     currentStep={3}
                 />
-                <Layout noPadding={true}>
+                <Layout
+                    noPadding={true}
+                    footer={
+                        <LoadingButton
+                            onPress={this.handleSign}
+                            styleNames={['large', 'active', 'flex']}
+                            title="Sign"
+                        />
+                    }
+                >
                     <StyledText style={styles.title} styleNames={['h1']}>
                         Sign Waiver
                     </StyledText>
