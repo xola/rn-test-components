@@ -27,8 +27,6 @@ const computerSchema = object().shape({
     label: string().required('Required'),
 });
 
-const printers = ['Select Printer', 'Printer 1', 'Printer 2', 'Printer 3', 'Printer 4'];
-
 class DiscoverDevices extends Component {
     state = {
         label: '',
@@ -39,13 +37,11 @@ class DiscoverDevices extends Component {
         this.handleSubmit('');
     }
 
-    handleOpenCheckout = () => {
-        NavigationService.navigate('Home');
-    };
-
     handleSubmit = async () => {
-        const { saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
-
+        const { connectedReader, saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
+        if (connectedReader) {
+            await this.props.disconnectReader();
+        }
         if (readers.isDiscovering) {
             abortDiscoverReaders();
         } else {
@@ -109,7 +105,6 @@ class DiscoverDevices extends Component {
                         <CardReader
                             reader={{ serialNumber: connectedReader }}
                             onDisconnect={this.props.disconnectReader}
-                            // onOpenCheckout={this.handleOpenCheckout}
                             isConnected
                             isPaired
                         />
