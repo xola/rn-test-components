@@ -7,6 +7,7 @@ import moment from 'moment';
 import StyledText from '../common/StyledText';
 import styles from './TicketStyle';
 import orderUtil from '../../utils/OrderUtil';
+import { TICKET_PRINTING_WIDTH } from '../../services/TicketPrinterService';
 
 class Ticket extends Component {
     static propTypes = {
@@ -59,7 +60,11 @@ class Ticket extends Component {
               };
 
         return (
-            <ViewShot style={styles.container} ref={this.setViewShotRef}>
+            <ViewShot
+                options={{ result: 'base64', width: TICKET_PRINTING_WIDTH }}
+                style={styles.container}
+                ref={this.setViewShotRef}
+            >
                 <StyledText style={styles.ticketOrder}>
                     Ticket {this.props.currentTicket} of {this.props.totalTickets}
                 </StyledText>

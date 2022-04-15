@@ -13,7 +13,7 @@ import {
     getComputer,
     abortDiscoverReaders,
 } from '../../actions/readersActions';
-import { discoverPrinters, savePrinter } from '../../actions/printerActions';
+import { discoverPrinters, savePrinter, printTest } from '../../actions/printerActions';
 import styles from './DiscoverDevicesStyle';
 import NavigationService from '../NavigationService';
 import TextInput from '../common/TextInput';
@@ -131,12 +131,13 @@ class DiscoverDevices extends Component {
                         defaultValue="Select Printer"
                         onSelect={(selectedItem, index) => {
                             this.props.savePrinter(selectedItem);
+                            //this.props.printTest(selectedItem);
                         }}
                         buttonTextAfterSelection={(selectedItem, index) => {
-                            return selectedItem.information.model;
+                            return selectedItem.connectionSettings.identifier;
                         }}
                         rowTextForSelection={(item, index) => {
-                            return item.information.model;
+                            return item.connectionSettings.identifier;
                         }}
                         buttonStyle={styles.printerButton}
                         buttonTextStyle={styles.buttonText}
@@ -166,6 +167,7 @@ const mapDispatchToProps = {
     getComputer,
     discoverPrinters,
     savePrinter,
+    printTest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoverDevices);

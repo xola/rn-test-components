@@ -17,12 +17,24 @@ export const savePrinter = printer => async (dispatch, getState) => {
 
 export const discoverPrinters = () => async (dispatch, getState) => {
     dispatch({ type: DISCOVER_PRINTERS_STARTED });
-    await TicketPrinterService.discoverPrinters(discoveredPrinter);
+    await TicketPrinterService.discoverPrinters(printer => {
+        dispatch(discoveredPrinter(printer));
+    });
     dispatch({ type: DISCOVER_PRINTERS_FINISHED });
 };
 
-export const discoveredPrinter = printer => async (dispatch, getState) => {
-    dispatch({ type: DISCOVERED_PRINTER, printer });
+export const discoveredPrinter = discoveredPrinter => async (dispatch, getState) => {
+    const printer = {
+        connectionSettings: {
+            identifier: discoveredPrinter._connectionSettings.identifier,
+            interfaceType: discoveredPrinter._connectionSettings.interfaceType,
+        },
+    };
+
+    dispatch({
+        type: DISCOVERED_PRINTER,
+        printer,
+    });
 };
 
 export const addTicket = ticket => async (dispatch, getState) => {
@@ -45,4 +57,10 @@ export const printTickets = totalTickets => async (dispatch, getState) => {
     }
 
     return null;
+};
+
+export const printTest = () => async (dispatch, getState) => {
+    const { printer } = getState().printer;
+
+    await TicketPrinterService.printTestTicket(printer);
 };

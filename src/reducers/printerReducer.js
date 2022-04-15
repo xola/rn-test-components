@@ -6,6 +6,7 @@ import {
     RESET_TICKETS,
     SAVE_PRINTER,
     DISCOVER_PRINTERS_STARTED,
+    DISCOVER_PRINTERS_FINISHED,
 } from '../actions/printerActions';
 
 export const initialState = {
@@ -39,6 +40,11 @@ const printerReducer = createReducer(initialState, {
 
     [DISCOVER_PRINTERS_STARTED](state) {
         state.printers = [];
+        state.isDiscovering = true;
+    },
+
+    [DISCOVER_PRINTERS_FINISHED](state) {
+        state.isDiscovering = false;
     },
 });
 
