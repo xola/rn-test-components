@@ -5,7 +5,6 @@ import { w } from '../../utils/Scale';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
     },
     title: {
         fontFamily: variables.fontBold,
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
         paddingTop: w(40)
     },
     info: {
-        // flex: 1,
         paddingTop: w(40)
     },
     demographics: {

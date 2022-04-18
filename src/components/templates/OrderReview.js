@@ -1,7 +1,6 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import customerSchema from '../../schemas/customerSchema';
 import TextInput from '../common/TextInput';
 import FormGroup from '../common/FormGroup';
@@ -27,34 +26,28 @@ class OrderReview extends Component {
     };
 
     render() {
-        const { experience, device } = this.props;
         const { customerName, customerEmail, phone } = this.props.cart.order;
-        const { amount, partnerFee } = this.props.cart.preparedOrder;
-        let total = amount;
-        if (partnerFee && !partnerFee.orderAmountIncludesPartnerFee) {
-            total += partnerFee.amount;
-        }
 
         return (
-            <Formik
-                initialValues={{ customerName, customerEmail, phone }}
-                validationSchema={customerSchema}
-                onSubmit={this.handlePayClick}
-            >
-                {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
-                    <>
-                        <Header
-                            back={true}
-                            right={() => true ? <TouchableOpacity onPress={handleSubmit} style={headerStyles.next}>
-                                <Text style={headerStyles.nextText}>{'Next'}</Text>
-                                <NextIcon />
-                            </TouchableOpacity> : <View />}
-                            steps={["Product", "Time", "Quantity", "Info", "Pay"]}
-                            currentStep={4}
-                        />
-                        <Layout>
-                            <View style={styles.container}>
-                                <KeyboardAwareScrollView style={styles.info}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container} keyboardShouldPersistTaps="handled">
+                <Formik
+                    initialValues={{ customerName, customerEmail, phone }}
+                    validationSchema={customerSchema}
+                    onSubmit={this.handlePayClick}
+                >
+                    {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+                        <>
+                            <Header
+                                back={true}
+                                right={() => true ? <TouchableOpacity onPress={handleSubmit} style={headerStyles.next}>
+                                    <Text style={headerStyles.nextText}>{'Next'}</Text>
+                                    <NextIcon />
+                                </TouchableOpacity> : <View />}
+                                steps={["Product", "Time", "Quantity", "Info", "Pay"]}
+                                currentStep={4}
+                            />
+                            <Layout>
+                                <ScrollView style={styles.container}>
                                     <Text style={styles.title}>
                                         Guest Information
                                     </Text>
@@ -62,6 +55,7 @@ class OrderReview extends Component {
                                     <FormGroup>
                                         <View style={styles.form}>
                                             <TextInput
+                                                id={'customerName'}
                                                 onChangeText={handleChange('customerName')}
                                                 onBlur={handleBlur('customerName')}
                                                 onEndEditing={this.handleEndEditing(values)}
@@ -76,6 +70,7 @@ class OrderReview extends Component {
                                     <FormGroup>
                                         <View>
                                             <TextInput
+                                                id={'customerEmail'}
                                                 onChangeText={handleChange('customerEmail')}
                                                 onBlur={handleBlur('customerEmail')}
                                                 onEndEditing={this.handleEndEditing(values)}
@@ -91,6 +86,7 @@ class OrderReview extends Component {
                                     <FormGroup>
                                         <View>
                                             <TextInput
+                                                id={'phone'}
                                                 onChangeText={handleChange('phone')}
                                                 onBlur={handleBlur('phone')}
                                                 onEndEditing={this.handleEndEditing(values)}
@@ -102,12 +98,12 @@ class OrderReview extends Component {
                                             />
                                         </View>
                                     </FormGroup>
-                                </KeyboardAwareScrollView>
-                            </View>
-                        </Layout>
-                    </>
-                )}
-            </Formik>
+                                </ScrollView>
+                            </Layout>
+                        </>
+                    )}
+                </Formik>
+            </KeyboardAvoidingView>
         );
     }
 }

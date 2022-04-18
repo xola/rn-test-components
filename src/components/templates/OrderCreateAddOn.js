@@ -12,6 +12,14 @@ import headerStyles from '../common/HeaderStyle'
 import { NextIcon } from '../../images/svg';
 
 class OrderCreate extends Component {
+    componentDidMount() {
+        const { order, itemIndex } = this.props.cart;
+        const item = order.items[itemIndex];
+        if (_.size(item.addOns) === 0) {
+            this.props.prepareOrder();
+        }
+    }
+
     handleDemographicChange = (id, quantity) => {
         this.props.changeDemographics(id, quantity);
     };

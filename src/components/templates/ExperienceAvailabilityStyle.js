@@ -51,6 +51,18 @@ const styles = StyleSheet.create({
         fontFamily: variables.fontLight,
         color: variables.textColor,
     },
+    row: {
+        flex: 1,
+        alignItems: "flex-start"
+    },
+    dateText: {
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontBold,
+        paddingVertical: w(20)
+    },
+    datesContainer: {
+        paddingTop: w(100)
+    }
 });
 
 export default styles;

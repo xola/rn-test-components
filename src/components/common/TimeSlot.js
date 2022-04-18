@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './TimeSlotStyle';
 import moment from 'moment';
 import variables from '../../styles/variables';
@@ -13,22 +13,24 @@ class TimeSlot extends Component {
     };
 
     render() {
-        const { time, slots, selectedTime } = this.props;
+        const { time, slots, selectedTime, isEmpty } = this.props;
         const formatedTime = time ? this.formatTime(time.toString()) : 'Anytime';
         const openSlots = slots >= 99999 ? '∞' : slots;
 
         return (
-            <TouchableOpacity
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: selectedTime === time ? variables.lightBlue : variables.white,
-                        borderColor: selectedTime === time ? variables.mainBlue : variables.lightGrey,
-                    }]}
-                onPress={this.selectTime}>
-                <Text style={styles.time}>{formatedTime}</Text>
-                <Text style={styles.slots}>{openSlots} open</Text>
-            </TouchableOpacity>
+            <View style={styles.container}>
+                {!isEmpty && <TouchableOpacity
+                    style={[
+                        styles.button,
+                        {
+                            backgroundColor: selectedTime === time ? variables.lightBlue : variables.white,
+                            borderColor: selectedTime === time ? variables.mainBlue : variables.lightGrey,
+                        }]}
+                    onPress={this.selectTime}>
+                    <Text style={styles.time}>{formatedTime}</Text>
+                    <Text style={styles.slots}>{openSlots} open</Text>
+                </TouchableOpacity>}
+            </View>
         );
     }
 

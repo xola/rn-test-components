@@ -4,12 +4,15 @@ import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    button: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: w(24),
         borderStyle: 'solid',
-        borderColor: variables.lightGrey,
         borderRadius: variables.borderRadius,
+        borderColor: variables.lightGrey,
         borderWidth: 1,
         height: w(80),
         margin: w(8),
