@@ -41,11 +41,11 @@ class ExperienceAvailability extends Component {
 
     handleSelectTime = (time) => {
         this.setState({ selectedTime: time })
-
+        this.handleNext(time)
     }
 
-    handleNext = () => {
-        this.props.selectTime(this.props.selectTime(this.state.selectedTime))
+    handleNext = (time) => {
+        this.props.selectTime((time))
         NavigationService.navigate('OrderCreate');
     }
 
@@ -97,7 +97,7 @@ class ExperienceAvailability extends Component {
                                 extraData={timeSlots}
                                 renderItem={({ item }) =>
                                     <TimeSlot
-                                        key={item.timeSlot.toString()}
+                                        key={item.timeSlot}
                                         handleClick={() => this.handleSelectTime(item.timeSlot)}
                                         selectedTime={this.state.selectedTime}
                                         time={item.timeSlot}
