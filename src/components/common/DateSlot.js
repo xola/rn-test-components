@@ -12,13 +12,13 @@ class DateSlot extends Component {
 
     render() {
         const { slots, date } = this.props;
-        const openSlots = slots >= 99999 ? '∞' : slots;
+        const openSlots = slots >= 99999 ? false : slots;
 
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.button} onPress={this.selectTime}>
-                    <Text style={styles.time}>{date}</Text>
-                    <Text style={styles.slots}>{openSlots} open</Text>
+                <TouchableOpacity style={[styles.button, { justifyContent: openSlots ? 'space-between' : 'center' }]} onPress={this.selectTime}>
+                    <Text style={[styles.time, { textAlign: openSlots ? 'left' : 'center' }]}>{date}</Text>
+                    {openSlots && <Text style={styles.slots}>{openSlots} open</Text>}
                 </TouchableOpacity>
             </View>
         );
