@@ -34,12 +34,12 @@ class DiscoverDevices extends Component {
 
     componentDidMount() {
         this.props.getComputer();
-        this.handleSubmit('');
+        this.handleSubmit('loading');
     }
 
-    handleSubmit = async () => {
+    handleSubmit = async (status) => {
         const { connectedReader, saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
-        if (connectedReader) {
+        if (status !== 'loading') {
             await this.props.disconnectReader();
         }
         if (readers.isDiscovering) {
@@ -86,7 +86,7 @@ class DiscoverDevices extends Component {
                             placeholder="Enter a label to identify this mobile device"
                             editable={!isDiscovering}
                             title="Pos Station label"
-                            onEndEditing={() => this.handleSubmit()}
+                            onEndEditing={() => this.handleSubmit('')}
                         />
                         <ErrorMessage name="label" />
                     </View>
