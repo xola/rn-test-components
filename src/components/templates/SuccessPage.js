@@ -58,7 +58,7 @@ class SuccessPage extends Component {
                     ) : (
                         <SuccessInfo
                             title={'Purchase Complete'}
-                            message={'Your booking confirmation has been sent to your [email &/or phone]'}
+                            message={'Your booking confirmation has been sent to your email and phone'}
                         />
                     )}
 
