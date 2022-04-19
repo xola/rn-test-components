@@ -27,11 +27,11 @@ class SuccessPage extends Component {
 
     render() {
         let experience;
-        if (this.props.experiences && this.props.cart.submittedOrder.items) {
+        let submittedItem = null;
+        const { submittedOrder, itemIndex } = this.props.cart;
+        if (this.props.experiences && submittedOrder && submittedOrder.items) {
             const { selectedExperience, collection } = this.props.experiences;
             experience = collection[selectedExperience];
-            let submittedItem = null;
-            const { submittedOrder, itemIndex } = this.props.cart;
             if (submittedOrder && submittedOrder.items[itemIndex]) {
                 submittedItem = submittedOrder.items[itemIndex];
             }
@@ -40,9 +40,7 @@ class SuccessPage extends Component {
         return (
             <>
                 {this.props.route.params?.waiverSigned && (
-                    <View
-                        style={styles.header}
-                    >
+                    <View style={styles.header}>
                         <StyledText style={{ fontWeight: '700' }} styleNames={['h2']}>
                             Thank You!
                         </StyledText>
@@ -50,11 +48,7 @@ class SuccessPage extends Component {
                 )}
                 <Layout>
                     {this.props.route.params?.waiverSigned ? (
-                        <SuccessInfo
-                            style={styles.info}
-                            title={'Waiver Signed'}
-                            message={'You’re all set!'}
-                        />
+                        <SuccessInfo style={styles.info} title={'Waiver Signed'} message={'You’re all set!'} />
                     ) : (
                         <SuccessInfo
                             title={'Purchase Complete'}
