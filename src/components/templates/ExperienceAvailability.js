@@ -59,10 +59,10 @@ class ExperienceAvailability extends Component {
     render() {
         const { selectedDate } = this.props.date;
         const { availability } = this.props.date;
-        const { schedules } = this.props.experience;
 
         let timeSlots = _.get(availability, selectedDate, {});
 
+        const dateSlot = _.isArray(_.get(availability, selectedDate, {}))
         if (_.isArray(timeSlots)) {
             timeSlots = timeSlots.filter(open => open > 0);
         } else {
@@ -109,18 +109,24 @@ class ExperienceAvailability extends Component {
                 />
                 <Layout>
                     <View style={styles.container}>
-                        {schedules.length === 0 ?
+                        {dateSlot ? this.props.date.isLoading ? (
+                            <View style={styles.isLoading}>
+                                <ActivityIndicator />
+                            </View>
+                        ) :
                             <View>
                                 <View style={[styles.columnDate, { height: w(100) }]}>
                                     <DateSlot
                                         handleClick={() => this.handleDateNext(today)}
                                         date={'Today'}
                                         slots={availability[today]}
+                                        disabled={availability[today]?.reduce((total, item) => total + item, 0) === 0}
                                     />
                                     <DateSlot
                                         handleClick={() => this.handleDateNext(tomorrow)}
                                         date={'Tomorrow'}
                                         slots={availability[tomorrow]}
+                                        disabled={availability[tomorrow]?.reduce((total, item) => total + item, 0) === 0}
                                     />
                                 </View>
                                 <View style={styles.datesContainer}>
@@ -133,6 +139,7 @@ class ExperienceAvailability extends Component {
                                                 handleClick={() => this.handleDateNext(item.date)}
                                                 date={moment(item.date).format('ddd DD MMM')}
                                                 slots={item.openSlots}
+                                                disabled={item.openSlots?.reduce((total, item) => total + item, 0) === 0}
                                             />
                                         }
                                         ListEmptyComponent={

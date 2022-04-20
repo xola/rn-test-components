@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import variables from '../../styles/variables';
 import styles from './TimeSlotStyle';
 
 /**
@@ -11,12 +12,15 @@ class DateSlot extends Component {
     };
 
     render() {
-        const { slots, date } = this.props;
+        const { slots, date, disabled } = this.props;
         const openSlots = slots >= 99999 ? false : slots;
 
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={[styles.button, { justifyContent: openSlots ? 'space-between' : 'center' }]} onPress={this.selectTime}>
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: disabled ? variables.lightGrey : variables.white, justifyContent: openSlots ? 'space-between' : 'center' }]}
+                    onPress={() => !disabled ? this.selectTime() : {}}
+                >
                     <Text style={[styles.time, { textAlign: openSlots ? 'left' : 'center' }]}>{date}</Text>
                     {openSlots && <Text style={styles.slots}>{openSlots} open</Text>}
                 </TouchableOpacity>
