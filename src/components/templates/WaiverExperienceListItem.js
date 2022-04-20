@@ -31,7 +31,7 @@ class WaiverExperienceListItem extends Component {
             return null;
         }
         const experience = experiences[item.experience.id];
-        if (!experience) {
+        if (!experience?.waiverPreference) {
             return null;
         }
         return (

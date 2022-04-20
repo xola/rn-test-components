@@ -39,8 +39,8 @@ class SelectExperience extends Component {
         const { experiences } = this.props;
         const selectExperienceForSigningWaiver = this.props.route.params?.selectExperienceForSigningWaiver;
         const visibleExperiences = [];
-        _.map(experiences, function(experience, key) {
-            if (experience.visible) {
+        _.map(experiences, function (experience, key) {
+            if (experience.visible && experience.waiverPreference) {
                 visibleExperiences.push(experience);
             }
             return experience.visible;

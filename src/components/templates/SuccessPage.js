@@ -56,7 +56,7 @@ class SuccessPage extends Component {
                         />
                     )}
 
-                    {experience && experience.waiverPreference ? (
+                    {experience && experience.waiverPreference && !this.props.route.params?.waiverSigned ? (
                         <View style={styles.button}>
                             <LoadingButton
                                 onPress={this.handleWaiverSignIn}
