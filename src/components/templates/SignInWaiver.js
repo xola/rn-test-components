@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import { WebView } from 'react-native-webview';
 import URI from 'urijs';
 import { connect } from 'react-redux';
-import Layout from '../common/Layout';
 import Header from '../common/Header';
 import { getActiveItem, getActiveOrder } from '../../selectors/orderSelector';
 import StyledText from '../common/StyledText';
-import { StyleSheet } from 'react-native';
-import LoadingButton from '../common/LoadingButton';
+import { StyleSheet, View } from 'react-native';
 import NavigationService from '../NavigationService';
+import variables from '../../styles/variables';
 
 const styles = StyleSheet.create({
     title: {
         fontWeight: '700',
         fontSize: 34,
-        marginTop: 20,
-        marginBottom: 15,
+        marginTop: 40,
+        marginBottom: 20,
     },
+    top: {
+        backgroundColor: variables.white,
+        paddingHorizontal: 60,
+    }
 });
 
 class SignInWaiver extends Component {
@@ -59,31 +62,28 @@ class SignInWaiver extends Component {
                     ]}
                     currentStep={3}
                 />
-                <Layout
-                    noPadding={true}
-                    footer={
-                        <LoadingButton
-                            onPress={this.handleSign}
-                            styleNames={['large', 'active', 'flex']}
-                            title="Sign"
-                        />
-                    }
-                >
+
+                <View style={styles.top}>
                     <StyledText style={styles.title} styleNames={['h1']}>
                         Sign Waiver
                     </StyledText>
-                    <WebView
-                        ref={this.webview}
-                        source={{ uri: source.toString() }}
-                        onNavigationStateChange={navState => {
-                            if (navState.url.includes(source.domain())) {
-                                this.setState({ canGoBack: false });
-                            } else {
-                                this.setState({ canGoBack: navState.canGoBack });
-                            }
-                        }}
-                    />
-                </Layout>
+                </View>
+
+                <WebView
+                    ref={this.webview}
+                    source={{ uri: source.toString() }}
+                    onNavigationStateChange={navState => {
+                        if (navState.url.includes('thank-you')) {
+                            this.handleSign()
+                        }
+                        if (navState.url.includes(source.domain())) {
+                            this.setState({ canGoBack: false });
+                        } else {
+                            this.setState({ canGoBack: navState.canGoBack });
+                        }
+
+                    }}
+                />
             </>
         );
     }
