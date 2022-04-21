@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Text, View, TouchableOpacity } from 'react-native';
+import LottieView from 'lottie-react-native';
 import styles from './StripePaymentModalStyle';
 import LoadingButton from '../components/common/LoadingButton';
 import { STATUS_CONFIRMING, STATUS_ERROR } from '../constants/paymentConstants';
@@ -71,7 +72,9 @@ class StripePaymentModal extends Component {
                         </View>
                     ) : this.props.payment.status === STATUS_CONFIRMING ? (
                         <View style={styles.container}>
-                            <ProcessingIcon />
+                            <View style={styles.lottieContainer}>
+                                <LottieView source={require('../images/lottie/loading.json')} autoPlay loop />
+                            </View>
                             <Text style={styles.title}>Processing Payment</Text>
                         </View>
                     ) : (

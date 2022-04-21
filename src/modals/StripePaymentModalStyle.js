@@ -9,6 +9,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
     },
+    lottieContainer: {
+        width: '100%',
+        height: w(350),
+        paddingTop: w(200),
+        paddingBottom: w(50),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     time: {
         fontSize: 60,
         marginBottom: 10,
