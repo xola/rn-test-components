@@ -39,13 +39,14 @@ class SelectExperience extends Component {
         const { experiences } = this.props;
         const selectExperienceForSigningWaiver = this.props.route.params?.selectExperienceForSigningWaiver;
         const visibleExperiences = [];
-        _.map(experiences, function (experience, key) {
-            if (experience.visible && experience.waiverPreference) {
-                visibleExperiences.push(experience);
-            }
-            return experience.visible;
-        });
+
         if (selectExperienceForSigningWaiver) {
+            _.map(experiences, function (experience, key) {
+                if (experience.visible && experience.waiverPreference) {
+                    visibleExperiences.push(experience);
+                }
+                return experience.visible;
+            });
             return (
                 <>
                     <Header back={true} steps={['Search', 'Select Product', 'Sign Waiver']} currentStep={2} />
@@ -64,6 +65,12 @@ class SelectExperience extends Component {
                 </>
             );
         } else {
+            _.map(experiences, function (experience, key) {
+                if (experience.visible) {
+                    visibleExperiences.push(experience);
+                }
+                return experience.visible;
+            });
             return (
                 <>
                     <Header
