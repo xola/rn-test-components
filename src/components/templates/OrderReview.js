@@ -1,5 +1,5 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
-import { TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import customerSchema from '../../schemas/customerSchema';
 import TextInput from '../common/TextInput';
@@ -17,8 +17,11 @@ import { NextIcon } from '../../images/svg';
 import NavigationService from '../NavigationService';
 
 class OrderReview extends Component {
-    handlePayClick = async params => {
-        NavigationService.navigate('OrderReviewFinal')
+    handleNextClick = async params => {
+        const isOrderCreated = await this.props.submitOrder(params)
+        if (isOrderCreated) {
+            NavigationService.navigate('OrderReviewFinal')
+        }
     };
 
     handleEndEditing = ({ customerName, customerEmail, phone }) => () => {
@@ -33,7 +36,7 @@ class OrderReview extends Component {
                 <Formik
                     initialValues={{ customerName, customerEmail, phone }}
                     validationSchema={customerSchema}
-                    onSubmit={this.handlePayClick}
+                    onSubmit={this.handleNextClick}
                 >
                     {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
                         <>
@@ -47,11 +50,14 @@ class OrderReview extends Component {
                                 currentStep={4}
                             />
                             <Layout>
-                                <ScrollView style={styles.container}>
+                                {this.props.cart.isLoading ? (
+                                    <View style={styles.loading}>
+                                        <ActivityIndicator size={'large'} />
+                                    </View>
+                                ) : (<ScrollView style={styles.container}>
                                     <Text style={styles.title}>
                                         Guest Information
                                     </Text>
-
                                     <FormGroup>
                                         <View style={styles.form}>
                                             <TextInput
@@ -99,6 +105,7 @@ class OrderReview extends Component {
                                         </View>
                                     </FormGroup>
                                 </ScrollView>
+                                )}
                             </Layout>
                         </>
                     )}

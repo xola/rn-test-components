@@ -3,18 +3,12 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import StripePaymentModal from '../../modals/StripePaymentModal';
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
-import customerSchema from '../../schemas/customerSchema';
 import OrderSummary from '../common/OrderSummary';
-import ErrorMessage from '../form/ErrorMessage';
-import StyledText from '../common/StyledText';
-import TextInput from '../common/TextInput';
-import FormGroup from '../common/FormGroup';
 import React, { Component } from 'react';
 import styles from './OrderReviewStyle';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import Header from '../common/Header';
-import { Formik } from 'formik';
 import _ from 'lodash';
 import headerStyles from '../common/HeaderStyle'
 import variables from '../../styles/variables';
@@ -22,10 +16,8 @@ import Currency from '../common/Currency';
 
 class OrderReviewFinal extends Component {
     handlePayClick = async params => {
-        if (await this.props.submitOrder(params)) {
-            if (this.props.cart.submittedOrder.paymentIntents[0]) {
-                this.props.openModal();
-            }
+        if (this.props.cart.submittedOrder.paymentIntents[0]) {
+            this.props.openModal();
         }
     };
 
@@ -52,7 +44,6 @@ class OrderReviewFinal extends Component {
 
     render() {
         const { experience, device } = this.props;
-        const { customerName, customerEmail, phone } = this.props.cart.order;
         const { amount, partnerFee } = this.props.cart.preparedOrder;
         let total = amount;
         if (partnerFee && !partnerFee.orderAmountIncludesPartnerFee) {
@@ -60,56 +51,47 @@ class OrderReviewFinal extends Component {
         }
 
         return (
-            <Formik
-                initialValues={{ customerName, customerEmail, phone }}
-                validationSchema={customerSchema}
-                onSubmit={this.handlePayClick}
-            >
-                {({ values, handleChange, handleBlur, handleSubmit }) => (
-                    <>
-                        <Header
-                            back={true}
-                            right={() => true ? <TouchableOpacity onPress={handleSubmit} style={[headerStyles.next, { backgroundColor: variables.green }]}>
-                                <View style={styles.row}>
-                                    <Text style={headerStyles.nextText}>{'Pay'}</Text>
-                                    <Text style={[headerStyles.nextText, { paddingRight: 0 }]}><Currency>{total}</Currency></Text>
-                                </View>
-                            </TouchableOpacity> : <View />}
-                            steps={["Product", "Time", "Quantity", "Info", "Pay"]}
-                            currentStep={5}
-                        />
-                        <Layout
-                            modals={
-                                this.props.payment.isOpen ? (
-                                    <StripePaymentModal
-                                        onClose={this.handleCancelModal}
-                                        onRetry={this.handleRetry}
-                                        onCommit={this.handleCommit}
-                                        onPaymentCollect={this.props.startPaymentCollection}
-                                        order={this.props.cart.order}
-                                        payment={this.props.payment}
-                                        device={device}
-                                        total={total}
-                                    />
-                                ) : null
-                            }
-                        >
+            <>
+                <Header
+                    back={true}
+                    right={() => true ? <TouchableOpacity onPress={this.handlePayClick} style={[headerStyles.next, { backgroundColor: variables.green }]}>
+                        <View style={styles.row}>
+                            <Text style={headerStyles.nextText}>{'Pay'}</Text>
+                            <Text style={[headerStyles.nextText, { paddingRight: 0 }]}><Currency>{total}</Currency></Text>
+                        </View>
+                    </TouchableOpacity> : <View />}
+                    steps={["Product", "Time", "Quantity", "Info", "Pay"]}
+                    currentStep={5}
+                />
+                <Layout
+                    modals={
+                        this.props.payment.isOpen ? (
+                            <StripePaymentModal
+                                onClose={this.handleCancelModal}
+                                onRetry={this.handleRetry}
+                                onCommit={this.handleCommit}
+                                onPaymentCollect={this.props.startPaymentCollection}
+                                order={this.props.cart.order}
+                                payment={this.props.payment}
+                                device={device}
+                                total={total}
+                            />
+                        ) : null
+                    }
+                >
 
-                            <Text style={styles.title}>
-                                Review Purchase
-                            </Text>
-                            <View style={styles.info}>
-                                <OrderSummary
-                                    cart={this.props.cart}
-                                    itemIndex={this.props.cart.itemIndex}
-                                    experience={experience}
-                                />
-                            </View>
-                        </Layout>
-                    </>
-                )
-                }
-            </Formik>
+                    <Text style={styles.title}>
+                        Review Purchase
+                    </Text>
+                    <View style={styles.info}>
+                        <OrderSummary
+                            cart={this.props.cart}
+                            itemIndex={this.props.cart.itemIndex}
+                            experience={experience}
+                        />
+                    </View>
+                </Layout>
+            </>
         );
     }
 }
