@@ -62,7 +62,8 @@ class ExperienceAvailability extends Component {
 
         let timeSlots = _.get(availability, selectedDate, {});
 
-        const dateSlot = _.isArray(_.get(availability, selectedDate, {}))
+        const dateSlot = !Object.values(availability).map(item => _.isArray(item)).some(item => item === false)
+
         if (_.isArray(timeSlots)) {
             timeSlots = timeSlots.filter(open => open > 0);
         } else {
@@ -120,13 +121,13 @@ class ExperienceAvailability extends Component {
                                         handleClick={() => this.handleDateNext(today)}
                                         date={'Today'}
                                         slots={availability[today]}
-                                        disabled={availability[today]?.reduce((total, item) => total + item, 0) === 0}
+                                        disabled={!availability[today] || availability[today]?.reduce((total, item) => total + item, 0) === 0}
                                     />
                                     <DateSlot
                                         handleClick={() => this.handleDateNext(tomorrow)}
                                         date={'Tomorrow'}
                                         slots={availability[tomorrow]}
-                                        disabled={availability[tomorrow]?.reduce((total, item) => total + item, 0) === 0}
+                                        disabled={!availability[tomorrow] || availability[tomorrow]?.reduce((total, item) => total + item, 0) === 0}
                                     />
                                 </View>
                                 <View style={styles.datesContainer}>
@@ -139,7 +140,7 @@ class ExperienceAvailability extends Component {
                                                 handleClick={() => this.handleDateNext(item.date)}
                                                 date={moment(item.date).format('ddd DD MMM')}
                                                 slots={item.openSlots}
-                                                disabled={item.openSlots?.reduce((total, item) => total + item, 0) === 0}
+                                                disabled={!item.openSlots || item.openSlots?.reduce((total, item) => total + item, 0) === 0}
                                             />
                                         }
                                         ListEmptyComponent={

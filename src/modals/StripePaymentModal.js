@@ -43,7 +43,7 @@ class StripePaymentModal extends Component {
     }
 
     render() {
-        const { toggle, onCloseClick, ...rest } = this.props;
+        const { toggle, onClose, ...rest } = this.props;
         const time = this.formatTime(this.state.counter.toString());
 
         return (
@@ -80,7 +80,7 @@ class StripePaymentModal extends Component {
                     ) : (
                         <View style={styles.container}>
                             <View style={styles.top}>
-                                <TouchableOpacity onPress={() => NavigationService.goBack()} style={styles.back}>
+                                <TouchableOpacity onPress={this.props.onGoBack} style={styles.back}>
                                     <BackIcon />
                                 </TouchableOpacity>
                             </View>

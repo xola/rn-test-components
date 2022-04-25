@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { connect } from 'react-redux';
+import { getDeviceName } from 'react-native-device-info';
 import Layout from '../common/Layout';
 import CardReader from '../common/CardReader';
 import {
@@ -23,10 +24,6 @@ import { getPairedReader } from '../../selectors/readersSelector';
 import { w } from '../../utils/Scale';
 import { BackIcon, DropDownIcon } from '../../images/svg';
 
-const computerSchema = object().shape({
-    label: string().required('Required'),
-});
-
 class DiscoverDevices extends Component {
     state = {
         label: '',
@@ -34,12 +31,18 @@ class DiscoverDevices extends Component {
 
     componentDidMount() {
         this.props.getComputer();
-        this.handleSubmit('loading');
+        this.handleSubmit();
+        this.getDeviceInfo()
     }
 
-    handleSubmit = async (status) => {
-        const { connectedReader, saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
-        if (status !== 'loading') {
+    getDeviceInfo = async () => {
+        const label = await getDeviceName()
+        this.setState({ label })
+    }
+
+    handleSubmit = async () => {
+        const { saveComputer, readers, discoverReaders, abortDiscoverReaders, discoverPrinters } = this.props;
+        if (readers.connectedReader) {
             await this.props.disconnectReader();
         }
         if (readers.isDiscovering) {
@@ -84,9 +87,9 @@ class DiscoverDevices extends Component {
                             onChangeText={text => this.handleChange(text)}
                             value={this.state.label}
                             placeholder="Enter a label to identify this mobile device"
-                            editable={!isDiscovering}
+                            editable={false}
                             title="Pos Station label"
-                            onEndEditing={() => this.handleSubmit('')}
+                            onEndEditing={this.handleSubmit}
                         />
                         <ErrorMessage name="label" />
                     </View>
