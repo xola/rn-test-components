@@ -29,7 +29,6 @@ class OrderReviewFinal extends Component {
 
     handleGoBack = async () => {
         this.props.closeModal();
-        await StripeTerminal.abortCreatePayment();
     };
 
     handleRetry = async () => {

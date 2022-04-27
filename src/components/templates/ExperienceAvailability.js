@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Layout from '../common/Layout';
 import _ from 'lodash';
@@ -17,11 +17,11 @@ import DateSlot from '../common/DateSlot';
 import { w } from '../../utils/Scale';
 
 const NUM_COLUMNS = 4
-
 class ExperienceAvailability extends Component {
     state = {
         date: moment(),
-        dateSlotMore: 1
+        dateSlotMore: true,
+        dateSlotLength: 3
     };
 
     componentDidMount() {
@@ -43,7 +43,7 @@ class ExperienceAvailability extends Component {
     };
 
     handleMoreDates = () => {
-        this.setState({ dateSlotMore: this.state.dateSlotMore + 1 })
+        this.setState({ dateSlotLength: 15, dateSlotMore: false })
     }
 
     handleNext = (time) => {
@@ -92,8 +92,8 @@ class ExperienceAvailability extends Component {
 
         const today = moment().format('YYYY-MM-DD')
         const tomorrow = moment().clone().add(1, 'days').format('YYYY-MM-DD')
-        const dateSlotLength = this.state.dateSlotMore * 3
-        const dateSlots = [...Array(dateSlotLength)].map((item, index) => {
+
+        const dateSlots = [...Array(this.state.dateSlotLength)].map((item, index) => {
             const date = moment().clone().add(Number(index + 2), 'days').format('YYYY-MM-DD')
             return {
                 date: date,
@@ -115,7 +115,7 @@ class ExperienceAvailability extends Component {
                                 <ActivityIndicator />
                             </View>
                         ) :
-                            <View>
+                            <ScrollView>
                                 <View style={[styles.columnDate, { height: w(100) }]}>
                                     <DateSlot
                                         handleClick={() => this.handleDateNext(today)}
@@ -150,17 +150,18 @@ class ExperienceAvailability extends Component {
                                         }
                                         keyExtractor={item => item.timeSlot}
                                         numColumns={3}
+                                        ListFooterComponent={() =>
+                                            this.state.dateSlotMore ? <TouchableOpacity onPress={this.handleMoreDates} style={[styles.next, {
+                                                borderRadius: variables.borderRadius,
+                                                width: '98%',
+                                                alignSelf: 'center',
+                                            }]}>
+                                                <Text style={styles.dateText}>More Dates</Text>
+                                            </TouchableOpacity> : <View></View>
+                                        }
                                     />
-
-                                    <TouchableOpacity onPress={this.handleMoreDates} style={[styles.next, {
-                                        borderRadius: variables.borderRadius,
-                                        marginHorizontal: w(8),
-                                        marginTop: w(20)
-                                    }]}>
-                                        <Text style={styles.dateText}>More Dates</Text>
-                                    </TouchableOpacity>
                                 </View>
-                            </View>
+                            </ScrollView>
                             :
                             <View><View style={styles.columnDate}>
                                 <TouchableOpacity disabled={disablePrevDate} onPress={this.handlePreviousDates} style={[styles.next, {

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Spinner from '../common/Spinner';
 import Header from '../common/Header';
 import { changeDemographics, changeAddOns, prepareOrder } from '../../actions/orderActions';
+import { selectDate } from '../../actions/dateActions';
 import { Formik } from 'formik';
 import ErrorMessage from '../form/ErrorMessage';
 import LoadingButton from '../common/LoadingButton';
@@ -80,6 +81,7 @@ class OrderCreate extends Component {
         return (<>
             <Header
                 back={true}
+                onBackPress={() => this.props.selectDate(moment().format('YYYY-MM-DD'))}
                 right={() => true ? <TouchableOpacity onPress={() => this.handleNext()} style={headerStyles.next}>
                     <Text style={headerStyles.nextText}>Next</Text>
                     <NextIcon />
@@ -146,6 +148,7 @@ const mapDispatchToProps = {
     changeDemographics,
     changeAddOns,
     prepareOrder,
+    selectDate,
 };
 
 export default connect(

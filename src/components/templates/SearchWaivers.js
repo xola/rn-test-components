@@ -7,7 +7,7 @@ import NavigationService from '../NavigationService';
 
 class SearchWaivers extends Component {
     handleSearchClick = async params => {
-        await this.props.searchOrders(params.searchText);
+        await this.props.searchOrders(params.searchText, this.props.seller.id);
         if (_.size(this.props.orders) > 0) {
             NavigationService.navigate('SelectWaiver');
         } else {
@@ -28,6 +28,7 @@ class SearchWaivers extends Component {
 
 const mapStateToProps = state => ({
     orders: state.order.collection,
+    seller: state.auth.seller
 });
 
 const mapDispatchToProps = {

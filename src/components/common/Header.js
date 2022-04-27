@@ -36,9 +36,16 @@ class Header extends Component {
          * Param that determines whether home button should be shown
          */
         home: PropTypes.bool,
+        /**
+         *  Func Hook before go back
+         */
+        onBackPress: PropTypes.func,
     };
 
-    handleBackClick = () => {
+    handleBackClick = async () => {
+        if (this.props.onBackPress) {
+            this.props.onBackPress
+        }
         NavigationService.goBack();
     };
 

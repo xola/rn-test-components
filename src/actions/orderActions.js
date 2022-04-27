@@ -38,11 +38,11 @@ export const CHECKIN_ITEM_FAILED = 'CHECKIN_ITEM_FAILED';
 export const EMPTY_SEARCH_RESULT = 'EMPTY_SEARCH_RESULT';
 export const RESET_EMPTY_SEARCH_RESULT = 'RESET_EMPTY_SEARCH_RESULT';
 
-export const searchOrders = searchTerm => async dispatch => {
+export const searchOrders = (searchTerm, seller) => async dispatch => {
     try {
         dispatch({ type: SEARCH_ORDERS_REQUESTED });
         let { data } = await xolaApi.get('/api/orders', {
-            params: { kiosk: searchTerm, authenticate: true, type: 'order', limit: 100 },
+            params: { kiosk: searchTerm, authenticate: true, type: 'order', limit: 100, seller: seller },
         });
         let result = data.data;
         dispatch({ type: SEARCH_ORDERS_SUCCEEDED, orders: result });
@@ -142,9 +142,11 @@ export const submitOrder = params => async (dispatch, getState) => {
         const { preparedOrder } = getState().cart;
         const response = await xolaApi.post('/api/orders', preparedOrder);
         dispatch({ type: SUBMIT_ORDER_SUCCEEDED, order: response.data });
+        console.log(response.data)
         return true;
     } catch (e) {
-        dispatch({ type: SUBMIT_ORDER_FAILED, error: e.message, data: _.get(e, 'response.data') });
+        const errorMsg = e.message === "Request failed with status code 409" ? "This time slot is sold out" : e.message
+        dispatch({ type: SUBMIT_ORDER_FAILED, error: errorMsg, data: _.get(e, 'response.data') });
         return false;
     }
 };

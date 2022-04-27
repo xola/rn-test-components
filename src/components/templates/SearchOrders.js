@@ -7,7 +7,7 @@ import NavigationService from '../NavigationService';
 
 class SearchOrders extends Component {
     handleSearchClick = async params => {
-        await this.props.searchOrders(params.searchText);
+        await this.props.searchOrders(params.searchText, this.props.seller.id);
 
         if (_.size(this.props.orders) > 0) {
             NavigationService.navigate('SelectOrder');
@@ -23,6 +23,7 @@ class SearchOrders extends Component {
 
 const mapStateToProps = state => ({
     orders: state.order.collection,
+    seller: state.auth.seller
 });
 
 const mapDispatchToProps = {

@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     dateText: {
         fontSize: variables.h6Size,
         fontFamily: variables.fontBold,
-        paddingVertical: w(20)
+        paddingVertical: w(16)
     },
     datesContainer: {
-        paddingTop: w(100)
+        paddingTop: w(100),
     }
 });
 
