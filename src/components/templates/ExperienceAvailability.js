@@ -26,6 +26,14 @@ class ExperienceAvailability extends Component {
 
     componentDidMount() {
         this.props.selectDate(this.state.date.format('YYYY-MM-DD'));
+
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.props.selectDate(this.state.date.format('YYYY-MM-DD'));
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
     handleNextDates = () => {

@@ -56,24 +56,25 @@ class SuccessPage extends Component {
                         />
                     )}
 
-                    {experience && experience.waiverPreference && !this.props.route.params?.waiverSigned ? (
-                        <View style={styles.button}>
-                            <LoadingButton
-                                onPress={this.handleWaiverSignIn}
-                                styleNames={['large', 'wide', 'active']}
-                                title="Sign Waiver Now"
-                                icon={() => <WaiverIcon />}
-                            />
-                        </View>
-                    ) : (
+                    <View style={styles.row}>
+                        {experience && experience.waiverPreference && !this.props.route.params?.waiverSigned && (
+                            <View style={styles.button}>
+                                <LoadingButton
+                                    onPress={this.handleWaiverSignIn}
+                                    styleNames={['large', 'width300']}
+                                    title="Sign Waiver Now"
+                                    icon={() => <WaiverIcon />}
+                                />
+                            </View>
+                        )}
                         <View style={styles.button}>
                             <LoadingButton
                                 onPress={this.handleFinish}
-                                styleNames={['large', 'active', 'regular']}
+                                styleNames={['large', 'width300']}
                                 title="Done"
                             />
                         </View>
-                    )}
+                    </View>
 
                     {this.props.printer.printer && submittedItem ? (
                         <View>

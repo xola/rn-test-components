@@ -96,6 +96,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    width300: {
+        width: w(300),
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default styles;

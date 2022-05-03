@@ -7,13 +7,6 @@ const styles = StyleSheet.create({
         flex: 1,
         zIndex: 10,
     },
-    button: {
-        position: 'absolute',
-        bottom: w(40),
-        left: 0,
-        alignItems: 'center',
-        width: '100%',
-    },
     header: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -28,6 +21,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: w(130),
     },
+    row: {
+        position: 'absolute',
+        bottom: w(40),
+        left: 0,
+        alignItems: 'center',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
 });
 
 export default styles;

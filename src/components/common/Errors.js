@@ -21,6 +21,10 @@ class Errors extends Component {
             return null;
         }
 
+        if (latestError?.error === 'Request failed with status code 409') {
+            return null
+        }
+
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>

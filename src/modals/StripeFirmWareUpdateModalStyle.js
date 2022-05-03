@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import variables from '../styles/variables';
+import { w } from '../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,8 +19,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.12,
         shadowRadius: 2,
         borderRadius: 8,
-        width: 400,
-        padding: 40
+        width: w(600),
+        padding: w(40)
     },
     footer: {
         flexDirection: 'row-reverse',
@@ -38,12 +39,12 @@ const styles = StyleSheet.create({
     subTitle: {
         fontSize: variables.h5Size,
         color: variables.textModal,
-        marginVertical: 32,
-        lineHeight: 21,
+        marginVertical: w(32),
+        lineHeight: w(32),
     },
     buttonContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 11,
+        paddingHorizontal: w(16),
+        paddingVertical: w(11),
         borderRadius: 4,
         borderWidth: 1,
         borderColor: variables.lightGrey

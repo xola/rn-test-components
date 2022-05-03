@@ -1,4 +1,5 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
+import { dismissLatestError } from '../../actions/errorsActions';
 import { TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import customerSchema from '../../schemas/customerSchema';
@@ -15,8 +16,13 @@ import _ from 'lodash';
 import headerStyles from '../common/HeaderStyle'
 import { NextIcon } from '../../images/svg';
 import NavigationService from '../NavigationService';
+import TimeSlotSoldModal from '../../modals/TimeSlotSoldModal';
 
 class OrderReview extends Component {
+    componentWillUnmount() {
+        this.props.dismissLatestError();
+    }
+
     handleNextClick = async params => {
         const isOrderCreated = await this.props.submitOrder(params)
         if (isOrderCreated) {
@@ -27,6 +33,11 @@ class OrderReview extends Component {
     handleEndEditing = ({ customerName, customerEmail, phone }) => () => {
         this.props.updateCustomer({ customerName, customerEmail, phone });
     };
+
+    handleError = async () => {
+        this.props.dismissLatestError();
+        NavigationService.navigate('ExperienceAvailability')
+    }
 
     render() {
         const { customerName, customerEmail, phone } = this.props.cart.order;
@@ -49,7 +60,12 @@ class OrderReview extends Component {
                                 steps={["Product", "Time", "Quantity", "Info", "Pay"]}
                                 currentStep={4}
                             />
-                            <Layout>
+                            <Layout
+                                modals={<TimeSlotSoldModal
+                                    toggle={this.props.latestError?.error === 'Request failed with status code 409'}
+                                    onClose={this.handleError}
+                                />}
+                            >
                                 {this.props.cart.isLoading ? (
                                     <View style={styles.loading}>
                                         <ActivityIndicator size={'large'} />
@@ -121,6 +137,7 @@ const mapStateToProps = state => ({
     item: state.cart.preparedOrder.items[state.cart.itemIndex],
     device: state.readers.computer.label,
     payment: state.payment,
+    latestError: state.errors[state.errors.length - 1],
 });
 
 const mapDispatchToProps = {
@@ -131,6 +148,7 @@ const mapDispatchToProps = {
     openModal,
     closeModal,
     updateCustomer,
+    dismissLatestError
 };
 
 export default connect(

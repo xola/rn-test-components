@@ -145,8 +145,7 @@ export const submitOrder = params => async (dispatch, getState) => {
         console.log(response.data)
         return true;
     } catch (e) {
-        const errorMsg = e.message === "Request failed with status code 409" ? "This time slot is sold out" : e.message
-        dispatch({ type: SUBMIT_ORDER_FAILED, error: errorMsg, data: _.get(e, 'response.data') });
+        dispatch({ type: SUBMIT_ORDER_FAILED, error: e.message, data: _.get(e, 'response.data') });
         return false;
     }
 };

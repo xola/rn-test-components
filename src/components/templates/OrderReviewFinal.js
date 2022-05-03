@@ -13,6 +13,7 @@ import _ from 'lodash';
 import headerStyles from '../common/HeaderStyle'
 import variables from '../../styles/variables';
 import Currency from '../common/Currency';
+import NavigationService from '../NavigationService';
 
 class OrderReviewFinal extends Component {
     handlePayClick = async params => {
@@ -22,12 +23,14 @@ class OrderReviewFinal extends Component {
     };
 
     handleCancelModal = async () => {
-        this.props.closeModal();
         await StripeTerminal.abortCreatePayment();
         await this.props.releaseOrder();
+        this.props.closeModal();
+        NavigationService.navigate('Home')
     };
 
     handleGoBack = async () => {
+        await StripeTerminal.abortCreatePayment();
         this.props.closeModal();
     };
 
