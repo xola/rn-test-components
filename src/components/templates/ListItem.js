@@ -19,8 +19,12 @@ class ListItem extends Component {
     };
 
     handleWaiverSelect = () => {
-        this.props.onClick(this.props.item);
-        !this.props.selectedWaiver && setTimeout(this.handleSignWaiver, 1000);
+        if (this.props.type === 'waiver') {
+            this.props.onClick(this.props.item);
+            !this.props.selectedWaiver && setTimeout(this.handleSignWaiver, 1000);
+        } else {
+            this.props.onClick();
+        }
     };
     render() {
         const { order, experiences, item, selectedWaiver } = this.props;

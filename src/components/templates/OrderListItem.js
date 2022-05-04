@@ -16,28 +16,6 @@ class OrderListItem extends Component {
         this.setState({ isLoading: false });
     };
 
-    renderActionButton() {
-        const { item } = this.props;
-        const isCheckedIn = item.guestStatus === 'arrived';
-        return isCheckedIn ? (
-            <LoadingButton
-                styleNames={['medium', 'success']}
-                title={
-                    <StyledText styleNames={['h3']}>
-                        <CustomIcon name="tick-bold" /> Checked in
-                    </StyledText>
-                }
-            />
-        ) : (
-            <LoadingButton
-                onPress={this.handleCheckIn}
-                isLoading={this.state.isLoading}
-                styleNames={['medium', 'empty']}
-                title="Check In"
-            />
-        );
-    }
-
     render() {
         const { experiences, item } = this.props;
         if (!item.experience) {
@@ -47,7 +25,7 @@ class OrderListItem extends Component {
         if (!experience) {
             return null;
         }
-        return <ListItem actionButton={this.renderActionButton()} order={this.props.order} item={this.props.item} />;
+        return <ListItem type="checkIn" order={this.props.order} item={this.props.item} onClick={this.handleCheckIn} />;
     }
 }
 

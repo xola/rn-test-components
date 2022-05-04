@@ -18,6 +18,7 @@ class SearchWaivers extends Component {
     render() {
         return (
             <SearchPage
+                type="waiver"
                 title={'Find your reservation to sign the waiver'}
                 showFindBookingButton={true}
                 onSearchClick={this.handleSearchClick}

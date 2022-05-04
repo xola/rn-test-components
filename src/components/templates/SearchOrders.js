@@ -17,7 +17,7 @@ class SearchOrders extends Component {
     };
 
     render() {
-        return <SearchPage title={'Find your reservation to check in'} onSearchClick={this.handleSearchClick} />;
+        return <SearchPage type="checkIn" title={'Find your reservation to check in'} onSearchClick={this.handleSearchClick} />;
     }
 }
 

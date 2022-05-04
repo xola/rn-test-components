@@ -27,6 +27,11 @@ class OrderList extends Component {
 
         return _.size(experienceItems) ? (
             <ScrollView contentContainerStyle={styles.list}>
+                <View style={styles.header}>
+                    <StyledText style={styles.headerTitle} styleNames={['h1']}>
+                        Please Select Your Reservation
+                    </StyledText>
+                </View>
                 {_.map(experienceItems, experienceItem => (
                     <OrderListItem
                         key={experienceItem.item.id}

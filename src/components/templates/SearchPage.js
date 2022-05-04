@@ -35,7 +35,7 @@ class SearchPage extends Component {
             >
                 {props => (
                     <>
-                        <Header back={true} steps={['Search', 'Select Reservation', 'Sign Waiver']} currentStep={1} />
+                        <Header back={true} steps={['Search', 'Select Reservation', this.props.type === 'waiver' ? 'Sign Waiver' : 'Check In']} currentStep={1} />
                         <Layout>
                             <KeyboardAwareScrollView contentContainerStyle={styles.container}>
                                 <View style={styles.steps}>

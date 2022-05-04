@@ -1,5 +1,6 @@
 import xolaApi from '../api/xolaApi';
 import _ from 'lodash';
+import { Alert } from 'react-native'
 import NavigationService from '../components/NavigationService';
 import { GUEST_STATUS_ARRIVED, STATUS_ACCEPTED, SOURCE_KIOSK } from '../constants/orderConstants';
 
@@ -38,11 +39,20 @@ export const CHECKIN_ITEM_FAILED = 'CHECKIN_ITEM_FAILED';
 export const EMPTY_SEARCH_RESULT = 'EMPTY_SEARCH_RESULT';
 export const RESET_EMPTY_SEARCH_RESULT = 'RESET_EMPTY_SEARCH_RESULT';
 
+export const toQueryString = (params, leadingSign = false) =>
+    Object.keys(params).length
+        ? (leadingSign ? '?' : '') +
+        Object.entries(params)
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&')
+        : ''
+
 export const searchOrders = (searchTerm, seller) => async dispatch => {
     try {
         dispatch({ type: SEARCH_ORDERS_REQUESTED });
-        let { data } = await xolaApi.get('/api/orders', {
-            params: { kiosk: searchTerm, authenticate: true, type: 'order', limit: 100, seller: seller },
+        const params = { dashboard: searchTerm, limit: 100, seller: seller }
+        let { data } = await xolaApi.get(`/api/orders?${toQueryString(params)}`, {
+            params: { authenticate: true, seller: seller }
         });
         let result = data.data;
         dispatch({ type: SEARCH_ORDERS_SUCCEEDED, orders: result });
@@ -81,8 +91,9 @@ export const checkInItem = (order, item) => async (dispatch, getState) => {
         const url = `/api/orders/${order.id}/checkInGuests`;
         await xolaApi.post(url, data, { params: { authenticate: true } });
         dispatch({ type: CHECKIN_ITEM_SUCCEEDED, orderId: order.id });
-        NavigationService.navigate('SuccessPage', { message: 'Check-in successful!', item: item });
+        NavigationService.navigate('CheckInSuccessPage', { message: 'Check-in successful!', item: item });
     } catch (e) {
+        Alert.alert('Error', e.message)
         dispatch({ type: CHECKIN_ITEM_FAILED, error: e.message });
     }
 };

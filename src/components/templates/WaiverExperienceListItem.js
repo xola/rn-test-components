@@ -36,6 +36,7 @@ class WaiverExperienceListItem extends Component {
         }
         return (
             <ListItem
+                type="waiver"
                 onClick={onClick}
                 selectedWaiver={selectedWaiver}
                 order={this.props.order}

@@ -17,6 +17,7 @@ import Setup from './templates/Setup';
 import SelectSeller from './templates/SelectSeller';
 import OrderCreateAddOn from './templates/OrderCreateAddOn';
 import OrderReviewFinal from './templates/OrderReviewFinal';
+import CheckInSuccessPage from './templates/CheckInSuccessPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export default () => {
             <Stack.Screen name="SelectWaiver" component={SelectWaiver} />
             <Stack.Screen name="SignInWaiver" component={SignInWaiver} />
             <Stack.Screen name="SuccessPage" component={SuccessPage} />
+            <Stack.Screen name="CheckInSuccessPage" component={CheckInSuccessPage} />
             <Stack.Screen name="SelectSeller" component={SelectSeller} />
         </Stack.Navigator>
     );
