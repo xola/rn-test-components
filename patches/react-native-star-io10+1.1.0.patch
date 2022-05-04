@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-star-io10/android/build.gradle b/node_modules/react-native-star-io10/android/build.gradle
+index 0367646..bcf0abe 100644
+--- a/node_modules/react-native-star-io10/android/build.gradle
++++ b/node_modules/react-native-star-io10/android/build.gradle
+@@ -127,6 +127,7 @@ def kotlin_version = getExtOrDefault('kotlinVersion')
+ dependencies {
+     // noinspection GradleDynamicVersion
+     api 'com.facebook.react:react-native:+'
++    implementation "com.squareup.okhttp3:okhttp:4.7.2"
+     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+     implementation files('src/lib/stario10.aar')
+     def coroutines_version = '1.3.7' //Kotlin coroutines用ライブラリ(async, await)のバージョン

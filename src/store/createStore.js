@@ -1,8 +1,8 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { logger } from 'redux-logger';
 import rootReducer from '../reducers';
 
-const middleware = [...getDefaultMiddleware()];
+const middleware = [];
 
 if (process.env.NODE_ENV === 'development') {
     middleware.push(logger);
@@ -13,7 +13,7 @@ const createStore = (preloadedState = {}) => {
         preloadedState,
         reducer: rootReducer,
         devTools: false,
-        middleware,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
     });
 
     if (module.hot) {

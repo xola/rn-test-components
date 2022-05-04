@@ -180,14 +180,26 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-webview')
-    implementation project(':@react-native-community_async-storage')
-    implementation project(':react-native-vector-icons')
-    implementation project(':crowdbotics-react-native-stripe-terminal')
-    implementation project(':react-native-config')
-    implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-webview')
+    implementation project(':react-native-vector-icons')
+    implementation "com.stripe:stripeterminal:2.5.2"
+    implementation project(':crowdbotics-react-native-stripe-terminal')
+    implementation project(':react-native-gesture-handler')
+
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.fbjni'
+    }
+
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+        exclude group:'com.squareup.okhttp3', module:'okhttp'
+    }
+
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

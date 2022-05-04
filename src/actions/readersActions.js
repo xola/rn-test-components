@@ -1,5 +1,5 @@
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ObjectID from 'bson-objectid';
 import xolaApi from '../api/xolaApi';
 import { SIMULATE_STRIPE_TERMINAL } from '@env';
