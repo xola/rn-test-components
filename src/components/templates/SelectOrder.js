@@ -18,7 +18,7 @@ class SelectOrder extends Component {
 
         return (
             <>
-                <Header back={true} steps={['Search', 'Select Reservation']} currentStep={2} />
+                <Header back={true} steps={['Search', 'Select Reservation', 'Check In']} currentStep={2} />
                 <Layout>
                     <OrderList onCheckInItem={this.handleCheckInItem} orders={orders} />
                 </Layout>
