@@ -27,7 +27,7 @@ class WaiverExperienceList extends Component {
             });
         });
 
-        experienceItems = _.orderBy(experienceItems, ['item.arrival', 'order.customerName'], ['desc', 'asc']);
+        experienceItems = _.orderBy(experienceItems, ['item.arrival', 'item.arrivalTime', 'order.customerName'], ['asc', 'asc', 'asc']);
         return _.size(experienceItems) ? (
             <ScrollView contentContainerStyle={styles.list}>
                 <View style={styles.header}>
