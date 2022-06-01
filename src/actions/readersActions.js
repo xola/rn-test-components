@@ -7,6 +7,12 @@ import PaymentDeviceService from '../services/PaymentDeviceService';
 import { getPairedReader } from '../selectors/readersSelector';
 import _ from 'lodash';
 
+import { BluetoothStatus } from 'react-native-bluetooth-status'
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions'
+import { getUniqueId, isLocationEnabled } from 'react-native-device-info'
+import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box'
+
+
 export const SAVE_COMPUTER_REQUESTED = 'SAVE_COMPUTER_REQUESTED';
 export const SAVE_COMPUTER_SUCCEEDED = 'SAVE_COMPUTER_SUCCEEDED';
 export const SAVE_COMPUTER_FAILED = 'SAVE_COMPUTER_FAILED';
@@ -52,23 +58,59 @@ export const discoverReaders = () => async (dispatch, getState) => {
     const { data } = await xolaApi.get(`api/sellers/${auth.seller.id}/stripeTerminal/connectionToken`, {
         params: { authenticate: true },
     });
+    const isBluetoothEnabled = await BluetoothStatus.state()
 
-    await StripeTerminal.initialize({ fetchConnectionToken: async () => data.secret });
+    if (isBluetoothEnabled) {
+        const permission =
+            Platform.OS === 'android'
+                ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+                : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        const isLocationPermissionGranted = await check(permission)
 
-    await StripeTerminal.addReadersDiscoveredListener(readers => {
-        dispatch(readersDiscovered(readers));
-    });
+        if (isLocationPermissionGranted === RESULTS.GRANTED) {
+            const locationEnabled = await isLocationEnabled()
+            if (locationEnabled) {
+                await StripeTerminal.initialize({ fetchConnectionToken: async () => data.secret });
 
-    try {
-        await StripeTerminal.discoverReaders(
-            StripeTerminal.DeviceTypeChipper2X,
-            StripeTerminal.DiscoveryMethodBluetoothScan,
-            SIMULATE_STRIPE_TERMINAL === 'true',
-        );
+                await StripeTerminal.addReadersDiscoveredListener(readers => {
+                    dispatch(readersDiscovered(readers));
+                });
 
-        dispatch({ type: DISCOVER_READERS_SUCCEEDED });
-    } catch (response) {
-        dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                try {
+                    console.log('doscovering readers')
+                    await StripeTerminal.discoverReaders(
+                        StripeTerminal.DeviceTypeChipper2X,
+                        StripeTerminal.DiscoveryMethodBluetoothScan,
+                        SIMULATE_STRIPE_TERMINAL === 'true' ? 1 : 0, // fix me from env
+                    );
+
+                    dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                } catch (response) {
+                    dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                }
+            } else {
+                try {
+                    const locationRequestResponse = await LocationServicesDialogBox.checkLocationServicesIsEnabled(
+                        {
+                            message: 'To use POS reader, you need to enable the GPS',
+                            ok: 'Enable',
+                            cancel: 'Cancel',
+                            showDialog: true,
+                            openLocationServices: true,
+                            preventOutSideTouch: false,
+                            preventBackClick: false,
+                            providerListener: false,
+                        },
+                    )
+
+                    if (Object.is(locationRequestResponse.status, 'enabled')) {
+                        discoverReaders()
+                    }
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+        }
     }
 };
 
