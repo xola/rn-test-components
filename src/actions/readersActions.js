@@ -8,9 +8,10 @@ import { getPairedReader } from '../selectors/readersSelector';
 import _ from 'lodash';
 
 import { BluetoothStatus } from 'react-native-bluetooth-status'
-import { check, PERMISSIONS, RESULTS } from 'react-native-permissions'
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions'
 import { getUniqueId, isLocationEnabled } from 'react-native-device-info'
-import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box'
+import { Alert } from 'react-native';
+import NavigationService from '../components/NavigationService';
 
 
 export const SAVE_COMPUTER_REQUESTED = 'SAVE_COMPUTER_REQUESTED';
@@ -59,12 +60,12 @@ export const discoverReaders = () => async (dispatch, getState) => {
         params: { authenticate: true },
     });
     const isBluetoothEnabled = await BluetoothStatus.state()
+    const permission =
+        Platform.OS === 'android'
+            ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+            : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
 
     if (isBluetoothEnabled) {
-        const permission =
-            Platform.OS === 'android'
-                ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-                : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
         const isLocationPermissionGranted = await check(permission)
 
         if (isLocationPermissionGranted === RESULTS.GRANTED) {
@@ -88,27 +89,34 @@ export const discoverReaders = () => async (dispatch, getState) => {
                 } catch (response) {
                     dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
                 }
-            } else {
-                try {
-                    const locationRequestResponse = await LocationServicesDialogBox.checkLocationServicesIsEnabled(
-                        {
-                            message: 'To use POS reader, you need to enable the GPS',
-                            ok: 'Enable',
-                            cancel: 'Cancel',
-                            showDialog: true,
-                            openLocationServices: true,
-                            preventOutSideTouch: false,
-                            preventBackClick: false,
-                            providerListener: false,
-                        },
-                    )
+            }
+        } else {
+            try {
+                const locationRequestResponse = await request(permission)
+                if (locationRequestResponse === RESULTS.GRANTED) {
+                    await StripeTerminal.initialize({ fetchConnectionToken: async () => data.secret });
 
-                    if (Object.is(locationRequestResponse.status, 'enabled')) {
-                        discoverReaders()
+                    await StripeTerminal.addReadersDiscoveredListener(readers => {
+                        dispatch(readersDiscovered(readers));
+                    });
+
+                    try {
+                        await StripeTerminal.discoverReaders(
+                            StripeTerminal.DeviceTypeChipper2X,
+                            StripeTerminal.DiscoveryMethodBluetoothScan,
+                            SIMULATE_STRIPE_TERMINAL === 'true' ? 1 : 0, // fix me from env
+                        );
+
+                        dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                    } catch (response) {
+                        dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
                     }
-                } catch (error) {
-                    console.log(error.message)
+                } else {
+                    Alert.alert("Error", "Location is required for POS.")
+                    NavigationService.goBack()
                 }
+            } catch (error) {
+                console.log(error.message)
             }
         }
     }

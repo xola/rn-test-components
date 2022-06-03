@@ -39,8 +39,8 @@
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This app uses Bluetooth to connect to supported card readers and printers.</string>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>This app uses local network to connect to supported card readers and printers.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app uses local network to connect to supported card readers and printers.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth access is required in order to connect to supported card readers.</string>
 	<key>NSCalendarsUsageDescription</key>
@@ -71,10 +71,10 @@
 		<string>Inter-Bold.ttf</string>
 		<string>Inter-Light.ttf</string>
 	</array>
-    <key>UISupportedExternalAccessoryProtocols</key>
-    <array>
-        <string>jp.star-m.starpro</string>
-    </array>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>jp.star-m.starpro</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

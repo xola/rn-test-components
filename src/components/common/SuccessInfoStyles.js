@@ -4,7 +4,7 @@ import { w } from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: '78%',
         justifyContent: 'center',
         alignItems: 'center',
     },

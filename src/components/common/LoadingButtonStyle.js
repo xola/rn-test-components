@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     large: {
         fontSize: w(24),
         fontWeight: '700',
-        paddingVertical: w(24),
+        paddingVertical: w(22),
     },
     active: {
         backgroundColor: variables.mainBlue,
