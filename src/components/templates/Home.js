@@ -72,11 +72,11 @@ class Home extends Component {
                                         />
                                     ) : null}
 
-                                    <LoadingButton
+                                    {seller.preferences?.checkIn?.enabled ? <LoadingButton
                                         onPress={this.handleCheckInClick}
                                         styleNames={['large', 'neutral', 'narrow']}
                                         title="Check In"
-                                    />
+                                    /> : null}
                                 </View>
                             </View>
                         </View>
