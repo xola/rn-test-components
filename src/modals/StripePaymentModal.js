@@ -46,57 +46,60 @@ class StripePaymentModal extends Component {
         const { toggle, onClose, ...rest } = this.props;
         const time = this.formatTime(this.state.counter.toString());
 
-        return (
-            <Modal toggle={toggle} transparent={false} {...rest}>
+        if (this.props.payment.status === STATUS_ERROR)
+            return <Modal toggle={toggle} transparent={false} {...rest}>
                 <Layout>
-                    {this.props.payment.status === STATUS_ERROR ? (
+                    <View style={styles.container}>
                         <View style={styles.container}>
-                            <View style={styles.container}>
-                                <FailedIcon />
-                                <Text style={styles.title}>Payment Failed</Text>
-                            </View>
-                            <View style={styles.footer}>
-                                <View style={styles.buttons}>
-                                    <LoadingButton
-                                        onPress={this.props.onRetry}
-                                        title="Try Again"
-                                        styleNames={['active', 'large', 'wide']}
-                                    />
-                                    <LoadingButton
-                                        onPress={this.props.onClose}
-                                        title="Cancel Purchase"
-                                        styleNames={['inactive', 'large', 'wide']}
-                                    />
-                                </View>
+                            <FailedIcon />
+                            <Text style={styles.title}>Payment Failed</Text>
+                        </View>
+                        <View style={styles.footer}>
+                            <View style={styles.buttons}>
+                                <LoadingButton
+                                    onPress={this.props.onRetry}
+                                    title="Try Again"
+                                    styleNames={['active', 'large', 'wide']}
+                                />
+                                <LoadingButton
+                                    onPress={this.props.onClose}
+                                    title="Cancel Purchase"
+                                    styleNames={['inactive', 'large', 'wide']}
+                                />
                             </View>
                         </View>
-                    ) : this.props.payment.status === STATUS_CONFIRMING ? (
-                        <View style={styles.container}>
-                            <View style={styles.lottieContainer}>
-                                <LottieView source={require('../images/lottie/loading.json')} autoPlay loop />
-                            </View>
-                            <Text style={styles.title}>Processing Payment</Text>
-                        </View>
-                    ) : (
-                        <View style={styles.container}>
-                            <View style={styles.top}>
-                                <TouchableOpacity onPress={this.props.onGoBack} style={styles.back}>
-                                    <BackIcon />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.container}>
-                                <CardIcon />
-                                <Text style={styles.title}>Insert or Tap your Credit Card</Text>
-                            </View>
-                            <View style={styles.bottom}>
-                                <Text style={styles.title}>Total</Text>
-                                <Text style={styles.title}><Currency>{this.props.total}</Currency></Text>
-                            </View>
-                        </View>
-                    )}
+                    </View>
                 </Layout>
             </Modal>
-        );
+
+        if (this.props.payment.status === STATUS_CONFIRMING)
+            return <Modal toggle={toggle} transparent={false} {...rest}>
+                <Layout>
+                    <View style={styles.container}>
+                        <View style={styles.lottieContainer}>
+                            <LottieView source={require('../images/lottie/loading.json')} autoPlay loop />
+                        </View>
+                        <Text style={styles.title}>Processing Payment</Text>
+                    </View>
+                </Layout></Modal>
+
+        return <Modal toggle={toggle} transparent={false} {...rest}>
+            <Layout>
+                <View style={styles.container}>
+                    <View style={styles.top}>
+                        <TouchableOpacity onPress={this.props.onGoBack} style={styles.back}>
+                            <BackIcon />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.container}>
+                        <CardIcon />
+                        <Text style={styles.title}>Insert or Tap your Credit Card</Text>
+                    </View>
+                    <View style={styles.bottom}>
+                        <Text style={styles.title}>Total</Text>
+                        <Text style={styles.title}><Currency>{this.props.total}</Currency></Text>
+                    </View>
+                </View></Layout></Modal>
     }
 }
 
