@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     brand: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: w(60),
+        paddingVertical: w(10),
         flex: 1
     },
     brandText: {
         textAlign: 'center',
-        paddingTop: (20)
+        paddingTop: (10)
     },
     image: {
         width: w(94),
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     buttonContainer: {
-        paddingTop: w(60),
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1

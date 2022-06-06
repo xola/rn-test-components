@@ -37,55 +37,52 @@ class LogIn extends Component {
             >
                 {props => (
                     <Layout>
-                        <KeyboardAvoidingView behavior="padding" keyboardShouldPersistTaps="handled" style={styles.flex} >
-                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
-                                <Image style={styles.image} source={logo} />
-                                <View style={styles.brand}>
-                                    <Image style={styles.kioskLogo} source={kioskLogo} />
-                                    <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
-                                </View>
-                                <FormGroup style={styles.flex}>
-                                    <View style={styles.flex}>
-                                        <TextInput
-                                            id="username"
-                                            title="E-mail"
-                                            onChangeText={props.handleChange('username')}
-                                            keyboardType="email-address"
-                                            error={props.errors.username}
-                                        />
-                                    </View>
-                                    <View style={[styles.flex, { paddingTop: w(20) }]}>
-                                        <TextInput
-                                            id="password"
-                                            title="Password"
-                                            onChangeText={props.handleChange('password')}
-                                            secureTextEntry={true}
-                                            error={props.errors.password}
-                                        />
-                                    </View>
-                                </FormGroup>
-                                <FormGroup style={styles.flex}>
-                                    <View style={styles.buttonContainer}>
-                                        <LoadingButton
-                                            onPress={() => this.openSignUp()}
-                                            styleNames={['large', 'neutral', 'flex']}
-                                            title="Not a Xola customer?"
-                                        />
-                                        <LoadingButton
-                                            onPress={props.handleSubmit}
-                                            isLoading={this.props.auth.isLoading}
-                                            styleNames={['large', 'active', 'flex']}
-                                            title="Login"
-                                        />
-                                    </View>
-                                    <LoadingButton
-                                        onPress={() => this.openPrivacy()}
-                                        styleNames={['large', 'link', 'flex']}
-                                        title="Privacy Policy"
+                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
+                            <Image style={styles.image} source={logo} />
+                            <View style={styles.brand}>
+                                <Image style={styles.kioskLogo} source={kioskLogo} />
+                                <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
+                            </View>
+                            <FormGroup style={styles.flex}>
+                                <View style={styles.flex}>
+                                    <TextInput
+                                        id="username"
+                                        title="E-mail"
+                                        onChangeText={props.handleChange('username')}
+                                        keyboardType="email-address"
+                                        error={props.errors.username}
                                     />
-                                </FormGroup>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
+
+                                    <TextInput
+                                        id="password"
+                                        title="Password"
+                                        onChangeText={props.handleChange('password')}
+                                        secureTextEntry={true}
+                                        error={props.errors.password}
+                                    />
+                                </View>
+                            </FormGroup>
+                            <FormGroup style={styles.flex}>
+                                <View style={styles.buttonContainer}>
+                                    <LoadingButton
+                                        onPress={() => this.openSignUp()}
+                                        styleNames={['large', 'neutral', 'flex']}
+                                        title="Not a Xola customer?"
+                                    />
+                                    <LoadingButton
+                                        onPress={props.handleSubmit}
+                                        isLoading={this.props.auth.isLoading}
+                                        styleNames={['large', 'active', 'flex']}
+                                        title="Login"
+                                    />
+                                </View>
+                                <LoadingButton
+                                    onPress={() => this.openPrivacy()}
+                                    styleNames={['large', 'link', 'flex']}
+                                    title="Privacy Policy"
+                                />
+                            </FormGroup>
+                        </ScrollView>
                     </Layout>
                 )}
             </Formik>
