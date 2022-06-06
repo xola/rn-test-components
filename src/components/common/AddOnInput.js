@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Currency from './Currency';
 import { CheckIcon } from '../../images/svg';
 import { format } from '../../utils/Currency';
+import { w } from '../../utils/Scale';
 
 /**
  * Input component that determines type of input to be shown based on addOn type
@@ -109,13 +110,13 @@ class AddOnInput extends Component {
             return (
                 <View style={styles.container}>
                     <View style={styles.action}>
-                        <View style={styles.content}>
+                        <View style={[styles.content, { padding: w(10) }]}>
                             <ClickablePicker
                                 value={this.state.selectedChoice}
                                 onValueChange={this.handleDropDownChange}
                                 title={() => <Text style={styles.description}>Choose an option</Text>}
                             >
-                                <Picker.Item style={{ backgroundColor: 'red' }} label={'None'} value={null} />
+                                <Picker.Item style={{ backgroundColor: 'red' }} label={'Choose an option'} value={null} />
 
                                 {addOn.choices.map(choice => (
                                     <Picker.Item label={`${choice.name} - ${format(choice.price, currency)}`} key={choice.id} value={choice.id} />

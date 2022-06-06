@@ -43,7 +43,7 @@ class OrderReview extends Component {
         const { customerName, customerEmail, phone } = this.props.cart.order;
 
         return (
-            <KeyboardAvoidingView behavior="padding" style={styles.container} keyboardShouldPersistTaps="handled">
+            <View style={styles.container}>
                 <Formik
                     initialValues={{ customerName, customerEmail, phone }}
                     validationSchema={customerSchema}
@@ -126,7 +126,7 @@ class OrderReview extends Component {
                         </>
                     )}
                 </Formik>
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
