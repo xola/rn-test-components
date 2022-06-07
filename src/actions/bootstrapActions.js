@@ -1,11 +1,10 @@
 import RNIosSettingsBundle from 'react-native-ios-settings-bundle';
-import { Platform } from 'react-native'
+import { Platform } from 'react-native';
 
 export const SET_ENVIRONMENT = 'SET_ENVIRONMENT';
 
 export const bootstrap = () => dispatch => {
-
-    if (Platform.OS !== 'ios') return
+    if (Platform.OS !== 'ios') return;
 
     RNIosSettingsBundle.get('EnvironmentChoice', (err, value) => {
         dispatch({ type: SET_ENVIRONMENT, environment: value });
@@ -14,3 +13,5 @@ export const bootstrap = () => dispatch => {
         }
     });
 };
+
+export const setEnvironment = value => dispatch => dispatch({ type: SET_ENVIRONMENT, environment: value });
