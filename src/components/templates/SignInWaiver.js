@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Header from '../common/Header';
 import { getActiveItem, getActiveOrder } from '../../selectors/orderSelector';
 import StyledText from '../common/StyledText';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import NavigationService from '../NavigationService';
 import variables from '../../styles/variables';
 
@@ -36,6 +36,15 @@ class SignInWaiver extends Component {
     handleSign = () => {
         NavigationService.navigate('SuccessPage', { waiverSigned: true });
     };
+
+    handleWebViewNavChange(url, source) {
+        if (url.includes('thank-you')) {
+            this.handleSign()
+        }
+        if (url.includes(source.domain())) {
+            this.setState({ canGoBack: false });
+        }
+    }
 
     render() {
         const { item, experiences, order } = this.props;
@@ -72,17 +81,27 @@ class SignInWaiver extends Component {
                 <WebView
                     ref={this.webview}
                     source={{ uri: source.toString() }}
-                    onNavigationStateChange={navState => {
-                        if (navState.url.includes('thank-you')) {
-                            this.handleSign()
+                    injectedJavaScript={`
+                        (function() {
+                        function wrap(fn) {
+                            return function wrapper() {
+                            var res = fn.apply(this, arguments);
+                            window.ReactNativeWebView.postMessage(window.location.href);
+                            return res;
+                            }
                         }
-                        if (navState.url.includes(source.domain())) {
-                            this.setState({ canGoBack: false });
-                        } else {
-                            this.setState({ canGoBack: navState.canGoBack });
-                        }
-
+                        history.pushState = wrap(history.pushState);
+                        history.replaceState = wrap(history.replaceState);
+                        window.addEventListener('popstate', function() {
+                            window.ReactNativeWebView.postMessage(window.location.href);
+                        });
+                        })();
+                        true;
+                    `}
+                    onMessage={event => {
+                        Platform.OS === 'android' && this.handleWebViewNavChange(event.nativeEvent.data, source)
                     }}
+                    onNavigationStateChange={navState => this.handleWebViewNavChange(navState.url, source)}
                 />
             </>
         );
