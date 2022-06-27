@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import {
     InterfaceType,
     StarConnectionSettings,
@@ -10,12 +11,17 @@ export const TICKET_PRINTING_WIDTH = 506;
 
 const TicketPrinterService = {
     async discoverPrinters(onPrinterFound) {
-        const manager = await StarDeviceDiscoveryManagerFactory.create([
+        const interfaceTypes = Platform.OS == 'android' ? [
+            InterfaceType.Lan,
+            InterfaceType.Bluetooth,
+            InterfaceType.Usb,
+        ] : [
             InterfaceType.Lan,
             InterfaceType.Bluetooth,
             InterfaceType.BluetoothLE,
             InterfaceType.Usb,
-        ]);
+        ];
+        const manager = await StarDeviceDiscoveryManagerFactory.create(interfaceTypes);
         manager.discoveryTime = 1000;
         manager.onPrinterFound = async printer => {
             onPrinterFound(printer);
