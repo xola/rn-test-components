@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     button: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: w(24),
+        paddingHorizontal: w(20),
         borderStyle: 'solid',
         borderRadius: variables.borderRadius,
         borderColor: variables.lightGrey,
@@ -20,12 +20,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     time: {
-        flex: 1,
         fontSize: w(20),
         fontFamily: variables.fontBold,
     },
     slots: {
-        flex: 1,
         fontSize: w(20),
         fontFamily: variables.fontLight,
         textAlign: 'right',

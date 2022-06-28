@@ -59,12 +59,12 @@ class StripePaymentModal extends Component {
                                 <LoadingButton
                                     onPress={this.props.onRetry}
                                     title="Try Again"
-                                    styleNames={['active', 'large', 'wide']}
+                                    styleNames={['active', 'large', 'width300']}
                                 />
                                 <LoadingButton
                                     onPress={this.props.onClose}
                                     title="Cancel Purchase"
-                                    styleNames={['inactive', 'large', 'wide']}
+                                    styleNames={['inactive', 'large', 'width300']}
                                 />
                             </View>
                         </View>
