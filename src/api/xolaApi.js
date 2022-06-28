@@ -52,4 +52,16 @@ xolaApi.xolaUrl = uri => {
     }
 };
 
+xolaApi.pluginUrl = uri => {
+    const { bootstrap } = store.getState();
+
+    let url = ""
+    if (bootstrap.environment === "production") {
+        url = "https://elrond.xola.com"
+    } else {
+        url = "https://elrond.sandbox.xola.com"
+    }
+    return url + '/' + _.trimStart(uri, '/');
+};
+
 export default xolaApi;

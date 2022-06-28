@@ -13,10 +13,18 @@ import StyledText from '../common/StyledText';
 import xolaApi from '../../api/xolaApi';
 import { resetCart } from '../../actions/cartActions';
 import { BackIcon } from '../../images/svg';
+import Axios from 'axios';
 
 class Home extends Component {
+    state = {
+        waiverEnabled: false,
+        checkInEnabled: false
+    }
+
     componentDidMount() {
         this.props.discoverPrinters();
+        this.checkWaivers();
+        this.checkPreferences();
     }
 
     handleBookNowClick = () => {
@@ -34,10 +42,39 @@ class Home extends Component {
         NavigationService.navigate('SearchOrders');
     };
 
+    checkWaivers = async () => {
+        const { auth, seller } = this.props;
+        try {
+            const plugins = await Axios.get(xolaApi.pluginUrl('/plugins?abilities[has]=waiver'))
+            const waiverPluginIds = plugins.data?.data.map(item => item.id)
+
+            if (waiverPluginIds.length !== 0) {
+                const installedPlugins = await Axios.get(xolaApi.pluginUrl(`/installations?seller=${seller.id}&id[in]=${waiverPluginIds}`), {
+                    headers: { 'X-API-KEY': auth.apiKey },
+                })
+
+                if (installedPlugins.data?.data?.length !== 0) {
+                    this.setState({
+                        waiverEnabled: true
+                    })
+                }
+            }
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
+    checkPreferences = () => {
+        const { experiences, seller } = this.props
+        const experienceCheckIn = Object.values(experiences.collection).some(item => item.checkPreferences === true)
+        if (experienceCheckIn || seller.preferences?.checkIn) {
+            this.setState({ checkInEnabled: true })
+        }
+    }
+
     render() {
         const { seller } = this.props;
         const logoUrl = xolaApi.xolaUrl(`/api/sellers/${seller.id}/logo?height=512&format=png`);
-        const hasWaivers = _.includes(seller.roles, 'ROLE_WAIVER');
 
         return (
             <Layout noReset={true}>
@@ -64,7 +101,7 @@ class Home extends Component {
                                         />
                                     ) : null}
 
-                                    {hasWaivers ? (
+                                    {this.state.waiverEnabled ? (
                                         <LoadingButton
                                             onPress={this.handleWaiversClick}
                                             styleNames={['large', 'neutral', 'narrow']}
@@ -72,7 +109,7 @@ class Home extends Component {
                                         />
                                     ) : null}
 
-                                    {seller.preferences?.checkIn?.enabled ? <LoadingButton
+                                    {this.state.checkInEnabled ? <LoadingButton
                                         onPress={this.handleCheckInClick}
                                         styleNames={['large', 'neutral', 'narrow']}
                                         title="Check In"
@@ -89,6 +126,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
+    auth: state.auth,
     seller: state.auth.seller,
     experiences: state.experiences,
     connectedReader: state.readers.connectedReader,
