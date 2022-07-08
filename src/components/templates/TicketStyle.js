@@ -1,27 +1,35 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import variables from '../../styles/variables';
 
 const styles = StyleSheet.create({
     container: {
         width: 280,
         padding: 40,
-        backgroundColor: variables.white,
+        ...Platform.select({
+            ios: {
+                backgroundColor: variables.white,
+            },
+            android: {
+
+            }
+        }),
         position: 'absolute',
         top: 2000,
-        zIndex: 1,
+        zIndex: 1
     },
     image: {
         width: 200,
-        height: 200,
+        height: 200
     },
     name: {
         marginTop: 10,
         marginBottom: 5,
         fontSize: 16,
+        fontWeight: 'normal'
     },
     infoText: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: 'normal',
     },
     ticketOrder: {
         fontSize: 16,
@@ -31,7 +39,7 @@ const styles = StyleSheet.create({
     demographics: {
         marginTop: 10,
         fontSize: 22,
-        fontWeight: 'bold',
+        fontWeight: 'normal',
     },
 });
 

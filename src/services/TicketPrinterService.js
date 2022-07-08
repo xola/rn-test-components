@@ -11,7 +11,7 @@ export const TICKET_PRINTING_WIDTH = 506;
 
 const TicketPrinterService = {
     async discoverPrinters(onPrinterFound) {
-        const interfaceTypes = (Platform.OS == 'android') ? [
+        const interfaceTypes = (Platform.OS === 'android') ? [
             InterfaceType.Lan,
             InterfaceType.Bluetooth,
             InterfaceType.Usb,
@@ -21,7 +21,7 @@ const TicketPrinterService = {
             InterfaceType.BluetoothLE,
             InterfaceType.Usb,
         ];
-        
+
         const manager = await StarDeviceDiscoveryManagerFactory.create(interfaceTypes);
         manager.discoveryTime = 1000 * 60;
         manager.onPrinterFound = async printer => {

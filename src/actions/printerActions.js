@@ -20,15 +20,14 @@ export const savePrinter = printer => async (dispatch, getState) => {
 };
 
 export const discoverPrinters = () => async (dispatch, getState) => {
-
     const isBluetoothEnabled = await BluetoothStatus.state()
     if (isBluetoothEnabled) {
-    if (Platform.OS == 'android' && 31 <= Platform.Version) {
-            var hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT);
+        if (Platform.OS == 'android' && 31 <= Platform.Version) {
+            let hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT);
 
             if (!hasPermission) {
                 const status = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT);
-                    
+
                 hasPermission = status == PermissionsAndroid.RESULTS.GRANTED;
             }
 
@@ -36,14 +35,14 @@ export const discoverPrinters = () => async (dispatch, getState) => {
                 Alert.alert("Error", "Bluetooth permission is required.")
                 NavigationService.goBack()
             }
-    }
+        }
 
-    dispatch({ type: DISCOVER_PRINTERS_STARTED });
-    await TicketPrinterService.discoverPrinters(printer => {
-        dispatch(discoveredPrinter(printer));
-    });
-    dispatch({ type: DISCOVER_PRINTERS_FINISHED });
-}
+        dispatch({ type: DISCOVER_PRINTERS_STARTED });
+        await TicketPrinterService.discoverPrinters(printer => {
+            dispatch(discoveredPrinter(printer));
+        });
+        dispatch({ type: DISCOVER_PRINTERS_FINISHED });
+    }
 };
 
 export const discoveredPrinter = discoveredPrinter => async (dispatch, getState) => {
