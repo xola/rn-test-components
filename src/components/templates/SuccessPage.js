@@ -76,7 +76,7 @@ class SuccessPage extends Component {
                         </View>
                     </View>
 
-                    {this.props.printer.printer && submittedItem ? (
+                    {this.props.printer.printer && submittedItem && !this.props.route.params?.waiverSigned ? (
                         <View>
                             <PrintTickets
                                 experience={experience}
