@@ -13,7 +13,6 @@ import StyledText from '../common/StyledText';
 import xolaApi from '../../api/xolaApi';
 import { resetCart } from '../../actions/cartActions';
 import { BackIcon } from '../../images/svg';
-import Axios from 'axios';
 
 class Home extends Component {
     state = {
@@ -42,25 +41,12 @@ class Home extends Component {
         NavigationService.navigate('SearchOrders');
     };
 
-    checkWaivers = async () => {
-        const { auth, seller } = this.props;
-        try {
-            const plugins = await Axios.get(xolaApi.pluginUrl('/plugins?abilities[has]=waiver'))
-            const waiverPluginIds = plugins.data?.data.map(item => item.id)
+    checkWaivers = () => {
+        const { experiences } = this.props
+        const experienceWaiverIn = Object.values(experiences.collection).some(item => Boolean(item.waiverPreference?.url) === true)
 
-            if (waiverPluginIds.length !== 0) {
-                const installedPlugins = await Axios.get(xolaApi.pluginUrl(`/installations?seller=${seller.id}&id[in]=${waiverPluginIds}`), {
-                    headers: { 'X-API-KEY': auth.apiKey },
-                })
-
-                if (installedPlugins.data?.data?.length !== 0) {
-                    this.setState({
-                        waiverEnabled: true
-                    })
-                }
-            }
-        } catch (e) {
-            console.log(e.message)
+        if (experienceWaiverIn) {
+            this.setState({ waiverEnabled: true })
         }
     }
 
