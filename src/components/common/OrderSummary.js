@@ -73,7 +73,7 @@ class OrderSummary extends Component {
         }
 
         return (
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} nestedScrollEnabled={true}>
                 <View style={styles.experience}>
                     <Image style={styles.image} source={image} alt="" />
 

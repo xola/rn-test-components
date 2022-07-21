@@ -1,5 +1,5 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text, ScrollView } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import StripePaymentModal from '../../modals/StripePaymentModal';
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
@@ -58,7 +58,7 @@ class OrderReviewFinal extends Component {
         }
 
         return (
-            <>
+            <ScrollView>
                 <Header
                     back={true}
                     right={() => true ? <TouchableOpacity onPress={this.handlePayClick} style={[headerStyles.next, { backgroundColor: variables.green }]}>
@@ -99,7 +99,7 @@ class OrderReviewFinal extends Component {
                         />
                     </View>
                 </Layout>
-            </>
+            </ScrollView>
         );
     }
 }
