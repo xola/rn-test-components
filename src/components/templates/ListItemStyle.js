@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     },
     demographics: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        paddingVertical: 4,
         fontSize: 20,
     },
     infoText: {
