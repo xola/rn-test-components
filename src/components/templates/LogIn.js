@@ -56,7 +56,7 @@ class LogIn extends Component {
     render() {
         return (
             <View
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 onResponderRelease={this.detectTouch}
                 onStartShouldSetResponder={() => true}>
                 <Formik

@@ -64,7 +64,16 @@ const styles = StyleSheet.create({
         fontFamily: variables.fontBold,
         fontSize: variables.h3Size,
         color: variables.textColor
-    }
+    },
+    dropdownButton: {
+        width: '100%',
+        backgroundColor: variables.white,
+    },
+    buttonText: {
+        fontSize: variables.h6Size,
+        fontFamily: variables.fontLight,
+        textAlign: 'center'
+    },
 });
 
 export default styles;

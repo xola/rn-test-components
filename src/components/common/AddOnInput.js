@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import SelectDropdown from 'react-native-select-dropdown';
 import Spinner from './Spinner';
 import { View, Text, Picker, TouchableOpacity } from 'react-native';
 import ClickablePicker from './ClickablePicker';
@@ -42,7 +43,7 @@ class AddOnInput extends Component {
         this.props.addOn.choices.forEach(choice => {
             const preparedChoice = { configuration: choice, quantity: 0 };
 
-            if (value === choice.id) {
+            if (value?.id === choice.id) {
                 this.props.onAddonChange(preparedChoice, 1, this.props.addOn);
             } else {
                 this.props.onAddonChange(preparedChoice, 0, this.props.addOn);
@@ -111,17 +112,16 @@ class AddOnInput extends Component {
                 <View style={styles.container}>
                     <View style={styles.action}>
                         <View style={[styles.content, { padding: w(10) }]}>
-                            <ClickablePicker
-                                value={this.state.selectedChoice}
-                                onValueChange={this.handleDropDownChange}
-                                title={() => <Text style={styles.description}>Choose an option</Text>}
-                            >
-                                <Picker.Item style={{ backgroundColor: 'red' }} label={'Choose an option'} value={null} />
-
-                                {addOn.choices.map(choice => (
-                                    <Picker.Item label={`${choice.name} - ${format(choice.price, currency)}`} key={choice.id} value={choice.id} />
-                                ))}
-                            </ClickablePicker>
+                            <SelectDropdown
+                                data={[null, ...addOn.choices]}
+                                defaultValue="Choose an option"
+                                onSelect={this.handleDropDownChange}
+                                buttonStyle={styles.dropdownButton}
+                                buttonTextStyle={styles.buttonText}
+                                rowTextStyle={styles.buttonText}
+                                rowStyle={styles.rowStyle}
+                                renderCustomizedRowChild={(choice) => <Text style={styles.buttonText}>{choice?.name ? `${choice.name} - ${format(choice.price, currency)}` : 'Choose an option'}</Text>}
+                            />
                         </View>
                     </View>
                     <View style={styles.detail}>

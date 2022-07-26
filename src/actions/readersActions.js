@@ -10,7 +10,7 @@ import _ from 'lodash';
 import { BluetoothStatus } from 'react-native-bluetooth-status'
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions'
 import { getUniqueId, isLocationEnabled } from 'react-native-device-info'
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import NavigationService from '../components/NavigationService';
 
 
@@ -43,12 +43,10 @@ export const INITIALIZE_TERMINAL_FAILED = 'INITIALIZE_TERMINAL_FAILED';
 export const INITIALIZE_TERMINAL_SUCCEEDED = 'INITIALIZE_TERMINAL_SUCCEEDED';
 
 const DISCOVER_TIMEOUT = 1000 * 60;
-
-let discoverReadersSubscription;
+const STRIPE_SIMULATION = SIMULATE_STRIPE_TERMINAL === 'true' ? 1 : 0
 
 export const discoverReaders = () => async (dispatch, getState) => {
     const { readers, auth } = getState();
-
     if (readers.isDiscovering) {
         return;
     }
@@ -59,7 +57,9 @@ export const discoverReaders = () => async (dispatch, getState) => {
     const { data } = await xolaApi.get(`api/sellers/${auth.seller.id}/stripeTerminal/connectionToken`, {
         params: { authenticate: true },
     });
+
     const isBluetoothEnabled = await BluetoothStatus.state()
+
     const permission =
         Platform.OS === 'android'
             ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
@@ -77,17 +77,29 @@ export const discoverReaders = () => async (dispatch, getState) => {
                     dispatch(readersDiscovered(readers));
                 });
 
-                try {
-                    console.log('doscovering readers')
-                    await StripeTerminal.discoverReaders(
-                        StripeTerminal.DeviceTypeChipper2X,
-                        StripeTerminal.DiscoveryMethodBluetoothScan,
-                        SIMULATE_STRIPE_TERMINAL === 'true' ? 1 : 0, // fix me from env
-                    );
+                if (Platform.OS === 'android') {
+                    try {
+                        await StripeTerminal.discoverReaders(
+                            StripeTerminal.DeviceTypeChipper2X,
+                            StripeTerminal.DiscoveryMethodBluetoothScan,
+                            stripeSimulation
+                        );
 
-                    dispatch({ type: DISCOVER_READERS_SUCCEEDED });
-                } catch (response) {
-                    dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                        dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                    } catch (response) {
+                        dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                    }
+                } else {
+                    try {
+                        await StripeTerminal.discoverReadersByMethod(
+                            StripeTerminal.DiscoveryMethodBluetoothScan,
+                            STRIPE_SIMULATION
+                        );
+
+                        dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                    } catch (response) {
+                        dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                    }
                 }
             }
         } else {
@@ -100,16 +112,29 @@ export const discoverReaders = () => async (dispatch, getState) => {
                         dispatch(readersDiscovered(readers));
                     });
 
-                    try {
-                        await StripeTerminal.discoverReaders(
-                            StripeTerminal.DeviceTypeChipper2X,
-                            StripeTerminal.DiscoveryMethodBluetoothScan,
-                            SIMULATE_STRIPE_TERMINAL === 'true' ? 1 : 0, // fix me from env
-                        );
+                    if (Platform.OS === 'android') {
+                        try {
+                            await StripeTerminal.discoverReaders(
+                                StripeTerminal.DeviceTypeChipper2X,
+                                StripeTerminal.DiscoveryMethodBluetoothScan,
+                                STRIPE_SIMULATION
+                            );
 
-                        dispatch({ type: DISCOVER_READERS_SUCCEEDED });
-                    } catch (response) {
-                        dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                            dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                        } catch (response) {
+                            dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                        }
+                    } else {
+                        try {
+                            await StripeTerminal.discoverReadersByMethod(
+                                StripeTerminal.DiscoveryMethodBluetoothScan,
+                                STRIPE_SIMULATION
+                            );
+
+                            dispatch({ type: DISCOVER_READERS_SUCCEEDED });
+                        } catch (response) {
+                            dispatch({ type: DISCOVER_READERS_FAILED, error: response.error });
+                        }
                     }
                 } else {
                     Alert.alert("Error", "Location is required for POS.")

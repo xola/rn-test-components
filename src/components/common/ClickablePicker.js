@@ -1,9 +1,8 @@
-import { View, TouchableOpacity, Picker, Text } from 'react-native';
+import { View, TouchableOpacity, Picker, Text, Platform } from 'react-native';
 import React, { Component, Children } from 'react';
 import styles from './ClickablePickerStyle';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { DropDownIcon } from '../../images/svg';
 
 /**
  * Component that serves as a classic select box for multi-option inputs
@@ -15,20 +14,35 @@ class ClickablePicker extends Component {
         onValueChange: PropTypes.func,
     };
 
+    state = {
+        isOpened: false
+    }
+
     handleValueChange = value => {
         this.props.onValueChange(value);
     };
 
     render() {
         const { children, value } = this.props;
+        console.log(children, value)
+        if (Platform.OS === 'ios') {
+            return (
+                <View style={styles.container}>
+                    <Picker selectedValue={value} onValueChange={this.handleValueChange}>
+                        {children}
+                    </Picker>
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.container}>
+                    <Picker selectedValue={value} onValueChange={this.handleValueChange}>
+                        {children}
+                    </Picker>
+                </View>
+            );
+        }
 
-        return (
-            <View style={styles.container}>
-                <Picker selectedValue={value} onValueChange={this.handleValueChange}>
-                    {children}
-                </Picker>
-            </View>
-        );
     }
 }
 
