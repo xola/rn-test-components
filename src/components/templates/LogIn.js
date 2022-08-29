@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, View, Linking, Alert } from 'react-native';
+import {ScrollView, Image, View, Linking, Alert, KeyboardAvoidingView, Platform} from 'react-native';
 import TextInput from '../common/TextInput';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../../actions/authActions';
@@ -66,14 +66,21 @@ class LogIn extends Component {
                 >
                     {props => (
                         <Layout>
-                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
-                                <Image style={styles.image} source={logo} />
-                                <View style={styles.brand}>
-                                    <Image style={styles.kioskLogo} source={kioskLogo} />
-                                    <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
-                                </View>
-                                <FormGroup style={styles.flex}>
-                                    <View style={styles.flex}>
+                            <KeyboardAvoidingView
+                                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                                style={{flex: 1}}
+                                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+                                keyboardShouldPersistTaps="handled"
+                            >
+                                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
+                                    <View style={styles.top}>
+                                        <Image style={styles.image} source={logo} />
+                                        <Image style={styles.kioskLogo} source={kioskLogo} />
+                                        <View style={styles.brand}>
+                                            <StyledText styleNames={['large']} style={styles.brandText}>Xola Kiosk</StyledText>
+                                        </View>
+                                    </View>
+                                    <View style={styles.loginForm}>
                                         <TextInput
                                             id="username"
                                             title="E-mail"
@@ -90,28 +97,33 @@ class LogIn extends Component {
                                             error={props.errors.password}
                                         />
                                     </View>
-                                </FormGroup>
-                                <FormGroup style={styles.flex}>
-                                    <View style={styles.buttonContainer}>
-                                        <LoadingButton
-                                            onPress={() => this.openSignUp()}
-                                            styleNames={['large', 'neutral', 'flex']}
-                                            title="Not a Xola customer?"
-                                        />
-                                        <LoadingButton
-                                            onPress={props.handleSubmit}
-                                            isLoading={this.props.auth.isLoading}
-                                            styleNames={['large', 'active', 'flex']}
-                                            title="Login"
-                                        />
-                                    </View>
-                                    <LoadingButton
-                                        onPress={() => this.openPrivacy()}
-                                        styleNames={['large', 'link', 'flex']}
-                                        title="Privacy Policy"
-                                    />
-                                </FormGroup>
-                            </ScrollView>
+                                    <FormGroup style={styles.flex}>
+                                        <View style={styles.bottomContainer}>
+
+                                            <View style={styles.buttonContainer}>
+                                                <LoadingButton
+                                                    onPress={() => this.openSignUp()}
+                                                    styleNames={['large', 'neutral', 'flex']}
+                                                    title="Not a Xola customer?"
+                                                />
+                                                <LoadingButton
+                                                    onPress={props.handleSubmit}
+                                                    isLoading={this.props.auth.isLoading}
+                                                    styleNames={['large', 'active', 'flex']}
+                                                    title="Login"
+                                                />
+                                            </View>
+                                            <View style={styles.buttonContainer}>
+                                                <LoadingButton
+                                                    onPress={() => this.openPrivacy()}
+                                                    styleNames={['large', 'link', 'flex']}
+                                                    title="Privacy Policy"
+                                                />
+                                            </View>
+                                        </View>
+                                    </FormGroup>
+                                </ScrollView>
+                            </KeyboardAvoidingView>
                         </Layout>
                     )}
                 </Formik>

@@ -1,40 +1,44 @@
 import { StyleSheet } from 'react-native';
-import { w } from '../../utils/Scale';
+import {h, w} from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
         width: w(700),
         alignSelf: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
     },
     flex: {
         flex: 1,
     },
-    brand: {
+    top: {
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: w(10),
-        flex: 1
+        justifyContent: 'space-around',
+        height: h(300)
     },
     brandText: {
-        textAlign: 'center',
-        paddingTop: (10)
     },
     image: {
         width: w(94),
         height: w(33),
-        resizeMode: 'contain',
-        alignSelf: 'center',
     },
     kioskLogo: {
         width: w(102),
         height: w(102),
         resizeMode: 'contain',
-        alignSelf: 'center',
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1
+    },
+    bottomContainer: {
+        flexGrow: 0.5,
+        justifyContent: 'space-evenly',
+    },
+    loginForm: {
+        flexGrow: 0.5,
+        justifyContent: 'center',
     }
 });
 export default styles;
