@@ -82,7 +82,7 @@ export const discoverReaders = () => async (dispatch, getState) => {
                         await StripeTerminal.discoverReaders(
                             StripeTerminal.DeviceTypeChipper2X,
                             StripeTerminal.DiscoveryMethodBluetoothScan,
-                            stripeSimulation
+                            STRIPE_SIMULATION
                         );
 
                         dispatch({ type: DISCOVER_READERS_SUCCEEDED });

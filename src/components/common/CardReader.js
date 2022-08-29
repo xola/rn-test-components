@@ -6,7 +6,7 @@ import StyledText from './StyledText';
 import PropTypes from 'prop-types';
 import StripeFirmWareUpdateModal from '../../modals/StripeFirmWareUpdateModal';
 import StripeTerminal from 'crowdbotics-react-native-stripe-terminal';
-import { BBPoSICon, XolaDeviceIcon } from '../../images/svg';
+import { BBPoSICon, XolaDeviceIcon, MDeviceIcon } from '../../images/svg';
 
 class CardReader extends Component {
     static propTypes = {
@@ -75,7 +75,9 @@ class CardReader extends Component {
                     onCancel={() => this.setState({ showUpdateModal: false })}
                 />
                 <View style={styles.row}>
-                    {this.props.isPaired ? <BBPoSICon /> : <XolaDeviceIcon />}
+                    { 
+                    reader.deviceType === 0 ? <BBPoSICon /> : (reader.deviceType === 1 ? <MDeviceIcon /> : <XolaDeviceIcon /> )
+                    }
                     <Text style={styles.name}>{reader.serialNumber} </Text>
                     {(this.props.isPaired || this.props.isConnected) && <View style={styles.pairedContainer}>
                         <Text style={styles.isPaired}>{'Paired'}</Text>

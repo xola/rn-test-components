@@ -22,6 +22,7 @@ import WaiverIcon from './waiver'
 import ProcessingIcon from './processing'
 import SearchIcon from './search'
 import LogoutIcon from './logout'
+import MDeviceIcon from './m2'
 
 export {
     KioskAppIcon,
@@ -47,5 +48,6 @@ export {
     WaiverIcon,
     ProcessingIcon,
     SearchIcon,
-    LogoutIcon
+    LogoutIcon,
+    MDeviceIcon
 }
