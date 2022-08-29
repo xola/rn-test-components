@@ -173,7 +173,7 @@ export const commitOrder = () => async (dispatch, getState) => {
             type: COMMIT_ORDER_SUCCEEDED,
             data: response.data,
         });
-        NavigationService.navigate('SuccessPage');
+        NavigationService.navigate('TicketPrinting');
     } catch (e) {
         dispatch({ type: COMMIT_ORDER_FAILED, error: e.message, data: _.get(e, 'response.data') });
     }

@@ -76,6 +76,7 @@ export const printTickets = totalTickets => async (dispatch, getState) => {
             await TicketPrinterService.printTicket(printer, tickets[index]);
         }
         dispatch({ type: PRINTING_TICKETS_FINISHED });
+        NavigationService.navigate('SuccessPage');
     }
 
     return null;

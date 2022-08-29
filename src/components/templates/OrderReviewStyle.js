@@ -53,7 +53,28 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    ticketContainer: {
+        backgroundColor: variables.white,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    },
+    lottieContainer: {
+        width: '100%',
+        height: w(350),
+        paddingTop: w(200),
+        paddingBottom: w(50),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    ticketTitle: {
+        fontFamily: variables.fontBold,
+        fontSize: variables.h3Size,
+        color: variables.textColor,
+        textAlign: 'center',
+        paddingVertical: w(20)
+    },
 });
 
 export default styles;

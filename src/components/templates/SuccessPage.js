@@ -6,7 +6,6 @@ import Layout from '../common/Layout';
 import styles from './SuccessPageStyle';
 import NavigationService from '../NavigationService';
 import LoadingButton from '../common/LoadingButton';
-import PrintTickets from './PrintTickets';
 import { addTicket, printTickets } from '../../actions/printerActions';
 import { WaiverIcon } from '../../images/svg';
 import StyledText from '../common/StyledText';
@@ -75,18 +74,6 @@ class SuccessPage extends Component {
                             />
                         </View>
                     </View>
-
-                    {this.props.printer.printer && submittedItem && !this.props.route.params?.waiverSigned ? (
-                        <View>
-                            <PrintTickets
-                                experience={experience}
-                                item={submittedItem}
-                                order={submittedOrder}
-                                printer={this.props.printer}
-                                onTicketLoad={this.handlePrintingTickets}
-                            />
-                        </View>
-                    ) : null}
                 </Layout>
             </>
         );
