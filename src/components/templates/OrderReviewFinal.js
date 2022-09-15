@@ -58,7 +58,7 @@ class OrderReviewFinal extends Component {
         }
 
         return (
-            <ScrollView>
+            <ScrollView style={styles.content}>
                 <Header
                     back={true}
                     right={() => true ? <TouchableOpacity onPress={this.handlePayClick} style={[headerStyles.next, { backgroundColor: variables.green }]}>

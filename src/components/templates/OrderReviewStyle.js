@@ -6,6 +6,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    content: {
+        backgroundColor: variables.white
+    },
     title: {
         fontFamily: variables.fontBold,
         fontSize: variables.h3Size,

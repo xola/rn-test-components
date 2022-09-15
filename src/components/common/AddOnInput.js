@@ -116,6 +116,7 @@ class AddOnInput extends Component {
                                 data={[null, ...addOn.choices]}
                                 defaultValue="Choose an option"
                                 onSelect={this.handleDropDownChange}
+                                buttonTextAfterSelection={(selectedItem, index) => <Text style={styles.buttonText}>{selectedItem?.name ? `${selectedItem.name} - ${format(selectedItem.price, currency)}` : 'Choose an option'}</Text>}
                                 buttonStyle={styles.dropdownButton}
                                 buttonTextStyle={styles.buttonText}
                                 rowTextStyle={styles.buttonText}
