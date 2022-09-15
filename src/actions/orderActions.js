@@ -93,7 +93,6 @@ export const checkInItem = (order, item) => async (dispatch, getState) => {
         dispatch({ type: CHECKIN_ITEM_SUCCEEDED, orderId: order.id });
         NavigationService.navigate('CheckInSuccessPage', { message: 'Check-in successful!', item: item });
     } catch (e) {
-        Alert.alert('Error', e.message)
         dispatch({ type: CHECKIN_ITEM_FAILED, error: e.message });
     }
 };

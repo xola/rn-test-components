@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: variables.h2Size,
         lineHeight: 32,
+        paddingTop: 20,
         color: variables.textModal,
         textAlign: 'center',
         fontWeight: '700'

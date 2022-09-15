@@ -9,22 +9,22 @@ const ModalButton = ({ title, backgroundColor, textColor, onPress, customStyles 
     </TouchableOpacity>
 }
 
-class TimeSlotSoldModal extends Component {
+class Error409Modal extends Component {
     render() {
-        const { toggle, onClose, ...rest } = this.props;
+        const { toggle, onClose, title, body, buttonTitle, ...rest } = this.props;
 
         return (
             <Modal visible={toggle} transparent={true} {...rest}>
                 <View style={styles.container}>
                     <View style={styles.modalContainer}>
-                        <Text style={styles.title}>Sold Out</Text>
+                        <Text style={styles.title}>{title}</Text>
                         <Text style={[styles.subTitle, { textAlign: 'center' }]}>
-                            The date and time you had chosen just got sold out. Please try a different time in order to complete your purchase.
+                            {body}
                         </Text>
                         <View style={[styles.buttons, { justifyContent: 'center' }]}>
                             <ModalButton
                                 onPress={onClose}
-                                title="Choose another time"
+                                title={buttonTitle}
                                 backgroundColor={variables.mainBlue}
                                 textColor={variables.white}
                             />
@@ -36,4 +36,4 @@ class TimeSlotSoldModal extends Component {
     }
 }
 
-export default TimeSlotSoldModal;
+export default Error409Modal;

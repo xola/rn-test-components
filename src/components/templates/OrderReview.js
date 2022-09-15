@@ -1,6 +1,6 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
 import { dismissLatestError } from '../../actions/errorsActions';
-import { TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import customerSchema from '../../schemas/customerSchema';
 import TextInput from '../common/TextInput';
@@ -16,7 +16,7 @@ import _ from 'lodash';
 import headerStyles from '../common/HeaderStyle'
 import { NextIcon } from '../../images/svg';
 import NavigationService from '../NavigationService';
-import TimeSlotSoldModal from '../../modals/TimeSlotSoldModal';
+import Error409Modal from '../../modals/Error409Modal';
 
 class OrderReview extends Component {
     componentWillUnmount() {
@@ -61,9 +61,12 @@ class OrderReview extends Component {
                                 currentStep={4}
                             />
                             <Layout
-                                modals={<TimeSlotSoldModal
+                                modals={<Error409Modal
                                     toggle={this.props.latestError?.error === 'Request failed with status code 409'}
                                     onClose={this.handleError}
+                                    title="Sold Out"
+                                    body="The date and time you had chosen just got sold out. Please try a different time in order to complete your purchase."
+                                    buttonTitle="Choose another time"
                                 />}
                             >
                                 {this.props.cart.isLoading ? (
