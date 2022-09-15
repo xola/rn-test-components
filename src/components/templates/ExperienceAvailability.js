@@ -38,13 +38,11 @@ class ExperienceAvailability extends Component {
 
     handleNextDates = () => {
         const nextDate = this.state.date.clone().add(1, 'days');
-        this.props.selectDate(nextDate.format('YYYY-MM-DD'));
         this.setState({ date: nextDate });
     };
 
     handlePreviousDates = () => {
         const previousDate = this.state.date.clone().subtract(1, 'days');
-        this.props.selectDate(previousDate.format('YYYY-MM-DD'));
         if (previousDate.isSameOrAfter(moment(), 'day')) {
             this.setState({ date: previousDate });
         }
@@ -56,6 +54,7 @@ class ExperienceAvailability extends Component {
 
     handleNext = (time) => {
         this.props.selectTime(time)
+        this.props.selectDate(this.state.date.format('YYYY-MM-DD'))
         NavigationService.navigate('OrderCreate');
     }
 
@@ -68,7 +67,7 @@ class ExperienceAvailability extends Component {
         const { selectedDate } = this.props.date;
         const { availability } = this.props.date;
 
-        let timeSlots = _.get(availability, selectedDate, {});
+        let timeSlots = _.get(availability, this.state.date.format('YYYY-MM-DD'), {});
 
         const dateSlot = !Object.values(availability).map(item => _.isArray(item)).some(item => item === false)
 
