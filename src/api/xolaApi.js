@@ -58,9 +58,14 @@ xolaApi.pluginUrl = uri => {
     let url = ""
     if (bootstrap.environment === "production") {
         url = "https://elrond.xola.com"
-    } else {
+    } else if (bootstrap.environment === "sandbox") {
         url = "https://elrond.sandbox.xola.com"
+    } else if (bootstrap.environment === "staging") {
+        url = "https://elrond.staging.xola.com"
+    } else if (bootstrap.environment === "preprod") {
+        url = "https://elrond.preprod.xola.com"
     }
+
     return url + '/' + _.trimStart(uri, '/');
 };
 

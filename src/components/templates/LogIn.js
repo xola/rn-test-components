@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ScrollView, Image, View, Linking, Alert, KeyboardAvoidingView, Platform} from 'react-native';
+import { ScrollView, Image, View, Linking, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import TextInput from '../common/TextInput';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../../actions/authActions';
@@ -45,9 +45,22 @@ class LogIn extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.touches !== prevState.touches && this.state.touches === 5) {
-            const isProd = this.props.bootstrap.environment === 'production';
-            Alert.alert(`Environment is changed to ${isProd ? 'sandbox' : 'production'}`);
-            this.props.setEnvironment(`${isProd ? 'sandbox' : 'production'}`);
+            const env = this.props.bootstrap.environment;
+
+            if (env === 'production') {
+                this.props.setEnvironment('sandbox');
+                Alert.alert(`Environment is changed to Sandbox`);
+            } else if (env === 'sandbox') {
+                this.props.setEnvironment('staging');
+                Alert.alert(`Environment is changed to X2 staging`);
+            } else if (env === 'staging') {
+                this.props.setEnvironment('preprod');
+                Alert.alert(`Environment is changed to PreProduction`);
+            } else if (env === 'preprod') {
+                this.props.setEnvironment('production');
+                Alert.alert(`Environment is changed to Production`);
+            }
+
             this.setState({ touches: 0 });
             clearTimeout(this.timer.current);
         }
@@ -68,7 +81,7 @@ class LogIn extends Component {
                         <Layout>
                             <KeyboardAvoidingView
                                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                                style={{flex: 1}}
+                                style={{ flex: 1 }}
                                 keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
                                 keyboardShouldPersistTaps="handled"
                             >
