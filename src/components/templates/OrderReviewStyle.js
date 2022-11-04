@@ -6,20 +6,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    flex: {
+        flex: 1,
+    },
     content: {
-        backgroundColor: variables.white
+        backgroundColor: variables.white,
     },
     title: {
         fontFamily: variables.fontBold,
         fontSize: variables.h3Size,
         color: variables.titleText,
-        paddingTop: w(20)
+        paddingTop: w(20),
     },
     form: {
-        paddingTop: w(40)
+        paddingTop: w(40),
     },
     info: {
-        paddingTop: w(40)
+        paddingTop: w(40),
     },
     demographics: {
         flex: 1,
@@ -50,12 +53,12 @@ const styles = StyleSheet.create({
         color: variables.textColorMuted,
     },
     row: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     loading: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     ticketContainer: {
         backgroundColor: variables.white,
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         fontSize: variables.h3Size,
         color: variables.textColor,
         textAlign: 'center',
-        paddingVertical: w(20)
+        paddingVertical: w(20),
     },
 });
 

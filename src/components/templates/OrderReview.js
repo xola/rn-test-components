@@ -1,6 +1,6 @@
 import { submitOrder, commitOrder, releaseOrder, updateCustomer } from '../../actions/orderActions';
 import { dismissLatestError } from '../../actions/errorsActions';
-import { TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { startPaymentCollection, openModal, closeModal } from '../../actions/paymentActions';
 import customerSchema from '../../schemas/customerSchema';
 import TextInput from '../common/TextInput';
@@ -13,10 +13,11 @@ import Layout from '../common/Layout';
 import Header from '../common/Header';
 import { Formik } from 'formik';
 import _ from 'lodash';
-import headerStyles from '../common/HeaderStyle'
+import headerStyles from '../common/HeaderStyle';
 import { NextIcon } from '../../images/svg';
 import NavigationService from '../NavigationService';
 import Error409Modal from '../../modals/Error409Modal';
+import { h } from '../../utils/Scale';
 
 class OrderReview extends Component {
     componentWillUnmount() {
@@ -24,9 +25,9 @@ class OrderReview extends Component {
     }
 
     handleNextClick = async params => {
-        const isOrderCreated = await this.props.submitOrder(params)
+        const isOrderCreated = await this.props.submitOrder(params);
         if (isOrderCreated) {
-            NavigationService.navigate('OrderReviewFinal')
+            NavigationService.navigate('OrderReviewFinal');
         }
     };
 
@@ -36,8 +37,8 @@ class OrderReview extends Component {
 
     handleError = async () => {
         this.props.dismissLatestError();
-        NavigationService.navigate('ExperienceAvailability')
-    }
+        NavigationService.navigate('ExperienceAvailability');
+    };
 
     render() {
         const { customerName, customerEmail, phone } = this.props.cart.order;
@@ -53,77 +54,93 @@ class OrderReview extends Component {
                         <>
                             <Header
                                 back={true}
-                                right={() => true ? <TouchableOpacity onPress={handleSubmit} style={headerStyles.next}>
-                                    <Text style={headerStyles.nextText}>{'Next'}</Text>
-                                    <NextIcon />
-                                </TouchableOpacity> : <View />}
-                                steps={["Product", "Time", "Quantity", "Info", "Pay"]}
+                                right={() =>
+                                    true ? (
+                                        <TouchableOpacity onPress={handleSubmit} style={headerStyles.next}>
+                                            <Text style={headerStyles.nextText}>{'Next'}</Text>
+                                            <NextIcon />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <View />
+                                    )
+                                }
+                                steps={['Product', 'Time', 'Quantity', 'Info', 'Pay']}
                                 currentStep={4}
                             />
                             <Layout
-                                modals={<Error409Modal
-                                    toggle={this.props.latestError?.error === 'Request failed with status code 409'}
-                                    onClose={this.handleError}
-                                    title="Sold Out"
-                                    body="The date and time you had chosen just got sold out. Please try a different time in order to complete your purchase."
-                                    buttonTitle="Choose another time"
-                                />}
+                                modals={
+                                    <Error409Modal
+                                        toggle={this.props.latestError?.error === 'Request failed with status code 409'}
+                                        onClose={this.handleError}
+                                        title="Sold Out"
+                                        body="The date and time you had chosen just got sold out. Please try a different time in order to complete your purchase."
+                                        buttonTitle="Choose another time"
+                                    />
+                                }
                             >
                                 {this.props.cart.isLoading ? (
                                     <View style={styles.loading}>
                                         <ActivityIndicator size={'large'} />
                                     </View>
-                                ) : (<ScrollView style={styles.container}>
-                                    <Text style={styles.title}>
-                                        Guest Information
-                                    </Text>
-                                    <FormGroup>
-                                        <View style={styles.form}>
-                                            <TextInput
-                                                id={'customerName'}
-                                                onChangeText={handleChange('customerName')}
-                                                onBlur={handleBlur('customerName')}
-                                                onEndEditing={this.handleEndEditing(values)}
-                                                value={values.customerName}
-                                                placeholder="Name"
-                                                title="Name"
-                                                error={errors.customerName}
-                                            />
-                                        </View>
-                                    </FormGroup>
+                                ) : (
+                                    <KeyboardAvoidingView
+                                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                                        style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
+                                        keyboardVerticalOffset={Platform.OS === 'ios' ? 175 : 140}
+                                        keyboardShouldPersistTaps="handled"
+                                    >
+                                        <ScrollView>
+                                            <View>
+                                                <Text style={styles.title}>Guest Information</Text>
+                                                <FormGroup>
+                                                    <View style={styles.form}>
+                                                        <TextInput
+                                                            id={'customerName'}
+                                                            onChangeText={handleChange('customerName')}
+                                                            onBlur={handleBlur('customerName')}
+                                                            onEndEditing={this.handleEndEditing(values)}
+                                                            value={values.customerName}
+                                                            placeholder="Name"
+                                                            title="Name"
+                                                            error={errors.customerName}
+                                                        />
+                                                    </View>
+                                                </FormGroup>
 
-                                    <FormGroup>
-                                        <View>
-                                            <TextInput
-                                                id={'customerEmail'}
-                                                onChangeText={handleChange('customerEmail')}
-                                                onBlur={handleBlur('customerEmail')}
-                                                onEndEditing={this.handleEndEditing(values)}
-                                                value={values.customerEmail}
-                                                placeholder="Email"
-                                                keyboardType="email-address"
-                                                title="Email"
-                                                error={errors.customerEmail}
-                                            />
-                                        </View>
-                                    </FormGroup>
+                                                <FormGroup>
+                                                    <View>
+                                                        <TextInput
+                                                            id={'customerEmail'}
+                                                            onChangeText={handleChange('customerEmail')}
+                                                            onBlur={handleBlur('customerEmail')}
+                                                            onEndEditing={this.handleEndEditing(values)}
+                                                            value={values.customerEmail}
+                                                            placeholder="Email"
+                                                            keyboardType="email-address"
+                                                            title="Email"
+                                                            error={errors.customerEmail}
+                                                        />
+                                                    </View>
+                                                </FormGroup>
 
-                                    <FormGroup>
-                                        <View>
-                                            <TextInput
-                                                id={'phone'}
-                                                onChangeText={handleChange('phone')}
-                                                onBlur={handleBlur('phone')}
-                                                onEndEditing={this.handleEndEditing(values)}
-                                                value={values.phone}
-                                                placeholder={'Phone'}
-                                                keyboardType="phone-pad"
-                                                title="Mobile Phone"
-                                                error={errors.phone}
-                                            />
-                                        </View>
-                                    </FormGroup>
-                                </ScrollView>
+                                                <FormGroup>
+                                                    <View>
+                                                        <TextInput
+                                                            id={'phone'}
+                                                            onChangeText={handleChange('phone')}
+                                                            onBlur={handleBlur('phone')}
+                                                            onEndEditing={this.handleEndEditing(values)}
+                                                            value={values.phone}
+                                                            placeholder={'Phone'}
+                                                            keyboardType="phone-pad"
+                                                            title="Mobile Phone"
+                                                            error={errors.phone}
+                                                        />
+                                                    </View>
+                                                </FormGroup>
+                                            </View>
+                                        </ScrollView>
+                                    </KeyboardAvoidingView>
                                 )}
                             </Layout>
                         </>
@@ -151,10 +168,7 @@ const mapDispatchToProps = {
     openModal,
     closeModal,
     updateCustomer,
-    dismissLatestError
+    dismissLatestError,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(OrderReview);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderReview);
