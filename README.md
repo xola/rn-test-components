@@ -1,11 +1,11 @@
-# Xola Kiosk Native App
+# React Native Sample Application
 
 ## Installation
 
 Install project JS dependencies:
 
 ```bash
-$ npm install
+$ npm install --legacy-peer-deps
 ```
 
 For iOS development, you need to have XCode installed on your computer.
@@ -37,8 +37,3 @@ Run the iOS simulator by opening ios folder of the project in XCode and running 
 ```bash
 $ npm run simulator
 ```
-
-# Notes on Android
-
-1. iOS specific settings bundle does not work on Android
-2. react-native-start-io10 requires 4* okhttp version, react v0.63 provides 3.12 which is not compatible. There is a patch that monkey patch the package. After upgrade to last react version this approach needs to be reevaluated and potentially removed
