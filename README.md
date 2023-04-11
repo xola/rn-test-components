@@ -5,10 +5,10 @@
 Install project JS dependencies:
 
 ```bash
-$ npm install --legacy-peer-deps
+$ npm install
 ```
 
-For iOS development, you need to have XCode installed on your computer.
+You will need XCode (with cli utilities) and Android (with at least one SDK) installed on your computer to develop Apple and Android builds respectively.
 
 Install React Native CLI tools:
 
@@ -35,5 +35,11 @@ $ nano .env
 Run the iOS simulator by opening ios folder of the project in XCode and running it, or via command line by running:
 
 ```bash
-$ npm run simulator
+$ react-native start-ios
+```
+
+Run the iOS simulator by opening ios folder of the project in XCode and running it, or via command line by running:
+
+```bash
+$ react-native start-android
 ```
