@@ -3,11 +3,17 @@ import variables from '../../styles/variables';
 import { w } from '../../utils/Scale';
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1,
+        borderColor: "red",
+        borderWidth: 2,
+        maxHeight: 60
     },
     loadingButton: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         textAlign: 'center',
         backgroundColor: variables.mainBlue,
         borderRadius: w(12),
@@ -17,23 +23,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     small: {
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-        fontSize: 16,
+        paddingTop: 8,
+        fontSize: 12,
     },
     medium: {
-        paddingLeft: 20,
-        paddingRight: 20,
         paddingTop: 10,
-        paddingBottom: 10,
-        fontSize: 20,
+        fontSize: 14,
     },
     large: {
-        fontSize: w(24),
+        paddingTop: 12,
+        fontSize: w(16),
         fontWeight: '700',
-        paddingVertical: w(22),
     },
     active: {
         backgroundColor: variables.mainBlue,
@@ -66,10 +66,8 @@ const styles = StyleSheet.create({
         borderRadius: 0,
     },
     wide: {
-        paddingHorizontal: w(100),
     },
     regular: {
-        paddingHorizontal: w(40),
     },
     narrow: {
         width: w(340),
@@ -77,16 +75,11 @@ const styles = StyleSheet.create({
     flex: {
         flex: 1,
         width: '99%',
-        maxHeight: w(80),
     },
     pairName: {
-        fontSize: w(24),
-        paddingHorizontal: w(24),
         fontFamily: variables.fontBold,
     },
     pairButton: {
-        marginLeft: w(8),
-        padding: w(20),
         borderColor: variables.lightGrey,
         borderWidth: 1,
         borderRadius: variables.borderRadius,

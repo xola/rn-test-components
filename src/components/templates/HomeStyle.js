@@ -3,10 +3,11 @@ import {h, w} from '../../utils/Scale';
 
 const styles = StyleSheet.create({
     container: {
-        width: w(700),
+        width: '100%',
         alignSelf: 'center',
         flexGrow: 1,
         justifyContent: 'center',
+        paddingHorizontal: w(50)
     },
     flex: {
         flex: 1,
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     top: {
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: h(350)
+        //height: h(350)
     },
     brandText: {
         paddingTop: w(40),

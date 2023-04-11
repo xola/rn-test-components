@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, View, Linking, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, Text, Image, View, Linking, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import TextInput from '../common/TextInput';
 import { connect } from 'react-redux';
 import { setEnvironment } from '../../actions/bootstrapActions';
@@ -27,58 +27,58 @@ class LogIn extends Component {
 
     render() {
         return (
-            <View
-                style={{ flex: 1 }}
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, }} 
                 onStartShouldSetResponder={() => true}>
+
                 <Formik
                     initialValues={{ username: '', password: '' }}
                     validationSchema={userSchema}
                     onSubmit={this.onLogInClick}
                 >
                     {props => (
-                        <Layout>
-                            <KeyboardAvoidingView
-                                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                                style={{ flex: 1 }}
-                                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-                                keyboardShouldPersistTaps="handled"
-                            >
-                                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
-                                    <View style={styles.top}>
-                                        <Image style={styles.image} source={logo} />
-                                        <StyledText styleNames={['large']} style={styles.brandText}>React Native Test Environment</StyledText>
-                                    </View>
-                                    <View style={styles.loginForm}>
-                                        <TextInput
-                                            id="sampleField"
-                                            title="Form field"
-                                            onChangeText={props.handleChange('sampleField')}
-                                            keyboardType="default"
-                                            error={props.errors.sampleField}
-                                        />
-                                    </View>
-                                    <FormGroup style={styles.flex}>
-                                        <View style={styles.bottomContainer}>
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            style={{ flex: 1, width: "100%" }}
+                            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+                            keyboardShouldPersistTaps="handled"
+                        >
+                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} style={styles.flex}>
+                                <View style={styles.top}>
+                                    <Image style={styles.image} source={logo} />
+                                    <StyledText styleNames={['large']} style={styles.brandText}>React Native Test Environment</StyledText>
+                                </View>
+                                <View style={styles.loginForm}>
+                                    <TextInput
+                                        id="sampleField"
+                                        title="Form field"
+                                        onChangeText={props.handleChange('sampleField')}
+                                        keyboardType="default"
+                                        error={props.errors.sampleField}
+                                    />
+                                </View>
+                                <FormGroup style={styles.flex}>
+                                    <View style={styles.bottomContainer}>
 
-                                            <View style={styles.buttonContainer}>
-                                                <LoadingButton
-                                                    styleNames={['large', 'neutral', 'flex']}
-                                                    title="Regular button"
-                                                />
-                                                <LoadingButton
-                                                    onPress={props.handleSubmit}
-                                                    styleNames={['large', 'active', 'flex']}
-                                                    title="Primary Button"
-                                                />
-                                            </View>
+                                        <View style={styles.buttonContainer}>
+                                            <LoadingButton
+                                                styleNames={['large', 'neutral', 'flex']}
+                                                title="Regular button"
+                                            />
+                                            <LoadingButton
+                                                onPress={props.handleSubmit}
+                                                styleNames={['large', 'active', 'flex']}
+                                                title="Primary Button"
+                                            />
                                         </View>
-                                    </FormGroup>
-                                </ScrollView>
-                            </KeyboardAvoidingView>
-                        </Layout>
+                                    </View>
+                                </FormGroup>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
                     )}
                 </Formik>
-            </View>
+
+
+            </ScrollView>
         );
     }
 }
