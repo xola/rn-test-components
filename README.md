@@ -7,16 +7,15 @@ Install project JS dependencies:
 ```bash
 $ npm install
 ```
+Follow the [official instructions](https://reactnative.dev/docs/environment-setup) to set up React Native for your environment. For this exercise it is not necessary to build for ios if you do not currently own a Mac, though if you do we will expect you to have already installed XCode (with cli utilities). Developing for Android on Mac, Windows or Linux  will require the Android toolchain and at least one SDK. Once your environment is configured, check out the repo, switch to your working directory and:
 
-You will need XCode (with cli utilities) and Android (with at least one SDK) installed on your computer to develop Apple and Android builds respectively.
-
-Install React Native CLI tools:
+Install the React Native CLI tools:
 
 ```bash
 $ npm install -g react-native-cli
 ```
 
-Install pod files:
+Install pod files (for ios development):
 
 ```bash
 $ cd ios

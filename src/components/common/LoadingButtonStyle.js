@@ -6,8 +6,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: "red",
-        borderWidth: 2,
         maxHeight: 60
     },
     loadingButton: {
