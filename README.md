@@ -1,4 +1,4 @@
-# React Native Sample Application
+# React Native Components Sample
 
 ## Installation
 
