@@ -31,14 +31,14 @@ $ nano .env
 
 ## Development
 
-Run the iOS simulator by opening ios folder of the project in XCode and running it, or via command line by running:
+Run the iOS simulator by opening the ios folder of the project in XCode and running it, or via command line by running:
 
 ```bash
-$ react-native start-ios
+$ react-native run-ios
 ```
 
-Run the iOS simulator by opening ios folder of the project in XCode and running it, or via command line by running:
+Run the Android simulator by opening the android folder of the project in Android Studio and running it, or via command line by running:
 
 ```bash
-$ react-native start-android
+$ react-native run-android
 ```
