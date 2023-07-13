@@ -1,13 +1,6 @@
-const XOLA_API_DEVELOPMENT = REACT_NATIVE_XOLA_API_DEVELOPMENT,
-XOLA_API_PRE_PRODUCTION = REACT_NATIVE_XOLA_API_PRE_PRODUCTION,
-XOLA_API_PRODUCTION = REACT_NATIVE_XOLA_API_PRODUCTION,
-XOLA_API_SANDBOX = REACT_NATIVE_XOLA_API_SANDBOX,
-XOLA_API_STAGING = REACT_NATIVE_XOLA_API_STAGING;
-
 export const XOLA_API_URL = {
-    development: XOLA_API_DEVELOPMENT,
-    production: XOLA_API_PRODUCTION,
-    sandbox: XOLA_API_SANDBOX,
-    staging: XOLA_API_STAGING,
-    preprod: XOLA_API_PRE_PRODUCTION
+    production: 'https://xola.com',
+    sandbox: 'https://sandbox.xola.com',
+    staging: 'https://x2.staging.xola.com',
+    preprod: 'https://preprod.xola.com'
 };

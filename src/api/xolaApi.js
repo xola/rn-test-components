@@ -2,9 +2,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import pkg from '../../package.json';
 import { XOLA_API_URL } from '../constants/apiConstants';
-//import { XOLA_API_VERSION } from '@env';
-const XOLA_API_VERSION = process.env.REACT_APP_XOLA_API_VERSION;
 
+const XOLA_API_VERSION = '2020-01-15'
 const USER_AGENT = `${pkg.name}/${pkg.version} (${pkg.description})`;
 
 const xolaApi = axios.create({
